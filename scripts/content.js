@@ -1,4 +1,6 @@
-chrome.runtime.sendMessage({ type: "QUERY" });
+chrome.runtime.sendMessage({ type: "QUERY" }, (response) => {
+    console.log(response);
+});
 
 window.onload = () => {
 	const moreNav = document.querySelector("a[data-test='home-nav']")?.parentElement;
