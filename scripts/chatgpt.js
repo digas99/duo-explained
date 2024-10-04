@@ -3,7 +3,7 @@ export class OpenAIAgent {
     console.log("OpenAIAgent initialized");
     const API_KEY_HERE = "";
 
-    await fetch("https://api.openai.com/v1/chat/completions", {
+    await fetch("https://api.openai.com/v1/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
