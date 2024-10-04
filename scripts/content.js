@@ -1,6 +1,6 @@
-chrome.runtime.sendMessage({ type: "QUERY" }, (response) => {
-    console.log(response);
-});
+// chrome.runtime.sendMessage({ type: "QUERY" }, (response) => {
+//     console.log(response);
+// });
 
 window.onload = () => {
 	// Duo ChatGPT tab
@@ -34,6 +34,11 @@ window.onload = () => {
 						}
 					}
 				});
+                
+                //! DEBUG CODE
+                chrome.runtime.sendMessage({ type: "QUERY", query: "Say this is a test!" }, (response) => {
+                    console.log(response);
+                });
 			});
 		}
 		else {
