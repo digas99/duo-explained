@@ -1,0 +1,27 @@
+{
+    "name": "Duolingo ChatGPT Explain",
+    "description": "Get explanations for exercises on Duolingo using OpenAI's ChatGPT.",
+    "version": "0.0.1",
+    "manifest_version": 3,
+    "icons": {
+        "16":  "images/logo/logo.png",
+        "32":  "images/logo/logo.png",
+        "48":  "images/logo/logo.png",
+        "128":  "images/logo/logo.png"
+    },
+    "background": {
+        "service_worker": "scripts/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.duolingo.com/*"],
+            "js": ["scripts/content.js"]
+        }
+    ],
+    "action": {
+        "default_popup": "popup/home.html"
+    },
+    "permissions": [
+        "scripting"
+    ]
+}
