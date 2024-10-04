@@ -1,0 +1,8 @@
+.d-cgpt-tab {
+	
+}
+
+.d-cgpt-tab > a > span {
+	border: 2px solid #7f017f;
+    background-color: #6c00801c;
+}
