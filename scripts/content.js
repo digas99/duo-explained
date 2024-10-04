@@ -1,4 +1,6 @@
-chrome.runtime.sendMessage({ type: "QUERY" });
+chrome.runtime.sendMessage({ type: "QUERY" }, (response) => {
+    console.log(response);
+});
 
 window.onload = () => {
 	// Duo ChatGPT tab
