@@ -3,6 +3,70 @@
 }
 
 .d-cgpt-tab > a > span {
-	border: 2px solid #7f017f;
-    background-color: #6c00801c;
+	border: unset !important;
+    background-color: unset !important;
+}
+
+.d-cgpt-tab > a.active > span {
+	border: 2px solid #7f017f !important;
+    background-color: #6c00801c !important;
+}
+
+.d-cgpt-prompt {
+	position: fixed;
+	bottom: 0;
+	height: 90px;
+	width: 100%;
+	z-index: 1000;
+}
+
+.d-cgpt-prompt > div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80px;
+	max-width: 700px;
+    margin: auto;
+	background: rgb(var(--color-snow));
+    border: 2px solid rgb(var(--color-swan));
+	border-radius: 16px;
+	padding: 0 20px;
+	display: flex;
+    align-items: center;
+    column-gap: 30px;
+}
+
+.d-cgpt-prompt > div > input {
+	width: 100%;
+	height: 50px;
+	background-color: unset;
+    border-color: white;
+    border: unset;
+    border-bottom: 1px solid white;
+    border-radius: unset;
+	color: rgb(var(--color-eel));
+	padding: 0 10px;
+}
+
+.d-cgpt-prompt > div > button {
+	height: 50px;
+	border: 1px solid rgb(var(--color-macaw));
+	border-radius: 5px;
+	padding: 0 10px;
+	background-color: rgb(var(--color-macaw));
+	color: white;
+	cursor: pointer;
+}
+
+.d-cgpt-prompt > div > button:hover {
+	opacity: 0.8;
+}
+
+.d-cgpt-prompt > div > img:first-child {
+	width: 30px;
+}
+
+.d-cgpt-prompt > div > img:last-child {
+	width: 20px;
+	filter: invert(1);
 }
