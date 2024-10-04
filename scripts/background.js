@@ -25,26 +25,30 @@ chrome.storage.sync.get("API_KEY", (apiKey) => {
  * If the message type is "SET_API_KEY, the API key is set in the agent and stored in local storage.
  * If the message type is "SET_MODEL", the model is set in the agent and stored in local storage.
  */
-chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === "QUERY") {
-    if (agent) {
-      try {
-        const response = await agent.query();
-        sendResponse(response);
-      } catch (error) {
-        sendResponse({ error: error.message });
-      }
-    } else {
-      sendResponse({ error: "Agent not initialized yet." });
-    }
+	(async () => {
+		if (agent) {
+			try {
+				const response = await agent.query();
+				sendResponse(response);
+			} catch (error) {
+				sendResponse({ error: error.message });
+			}
+		} else {
+			sendResponse({ error: "Agent not initialized yet." });
+		}
+	})();
   }
 
   // Set the API key
   if (request.type === "SET_API_KEY") {
-    agent.setApiKey(request.apiKey);
-    chrome.storage.sync.set({ API_KEY: request.apiKey }, () => {
-      sendResponse({ message: "API key set." });
-    });
+	const apiKey = request.apiKey;
+	(async () => {
+		agent.setApiKey(apiKey);
+		await chrome.storage.sync.set({ API_KEY: apiKey });
+		sendResponse({ message: "API Key set" });
+	})();
   }
 
   // Set the model
@@ -56,6 +60,5 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     });
   }
 
-  // Indicate that the response will be sent asynchronously
   return true;
 });

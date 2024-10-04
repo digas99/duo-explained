@@ -15,7 +15,6 @@ window.onload = () => {
 	// API Key prompt
 	chrome.storage.sync.get("API_KEY", data => {
 		const apiKey = data.API_KEY;
-		console.log(apiKey);
 		if (!apiKey) {
 			const prompt = makePrompt();
 			const root = document.querySelector("#root");
@@ -27,8 +26,7 @@ window.onload = () => {
 					return;
 				}
 		
-				chrome.runtime.sendMessage({ type: "SET_API_KEY", apiKey: apiKey }, (response) => {
-					console.log(response);
+				chrome.runtime.sendMessage({ type: "SET_API_KEY", apiKey: apiKey }, response => {
 					if (response) {
 						document.querySelector(".d-cgpt-prompt").remove();
 						if (newTab) {
@@ -65,7 +63,7 @@ const makePrompt = () => {
 		<div class="d-cgpt-prompt">
 			<div>
 				<img src="https://andreclerigo.github.io/duolingo-chatgpt-assets/logo.png">
-				<input type="text" placeholder="API Key">
+				<input type="text" placeholder="ChatGPT API Key">
 				<button>Submit</button>
 				<img src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/close-thick.png">
 			</div>
