@@ -119,3 +119,34 @@
     border-width: 0 0 var(--__internal__lip-width);
 	pointer-events: none !important;
 }
+
+.d-cgpt-explain-area-wrapper {
+	display: flex !important;
+    align-items: center;
+    column-gap: 50px;
+
+}
+
+.d-cgpt-explain-area {
+	width: 30%;
+	border: 1px solid rgb(var(--color-swan));
+	border-radius: 16px;
+	padding: 20px;
+	min-height: 400px;
+}
+
+.d-cgpt-explain-area > div {
+	padding: 10px 25px;
+}
+
+.d-cgpt-explain-header {
+
+}
+
+.d-cgpt-explain-header > h3 {
+	font-size: 25px;
+}
+
+.d-cgpt-explain-content {
+	text-align: left;
+}

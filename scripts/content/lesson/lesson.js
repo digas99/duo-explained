@@ -15,6 +15,15 @@
 				explainButton.remove();
 			}
 
+			const explainArea = document.querySelector(".d-cgpt-explain-area");
+			if (explainArea) {
+				explainArea.remove();
+				const challangeWrapper = document.querySelector("div[data-test='challenge']");
+				if (challangeWrapper) {
+					challangeWrapper.classList.remove("d-cgpt-explain-area-wrapper");
+				}
+			}
+
 			document.removeEventListener("answer", event);
 		});
 	});
@@ -25,9 +34,7 @@
 		button.id = "d-cgpt-explain-button";
 		button.querySelector("span").textContent = "Explain";
 		if (disabled) {
-			button.disabled = true;
-			button.setAttribute('aria-disabled', 'true');
-			button.classList.add("d-cgpt-explain-button-disabled"); 
+			disableButton(button);
 		}
 		else {
 			button.classList.add("d-cgpt-explain-button-enabled");
@@ -37,9 +44,36 @@
 				}
 				chrome.runtime.sendMessage({ type: "QUERY", query: query }, response => {
 					console.log(response);
+					const challangeWrapper = document.querySelector('div[data-test^="challenge"]');
+					if (challangeWrapper) {
+						challangeWrapper.classList.add("d-cgpt-explain-area-wrapper");
+						challangeWrapper.insertAdjacentHTML("beforeend", explanationPrompt(response));
+					}
+	
+					disableButton(button);
 				});
 			});
 		}
 		return button;
+	}
+
+	const explanationPrompt = content => {
+		const explainArea = /*html*/`
+			<div class="d-cgpt-explain-area">
+				<div class="d-cgpt-explain-header">
+					<h3>Explanation from ChatGPT</h3>
+				</div>
+				<div class="d-cgpt-explain-content">
+					${content}
+				</div>
+			</div>
+		`;
+		return explainArea;
+	}
+
+	const disableButton = button => {
+		button.disabled = true;
+		button.setAttribute('aria-disabled', 'true');
+		button.classList.add("d-cgpt-explain-button-disabled");
 	}
 })();
