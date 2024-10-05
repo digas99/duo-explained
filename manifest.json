@@ -16,7 +16,11 @@
 	"content_scripts": [
 		{
 			"matches": ["https://*.duolingo.com/*"],
-			"js": ["scripts/content.js"],
+			"js": [
+                "scripts/content/home.js",
+                "scripts/content/lesson/answer.js",
+                "scripts/content/lesson/lesson.js"
+            ],
 			"css": ["styles/styles.css"]
 		}
 	],
