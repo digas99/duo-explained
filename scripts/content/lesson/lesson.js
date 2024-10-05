@@ -7,12 +7,18 @@
 		
 		data.button.parentElement.classList.add("d-cgpt-explain-button-wrapper");
 		data.button.parentElement.insertBefore(makeButton(data.button, data, data.state === "correct"), data.button);
+		data.wrapper.parentElement.insertAdjacentHTML("beforeend", extraInputPrompt());
 
 		// clear for next question
 		data.button.addEventListener("click", () => {
 			const explainButton = document.querySelector("#d-cgpt-explain-button");
 			if (explainButton) {
 				explainButton.remove();
+			}
+
+			const extraInput = document.querySelector(".d-cgpt-speech-bubble");
+			if (extraInput) {
+				extraInput.remove();
 			}
 
 			const explainArea = document.querySelector(".d-cgpt-explain-area");
@@ -51,6 +57,10 @@
 					}
 	
 					disableButton(button);
+					const extraInput = document.querySelector(".d-cgpt-speech-bubble");
+					if (extraInput) {
+						extraInput.remove();
+					}
 				});
 			});
 		}
@@ -58,7 +68,7 @@
 	}
 
 	const explanationPrompt = content => {
-		const explainArea = /*html*/`
+		return /*html*/`
 			<div class="d-cgpt-explain-area">
 				<div class="d-cgpt-explain-header">
 					<h3>Explanation from ChatGPT</h3>
@@ -68,12 +78,22 @@
 				</div>
 			</div>
 		`;
-		return explainArea;
 	}
 
 	const disableButton = button => {
 		button.disabled = true;
 		button.setAttribute('aria-disabled', 'true');
 		button.classList.add("d-cgpt-explain-button-disabled");
+	}
+
+	const extraInputPrompt = () => {
+		return /*html*/`
+			<div class="d-cgpt-speech-bubble">
+				<div>
+					<textarea placeholder="If you want, add to the query to ChatGPT..."></textarea>
+					<div class="d-cgpt-speech-bubble-tip"></div>
+				</div>
+			</div>
+		`;
 	}
 })();
