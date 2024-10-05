@@ -17,7 +17,6 @@
 		// Duo ChatGPT tab
 		const moreNav = document.querySelector("a[data-test='home-nav']")?.parentElement;
 		const navbar = moreNav?.parentElement;
-		console.log(moreNav, navbar);
 		let newTab;
 		if (navbar) {
 			newTab = makeTab(moreNav);

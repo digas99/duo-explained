@@ -21,8 +21,7 @@
 
 		const answerMutation = mutation => {
 			const nodes = Array.from(mutation.addedNodes);
-			const wrongAnswerNode = nodes.find(node => node.querySelector(`div[data-test='blame blame-${state}']`));
-			return wrongAnswerNode;
+			return nodes.find(node => node.querySelector(`div[data-test='blame blame-${state}']`));
 		}
 		
 		const validMutations = mutations.filter(validMutation);

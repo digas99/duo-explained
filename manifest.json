@@ -18,7 +18,11 @@
 			"matches": ["https://*.duolingo.com/*"],
 			"js": [
                 "scripts/content/home.js",
+                "scripts/content/utils.js",
+
                 "scripts/content/lesson/answer.js",
+                "scripts/content/lesson/question.js",
+                "scripts/content/lesson/parsers.js",
                 "scripts/content/lesson/lesson.js"
             ],
 			"css": ["styles/styles.css"]

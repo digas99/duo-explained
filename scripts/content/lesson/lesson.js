@@ -24,7 +24,7 @@
 			const explainArea = document.querySelector(".d-cgpt-explain-area");
 			if (explainArea) {
 				explainArea.remove();
-				const challangeWrapper = document.querySelector("div[data-test='challenge']");
+				const challangeWrapper = document.querySelector("div[data-test^='challenge']");
 				if (challangeWrapper) {
 					challangeWrapper.classList.remove("d-cgpt-explain-area-wrapper");
 				}
@@ -32,6 +32,13 @@
 
 			document.removeEventListener("answer", event);
 		});
+	});
+
+	// listen for the challenge event
+	document.addEventListener("challenge", event => {
+		console.log("Challenge event detected");
+		const data = event.detail;
+		console.log(data);
 	});
 
 	const makeButton = (template, data, disabled) => {
