@@ -12,12 +12,17 @@
     background-color: #6c00801c !important;
 }
 
+.d-cgpt-tab > a > span:hover {
+	background-color: rgb(var(--color-polar)) !important; 
+}
+
 .d-cgpt-prompt {
 	position: fixed;
 	bottom: 0;
 	height: 90px;
 	width: 100%;
 	z-index: 1000;
+	transition: 0.3s;
 }
 
 .d-cgpt-prompt > div {
@@ -49,7 +54,7 @@
 }
 
 .d-cgpt-prompt > div > button {
-	height: 50px;
+	height: 40px;
 	border: 1px solid rgb(var(--color-macaw));
 	border-radius: 5px;
 	padding: 0 10px;
@@ -58,7 +63,11 @@
 	cursor: pointer;
 }
 
-.d-cgpt-prompt > div > button:hover {
+.d-cgpt-prompt-icon {
+	cursor: pointer;
+}
+
+.d-cgpt-prompt > div > button:hover, .d-cgpt-prompt-icon:hover {
 	opacity: 0.8;
 }
 
