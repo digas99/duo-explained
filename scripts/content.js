@@ -1,6 +1,6 @@
-chrome.runtime.sendMessage({ type: "QUERY" }, (response) => {
-    console.log(response);
-});
+// chrome.runtime.sendMessage({ type: "QUERY" }, (response) => {
+//     console.log(response);
+// });
 
 // watch for class .deV4C to be added
 const observer = new MutationObserver(mutations => {

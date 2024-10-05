@@ -8,15 +8,18 @@ let agent = new OpenAIAgent();
  * Load local storage values from user settings for API key and model chosen for ChatGPT.
  * This is useful for persisting the API key and model across browser sessions.
  */
-chrome.storage.sync.get("API_KEY", (apiKey) => {
-  console.log("API_KEY currently is " + apiKey);
+chrome.storage.sync.get("API_KEY", (result) => {
+    const apiKey = result.API_KEY;
+    console.log("API_KEY currently is " + apiKey);
 
-  chrome.storage.sync.get("MODEL", (model) => {
-    console.log("MODEL currently is " + model);
+    // Load the model from local storage
+    chrome.storage.sync.get("MODEL", (result) => {
+        const model = result.MODEL;
+        console.log("MODEL currently is " + model);
 
-    // Instantiate OpenAIAgent once the API_KEY and MODEL are loaded
-    agent.init(apiKey, model);
-  });
+        // Instantiate OpenAIAgent once the API_KEY and MODEL are loaded
+        agent.init(apiKey, model);
+    });
 });
 
 /**
@@ -30,7 +33,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	(async () => {
 		if (agent) {
 			try {
-				const response = await agent.query();
+				const response = await agent.query(agent.model, request.query);
 				sendResponse(response);
 			} catch (error) {
 				sendResponse({ error: error.message });
