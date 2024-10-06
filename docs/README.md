@@ -69,7 +69,7 @@ The challenges and their respective data are:
 
 Select the correct option from a list of vocabulary.
 
-[Visual reference](/images/types/duolingo-characterSelect.png)
+[Visual reference](/docs/types/duolingo-characterSelect.png)
 
 ```javascript
 {
@@ -85,7 +85,7 @@ Select the correct option from a list of vocabulary.
 
 Type the missing word from a translation.
 
-[Visual reference](/images/types/duolingo-completeReverseTranslation.png)
+[Visual reference](/docs/types/duolingo-completeReverseTranslation.png)
 
 ```javascript
 {
@@ -99,7 +99,7 @@ Type the missing word from a translation.
 
 Fill in the blanks in a sentence using one of the options provided.
 
-[Visual reference](/images/types/duolingo-gapFill.png)
+[Visual reference](/docs/types/duolingo-gapFill.png)
 
 ```javascript
 {
@@ -121,7 +121,7 @@ Same approach goes to `characterMatch`.
 
 Select the matching pairs between a source list and a target list.
 
-[VIsual reference](/images/types/duolingo-match.png)
+[VIsual reference](/docs/types/duolingo-match.png)
 
 ```javascript
 {
@@ -146,7 +146,7 @@ Select the matching pairs between a source list and a target list.
 
 Read the sentence and complete the answer provided with one of the options.
 
-[Visual reference](/images/types/duolingo-readComprehension.png)
+[Visual reference](/docs/types/duolingo-readComprehension.png)
 
 ```javascript
 {
@@ -164,7 +164,7 @@ Read the sentence and complete the answer provided with one of the options.
 
 Speak the sentence that is presented.
 
-[Visual reference](/images/types/duolingo-speak.png)
+[Visual reference](/docs/types/duolingo-speak.png)
 
 ```javascript
 {
@@ -180,7 +180,7 @@ The `sentence` object provides the sentence with the `<blank>` placeholders.
 
 The `userAnswer` array contains the words that the user selected in that exact order.
 
-[Visual reference](/images/types/duolingo-tapComplete.png) 
+[Visual reference](/docs/types/duolingo-tapComplete.png) 
 
 ```javascript
 {
@@ -196,7 +196,7 @@ Translate a sentence from one language to another.
 
 This may or may not have a `word bank` (it will be an empty array if it doesn't). The user answer will also be an array if word bank is present.
 
-[Visual reference [1]](/images/types/duolingo-translate.png) [[2]](/images/types/duolingo-translate-wordbank.png)
+[Visual reference [1]](/docs/types/duolingo-translate.png) [[2]](/docs/types/duolingo-translate-wordbank.png)
 
 ```javascript
 {
