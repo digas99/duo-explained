@@ -81,6 +81,9 @@ const parseChallenge = (type, wrapper) => {
 		case "listenComplete":
 			content = parseListenComplete(wrapper);
 			break;
+		case "speak":
+			content = parseSpeak(wrapper);
+			break;
 		default:
 			content = undefined;
 			break;

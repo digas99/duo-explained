@@ -1,7 +1,7 @@
 
 const parseCharacterSelect = wrapper => {
 	const choicesWrapper = wrapper.querySelector("div[aria-label='choice']");
-	return choiceParser(choicesWrapper);
+	return choiceParser(choicesWrapper, true);
 }
 
 const parseCharacterMatch = wrapper => {
@@ -186,14 +186,21 @@ const parseListenComplete = wrapper => {
 
 }
 
+const parseSpeak = wrapper => {
+	const sentence = wrapper.querySelector("div[dir='ltr']").innerText;
+	return {sentence};
+}
 
 /* Auxiliar parsing functions */
 
-const choiceParser = wrapper => {
+const choiceParser = (wrapper, reverse=false) => {
 	let choices = [], userAnswer = {};
 	if (wrapper) {
 		choices = Array.from(wrapper.children).map(choice => {
-			const [option, text] = choice.innerText.split("\n");
+			let [option, text] = choice.innerText.split("\n");
+			if (reverse)
+				[option, text] = [text, option];
+			
 			const object = {
 				option,
 				text

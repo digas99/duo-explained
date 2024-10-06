@@ -15,6 +15,7 @@ Documentation to assist in the development of the Duolingo ChatGPT project.
          4. [gapFill](#gapfill)
          5. [match](#match)
 		 1. [readComprehension](#readcomprehension)
+		 1. [speak](#speka)
 		 6. [tapComplete](#tapcomplete)
 		 7. [translate](#translate)
 4. [ChatGPT Module](#chatgpt-module)
@@ -68,6 +69,8 @@ The challenges and their respective data are:
 
 Select the correct option from a list of vocabulary.
 
+[Visual reference](/images/types/duolingo-characterSelect.png)
+
 ```javascript
 {
 	choices: [
@@ -82,6 +85,8 @@ Select the correct option from a list of vocabulary.
 
 Type the missing word from a translation.
 
+[Visual reference](/images/types/duolingo-completeReverseTranslation.png)
+
 ```javascript
 {
 	sentence: 'an important street',
@@ -93,6 +98,8 @@ Type the missing word from a translation.
 #### gapFill
 
 Fill in the blanks in a sentence using one of the options provided.
+
+[Visual reference](/images/types/duolingo-gapFill.png)
 
 ```javascript
 {
@@ -113,6 +120,8 @@ Fill in the blanks in a sentence using one of the options provided.
 Same approach goes to `characterMatch`.
 
 Select the matching pairs between a source list and a target list.
+
+[VIsual reference](/images/types/duolingo-match.png)
 
 ```javascript
 {
@@ -137,6 +146,8 @@ Select the matching pairs between a source list and a target list.
 
 Read the sentence and complete the answer provided with one of the options.
 
+[Visual reference](/images/types/duolingo-readComprehension.png)
+
 ```javascript
 {
 	answer: "Aujourd'hui, il...",
@@ -149,6 +160,18 @@ Read the sentence and complete the answer provided with one of the options.
 }
 ```
 
+#### speak
+
+Speak the sentence that is presented.
+
+[Visual reference](/images/types/duolingo-speak.png)
+
+```javascript
+{
+	sentence: "Émile! Tu n'as pas...",
+}
+```
+
 #### tapComplete
 
 Complete the sentence by tapping the words from the word bank in the correct order.
@@ -156,6 +179,8 @@ Complete the sentence by tapping the words from the word bank in the correct ord
 The `sentence` object provides the sentence with the `<blank>` placeholders.
 
 The `userAnswer` array contains the words that the user selected in that exact order.
+
+[Visual reference](/images/types/duolingo-tapComplete.png) 
 
 ```javascript
 {
@@ -170,6 +195,8 @@ The `userAnswer` array contains the words that the user selected in that exact o
 Translate a sentence from one language to another.
 
 This may or may not have a `word bank` (it will be an empty array if it doesn't). The user answer will also be an array if word bank is present.
+
+[Visual reference [1]](/images/types/duolingo-translate.png) [[2]](/images/types/duolingo-translate-wordbank.png)
 
 ```javascript
 {
