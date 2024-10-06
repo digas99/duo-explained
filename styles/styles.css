@@ -160,7 +160,6 @@
 
 .d-cgpt-speech-bubble {
 	position: absolute;
-    top: -50px;
     z-index: 10;
     width: 100%;
 }

@@ -8,10 +8,8 @@
 		const footer = document.getElementById("session/PlayerFooter");
 		footer.classList.add("d-cgpt-footer");
 
-		const explainButton = document.querySelector("#d-cgpt-explain-button");
-		if (explainButton) {
-			enableButton(explainButton);
-		}
+		addExplainButton(data);
+		toggleExtraInput(false);
 	});
 
 	// listen for the challenge event
@@ -23,15 +21,30 @@
 		const footer = document.getElementById("session/PlayerFooter");
 		footer.classList.add("d-cgpt-footer");
 
-		// clear previous
+		// clear from previous challenge
 		clearAll();
 
-		// add explain button
 		addExplainButton(data);
 		toggleExtraInput(false);
 	});
 
 
+	document.addEventListener("mouseover", event => {
+		const target = event.target;
+		
+		// toggle extra input
+		if (target.closest(".d-cgpt-footer") && document.querySelector(".d-cgpt-explain-button-enabled")) {
+			toggleExtraInput(true);
+		}
+		else {
+			if (!target.closest(".d-cgpt-speech-bubble")) {
+				toggleExtraInput(false);
+			}
+		}
+	});
+
+
+	/* Functions */
 
 	const clearAll = () => {
 		const explainButton = document.querySelector("#d-cgpt-explain-button");
@@ -59,25 +72,10 @@
 		const answerWrapper = document.getElementById("session/PlayerFooter");
 		if (answerButtonsWrapper) {
 			answerButtonsWrapper.classList.add("d-cgpt-explain-button-wrapper");
-			answerButtonsWrapper.insertBefore(makeButton(answerButtonsWrapper.firstChild, data, false), answerButtonsWrapper.firstChild);
+			answerButtonsWrapper.insertBefore(makeButton(answerButtonsWrapper.firstElementChild, data, false), answerButtonsWrapper.lastElementChild);
 			answerWrapper?.parentElement.insertAdjacentHTML("beforeend", extraInputPrompt());
 		}
 	}
-
-	document.addEventListener("mouseover", event => {
-		const target = event.target;
-		
-		// toggle extra input
-		if (target.closest(".d-cgpt-footer") && document.querySelector(".d-cgpt-explain-button-enabled")) {
-			toggleExtraInput(true);
-		}
-		else {
-			if (!target.closest(".d-cgpt-speech-bubble")) {
-				toggleExtraInput(false);
-			}
-		}
-	});
-
 
 	const makeButton = (template, data, disabled) => {
 		removeAllElements(".d-cgpt-explain-button");
@@ -87,6 +85,7 @@
 		button.id = "d-cgpt-explain-button";
 		button.classList.add("d-cgpt-explain-button");
 		button.querySelector("span").textContent = "Explain";
+		button.dataset.hasclick = false;
 		if (disabled) {
 			disableButton(button);
 		}
@@ -116,6 +115,11 @@
 		button.setAttribute('aria-disabled', 'true');
 		button.classList.remove("d-cgpt-explain-button-enabled");
 		button.classList.add("d-cgpt-explain-button-disabled");
+
+		const explainBubble = document.querySelector(".d-cgpt-speech-bubble");
+		if (explainBubble) {
+			explainBubble.style.display = "none";
+		}
 	}
 
 	const enableButton = button => {
@@ -124,7 +128,7 @@
 		button.classList.remove("d-cgpt-explain-button-disabled");
 		button.classList.add("d-cgpt-explain-button-enabled");
 
-		if (!button.dataset.hasclick) {
+		if (!button.dataset.hasclick || button.dataset.hasclick === "false") {
 			button.addEventListener("click", () => {
 				const query = {
 				}
@@ -145,8 +149,12 @@
 	}
 
 	const extraInputPrompt = () => {
+		removeAllElements(".d-cgpt-speech-bubble");
+		const answerWrapper = document.getElementById("session/PlayerFooter");
+		const height = answerWrapper.offsetHeight;
+
 		return /*html*/`
-			<div class="d-cgpt-speech-bubble">
+			<div class="d-cgpt-speech-bubble" style="bottom: ${height-10}px;">
 				<div>
 					<textarea placeholder="If you want, add to the query to ChatGPT..."></textarea>
 					<div class="d-cgpt-speech-bubble-tip"></div>
