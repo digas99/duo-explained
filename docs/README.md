@@ -9,15 +9,17 @@ Documentation to assist in the development of the Duolingo ChatGPT project.
    1. [Lesson](#lesson)
       1. [Question](#question)
       2. [Challenge Parsers](#challenge-parsers)
-		 1. [characterMatch](#match)
-         2. [characterSelect](#characterselect)
-         3. [completeReverseTranslation](#completereversetranslation)
-         4. [gapFill](#gapfill)
-         5. [match](#match)
-		 1. [readComprehension](#readcomprehension)
-		 1. [speak](#speka)
-		 6. [tapComplete](#tapcomplete)
-		 7. [translate](#translate)
+		 1. [assist](#assist)
+		 2. [characterMatch](#match)
+         3. [characterSelect](#select)
+         4. [completeReverseTranslation](#completereversetranslation)
+         5. [gapFill](#gapfill)
+         6. [match](#match)
+		 7. [readComprehension](#readcomprehension)
+		 8. [select](#select)
+		 9. [speak](#speka)
+		 10. [tapComplete](#tapcomplete)
+		 11. [translate](#translate)
 4. [ChatGPT Module](#chatgpt-module)
 
 # Project Structure
@@ -65,11 +67,11 @@ Because Duolingo exercises are dynamic and can change, the `Challenge Parsers` a
 
 The challenges and their respective data are:
 
-#### characterSelect
+#### assist
 
-Select the correct option from a list of vocabulary.
+Select the correct option that translates the sentence provided.
 
-[Visual reference](/docs/types/duolingo-characterSelect.png)
+[Visual reference](/docs/types/duolingo-assist.png)
 
 ```javascript
 {
@@ -77,6 +79,7 @@ Select the correct option from a list of vocabulary.
 		{option: 1, text: '固く'},
 		...
 	],
+	sentence: 'hard',
 	userAnswer: {option: 1, text: '固く'}
 }
 ```
@@ -160,6 +163,26 @@ Read the sentence and complete the answer provided with one of the options.
 }
 ```
 
+#### select
+
+Same approach goes to `characterSelect`.
+
+Select the correct option from a list of vocabulary.
+
+The `choices` may contain an image.
+
+[Visual reference[1]](/docs/types/duolingo-select.png) [[2]](/docs/types/duolingo-characterSelect.png)
+
+```javascript
+{
+	choices: [
+		{option: 1, text: '固く', image: 'https://...'},
+		...
+	],
+	userAnswer: {option: 1, text: '固く', image: 'https://...'}
+}
+```
+
 #### speak
 
 Speak the sentence that is presented.
@@ -169,6 +192,7 @@ Speak the sentence that is presented.
 ```javascript
 {
 	sentence: "Émile! Tu n'as pas...",
+	language: 'fr'
 }
 ```
 

@@ -44,9 +44,6 @@ const parseChallenge = (type, wrapper) => {
 
 	let content;
 	switch(type) {
-		case "characterSelect":
-			content = parseCharacterSelect(wrapper);
-			break;
 		case "translate":
 			content = parseTranslate(wrapper);
 			break;
@@ -83,6 +80,13 @@ const parseChallenge = (type, wrapper) => {
 			break;
 		case "speak":
 			content = parseSpeak(wrapper);
+			break;
+		case "assist":
+			content = parseAssist(wrapper);
+			break;
+		case "characterSelect":
+		case "select":
+			content = parseSelect(wrapper);
 			break;
 		default:
 			content = undefined;

@@ -1,13 +1,3 @@
-
-const parseCharacterSelect = wrapper => {
-	const choicesWrapper = wrapper.querySelector("div[aria-label='choice']");
-	return choiceParser(choicesWrapper, true);
-}
-
-const parseCharacterMatch = wrapper => {
-
-}
-
 const parseTranslate = wrapper => {
 	let wordBank = [];
 	const wordBankWrapper = wrapper.querySelector("div[data-test='word-bank']");
@@ -187,9 +177,24 @@ const parseListenComplete = wrapper => {
 }
 
 const parseSpeak = wrapper => {
-	const sentence = wrapper.querySelector("div[dir='ltr']").innerText;
-	return {sentence};
+	const sentenceWrapper = wrapper.querySelector("div[dir='ltr']");
+	const sentence = sentenceWrapper.innerText;
+	const language = sentenceWrapper.lang;
+	return {sentence, language};
 }
+
+const parseAssist = wrapper => {
+	const sentence = wrapper.querySelector("div[dir='ltr']").innerText;
+	const choicesWrapper = wrapper.querySelector("div[aria-label='choice']");
+	const {choices, userAnswer} = choiceParser(choicesWrapper);
+	return {sentence, choices, userAnswer};
+}
+
+const parseSelect = wrapper => {
+	const choicesWrapper = wrapper.querySelector("div[aria-label='choice']");
+	return choiceParser(choicesWrapper, true);
+}
+
 
 /* Auxiliar parsing functions */
 
@@ -201,9 +206,16 @@ const choiceParser = (wrapper, reverse=false) => {
 			if (reverse)
 				[option, text] = [text, option];
 			
+			// if it has an image
+			let image = "";
+			const img = choice.querySelector("div[style^='background-image']");
+			if (img)
+				image = img.style.backgroundImage.match(/url\("(.*)"\)/)[1];
+
 			const object = {
-				option,
-				text
+				"option": parseInt(option),
+				text,
+				image
 			}
 
 			if (choice.ariaChecked === "true") {
