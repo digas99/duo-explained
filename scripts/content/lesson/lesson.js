@@ -1,22 +1,25 @@
+let answerData, challengeData;
+
 (() => {
 	// listen for the answer event
 	document.addEventListener("answer", event => {
 		console.log("Answer event detected");
-		const data = event.detail;
-		console.log(data);
+		answerData = event.detail;
+		console.log(answerData);
+
 
 		const footer = document.getElementById("session/PlayerFooter");
 		footer.classList.add("d-cgpt-footer");
 
-		addExplainButton(data);
+		addExplainButton();
 		toggleExtraInput(false);
 	});
 
 	// listen for the challenge event
 	document.addEventListener("challenge", event => {
 		console.log("Challenge event detected");
-		const data = event.detail;
-		console.log(data);
+		challengeData = event.detail;
+		console.log(challengeData);
 
 		const footer = document.getElementById("session/PlayerFooter");
 		footer.classList.add("d-cgpt-footer");
@@ -24,7 +27,7 @@
 		// clear from previous challenge
 		clearAll();
 
-		addExplainButton(data);
+		addExplainButton();
 		toggleExtraInput(false);
 	});
 
@@ -45,6 +48,33 @@
 
 
 	/* Functions */
+
+	const handleExplanation = callback => {
+		const query = {
+			"answer": answerData,
+			"challenge": challengeData
+		}
+
+		const extraInput = document.querySelector(".d-cgpt-speech-bubble textarea");
+		if (extraInput) {
+			query["extra"] = extraInput.value;
+		}
+
+		console.log(query);
+
+		chrome.runtime.sendMessage({ type: "QUERY", query: query }, response => {
+			console.log(response);
+			const challangeWrapper = document.querySelector('div[data-test^="challenge"]');
+			if (challangeWrapper) {
+				challangeWrapper.classList.add("d-cgpt-explain-area-wrapper");
+				challangeWrapper.insertAdjacentHTML("beforeend", explanationPrompt(response));
+			}
+
+			if (callback)
+				callback();
+		});
+			
+	}
 
 	const clearAll = () => {
 		const explainButton = document.querySelector("#d-cgpt-explain-button");
@@ -67,17 +97,17 @@
 		}
 	}
 
-	const addExplainButton = data => {
+	const addExplainButton = () => {
 		const answerButtonsWrapper = document.querySelector("button[data-test='player-next']")?.parentElement;
 		const answerWrapper = document.getElementById("session/PlayerFooter");
 		if (answerButtonsWrapper) {
 			answerButtonsWrapper.classList.add("d-cgpt-explain-button-wrapper");
-			answerButtonsWrapper.insertBefore(makeButton(answerButtonsWrapper.firstElementChild, data, false), answerButtonsWrapper.lastElementChild);
+			answerButtonsWrapper.insertBefore(makeButton(answerButtonsWrapper.firstElementChild, false), answerButtonsWrapper.lastElementChild);
 			answerWrapper?.parentElement.insertAdjacentHTML("beforeend", extraInputPrompt());
 		}
 	}
 
-	const makeButton = (template, data, disabled) => {
+	const makeButton = (template, disabled) => {
 		removeAllElements(".d-cgpt-explain-button");
 
 		const button = template.cloneNode(true);
@@ -130,16 +160,7 @@
 
 		if (!button.dataset.hasclick || button.dataset.hasclick === "false") {
 			button.addEventListener("click", () => {
-				const query = {
-				}
-				chrome.runtime.sendMessage({ type: "QUERY", query: query }, response => {
-					console.log(response);
-					const challangeWrapper = document.querySelector('div[data-test^="challenge"]');
-					if (challangeWrapper) {
-						challangeWrapper.classList.add("d-cgpt-explain-area-wrapper");
-						challangeWrapper.insertAdjacentHTML("beforeend", explanationPrompt(response));
-					}
-
+				handleExplanation(() => {
 					disableButton(button);
 				});
 			});

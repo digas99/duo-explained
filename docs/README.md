@@ -119,7 +119,7 @@ or
 ```javascript
 {
 	question: 'Paris est une ville importante.',
-	userAnswer: 'Paris is an important city.'
+	userAnswer: 'Paris is an important city.',
 	wordBank: []
 }
 ```
