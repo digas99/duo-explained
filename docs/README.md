@@ -11,8 +11,11 @@ Documentation to assist in the development of the Duolingo ChatGPT project.
       2. [Challenge Parsers](#challenge-parsers)
 		 1. [characterMatch](#match)
          2. [characterSelect](#characterselect)
-         3. [match](#match)
-		 4. [translate](#translate)
+         3. [completeReverseTranslation](#completereversetranslation)
+         4. [gapFill](#gapfill)
+         5. [match](#match)
+		 6. [tapComplete](#tapcomplete)
+		 7. [translate](#translate)
 4. [ChatGPT Module](#chatgpt-module)
 
 # Project Structure
@@ -74,6 +77,36 @@ Select the correct option from a list of vocabulary.
 }
 ```
 
+#### completeReverseTranslation
+
+Type the missing word from a translation.
+
+```javascript
+{
+	sentence: 'an important street',
+	answer: 'une <blank> importante',
+	userAnswer: 'une rue importante'
+}
+```
+
+#### gapFill
+
+Fill in the blanks in a sentence using one of the options provided.
+
+```javascript
+{
+	options: [
+		{
+			option: 1,
+			choices: ['marcher', 'la voiture']
+		},
+		...
+	],
+	sentence: "j'aime <blank>, je ne prends pas <blank>.",
+	userAnswer: "j'aime marcher, je ne prends pas la voiture."
+}
+```
+
 #### match
 
 Same approach goes to `characterMatch`.
@@ -99,28 +132,34 @@ Select the matching pairs between a source list and a target list.
 }
 ```
 
+#### tapComplete
+
+Complete the sentence by tapping the words from the word bank in the correct order.
+
+The `sentence` object provides the sentence with the `<blank>` placeholders.
+
+The `userAnswer` array contains the words that the user selected in that exact order.
+
+```javascript
+{
+	sentence: "Je dois <blank> à la gare. Nous <blank> à Paris.",
+	userAnswer: ["aller", "allons"],
+	wordBank: ["allons", "aller"]
+}
+```
+
 #### translate
 
 Translate a sentence from one language to another.
 
-This may or may not have a word bank (it will be an empty array if it doesn't). The user answer will also be an array if word bank is present.
+This may or may not have a `word bank` (it will be an empty array if it doesn't). The user answer will also be an array if word bank is present.
 
 ```javascript
 {
-	question: 'Paris est une ville importante.',
-	userAnswer: ['Paris', 'is', ...],
-	wordBank: ['Where', 'important', ...]
+	sentence: 'Paris est une ville importante.',
+	userAnswer: ['Paris', 'is', ...], // or 'Paris is an important city.'
+	wordBank: ['Where', 'important', ...] // or []
 
-}
-```
-
-or
-
-```javascript
-{
-	question: 'Paris est une ville importante.',
-	userAnswer: 'Paris is an important city.',
-	wordBank: []
 }
 ```
 

@@ -11,7 +11,7 @@ let answerData, challengeData;
 		const footer = document.getElementById("session/PlayerFooter");
 		footer.classList.add("d-cgpt-footer");
 
-		addExplainButton();
+		addExplainButton(answerData.question.content === undefined);
 		toggleExtraInput(false);
 	});
 
@@ -27,7 +27,7 @@ let answerData, challengeData;
 		// clear from previous challenge
 		clearAll();
 
-		addExplainButton();
+		addExplainButton(challengeData.content === undefined);
 		toggleExtraInput(false);
 	});
 
@@ -97,12 +97,12 @@ let answerData, challengeData;
 		}
 	}
 
-	const addExplainButton = () => {
+	const addExplainButton = disabled => {
 		const answerButtonsWrapper = document.querySelector("button[data-test='player-next']")?.parentElement;
 		const answerWrapper = document.getElementById("session/PlayerFooter");
 		if (answerButtonsWrapper) {
 			answerButtonsWrapper.classList.add("d-cgpt-explain-button-wrapper");
-			answerButtonsWrapper.insertBefore(makeButton(answerButtonsWrapper.firstElementChild, false), answerButtonsWrapper.lastElementChild);
+			answerButtonsWrapper.insertBefore(makeButton(answerButtonsWrapper.lastElementChild, disabled), answerButtonsWrapper.lastElementChild);
 			answerWrapper?.parentElement.insertAdjacentHTML("beforeend", extraInputPrompt());
 		}
 	}
@@ -144,7 +144,7 @@ let answerData, challengeData;
 		button.disabled = true;
 		button.setAttribute('aria-disabled', 'true');
 		button.classList.remove("d-cgpt-explain-button-enabled");
-		button.classList.add("d-cgpt-explain-button-disabled");
+		button.classList.add("d-cgpt-explain-button-disabled", "_1NM1Q");
 
 		const explainBubble = document.querySelector(".d-cgpt-speech-bubble");
 		if (explainBubble) {
@@ -155,7 +155,7 @@ let answerData, challengeData;
 	const enableButton = button => {
 		button.disabled = false;
 		button.setAttribute('aria-disabled', 'false');
-		button.classList.remove("d-cgpt-explain-button-disabled");
+		button.classList.remove("d-cgpt-explain-button-disabled", "_1NM1Q");
 		button.classList.add("d-cgpt-explain-button-enabled");
 
 		if (!button.dataset.hasclick || button.dataset.hasclick === "false") {

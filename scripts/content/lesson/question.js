@@ -69,6 +69,21 @@ const parseChallenge = (type, wrapper) => {
 		case "completeReverseTranslation":
 			content = parseCompleteReverseTranslation(wrapper);
 			break;
+		case "readComprehension":
+			content = parseReadComprehension(wrapper);
+			break;
+		case "selectTranscription":
+			content = parseSelectTranscription(wrapper);
+			break;
+		case "listenIsolation":
+			content = parseListenIsolation(wrapper);
+			break;
+		case "listenComplete":
+			content = parseListenComplete(wrapper);
+			break;
+		default:
+			content = undefined;
+			break;
 	}
 
 	return {

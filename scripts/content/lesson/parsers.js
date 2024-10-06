@@ -1,9 +1,9 @@
 
 const parseCharacterSelect = wrapper => {
-	const choices = wrapper.querySelector("div[aria-label='choice']");
-	let result = [], userAnswer = {};
-	if (choices) {
-		result = Array.from(choices.children).map(choice => {
+	const choicesWrapper = wrapper.querySelector("div[aria-label='choice']");
+	let choices = [], userAnswer = {};
+	if (choicesWrapper) {
+		choices = Array.from(choicesWrapper.children).map(choice => {
 			const [text, option] = choice.innerText.split("\n");
 			const object = {
 				option,
@@ -17,10 +17,7 @@ const parseCharacterSelect = wrapper => {
 			return object;
 		});
 	}
-	return {
-		"choices": result,
-		"userAnswer": userAnswer
-	};
+	return {choices, userAnswer};
 }
 
 const parseCharacterMatch = wrapper => {
@@ -35,19 +32,15 @@ const parseTranslate = wrapper => {
 	}
 
 	const sections = wrapper.querySelectorAll("div[dir='ltr']");
-	let question = sections[0]?.innerText;
+	let sentence = sections[0]?.innerText;
 	if (sections[0].lang === "ja")
-		question = parseJapaneseFurigana(sections[0]);
+		sentence = parseJapaneseFurigana(sections[0]);
 
-	let answer = sections[1] ? sections[1].innerText : wrapper.querySelector("textarea[data-test='challenge-translate-input']").value; 
+	let userAnswer = sections[1] ? sections[1].innerText : wrapper.querySelector("textarea[data-test='challenge-translate-input']").value; 
 	if (wordBankWrapper)
-		answer = answer.split("\n");
+		userAnswer = userAnswer.split("\n");
 
-	return {
-		"question": question,
-		"userAnswer": answer,
-		"wordBank": wordBank
-	};
+	return {sentence, userAnswer, wordBank};
 }
 
 const parseListenTap = wrapper => {
@@ -90,18 +83,114 @@ const parseMatch = wrapper => {
 	};
 }
 
-const parseSelectPronunciation = wrapper => {
+const parseSelectPronunciation = wrapper => {querySelector("div[dir='ltr']").innerText.split("\n \n").map(text => text.replaceAll("\n", ""))
 	
 }
 
 const parseTapComplete = wrapper => {
+	let sentence = "", userAnswer = [];
 
+	const questionSection = wrapper.querySelector("div[dir='ltr']");
+	if (questionSection) {
+		sentence = Array.from(questionSection.children)
+			.filter(span => !span.querySelector("button"))
+			.map(span => span.innerText)
+			.join("").split("  ").join(" <blank> ");
+;
+		userAnswer = Array.from(questionSection.children)
+			.map(span => span.innerText)
+			.join("").split("  ").join(" <blank> ");
+	}
+
+	let wordBank = [];
+	const wordBankWrapper = wrapper.querySelector("div[data-test='word-bank']");
+	if (wordBankWrapper) {
+		wordBank = Array.from(wordBankWrapper.children).map(wordElem => wordElem.innerText);
+	}
+
+	return {sentence, userAnswer, wordBank};
 }
 
 const parseGapFill = wrapper => {
+	let sentence = "";
 
+	const questionSection = wrapper.querySelector("div[dir='ltr']");
+	if (questionSection) {
+		sentence = Array.from(questionSection.children)
+			.map(span => span.innerText)
+			.map(text => text == '' ? "<blank>" : text)
+			.join("");
+	}
+
+	let options = [];
+	const optionsWrapper = wrapper.querySelector("div[aria-label='choice']");
+	if (optionsWrapper) {
+		options = Array.from(optionsWrapper.children).map(child => {
+			const innerText = child.innerText.split("\n");
+			const option = innerText[0];
+			const choices = innerText[1].split(" ... ");
+			return {option, choices};
+		});
+	}
+
+	// recover original if duolingo auto-filled with user answer
+	// TODO: not working
+	let original = sentence;
+	options.map(option => option.choices)
+		.forEach(choices => {
+			let temp = original;
+			choices.forEach(choice => {
+				temp = original.replace(choice, "<blank>");
+			});
+
+			if (temp !== sentence)
+				original = temp;
+		});
+
+	return {
+		sentence: original,
+		userAnswer: sentence,
+		options
+	};
 }
 
 const parseCompleteReverseTranslation = wrapper => {
+	const sentence = wrapper.querySelector("div[dir='ltr']").innerText;
+	
+	const answerWrapper = wrapper.querySelector("label[dir='ltr']");
+	let original = "", userAnswer = "";
+	if (answerWrapper) {
+		Array.from(answerWrapper.children).forEach(span => {
+			if (span.querySelector("input")) {
+				original += "<blank>";
+				userAnswer += (span.querySelector("input").value || "<blank>");
+			}
+			else {
+				original += span.innerText;
+				userAnswer += span.innerText;
+			}
+		});
+	}
+
+	return {
+		sentence,
+		answer: original,
+		userAnswer
+	}
+}
+
+const parseReadComprehension = wrapper => {
+
+}
+
+const parseSelectTranscription = wrapper => {
+
+}
+
+const parseListenIsolation = wrapper => {
+
+}
+
+const parseListenComplete = wrapper => {
 
 }

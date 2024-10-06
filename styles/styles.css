@@ -97,7 +97,11 @@
 }
 
 .d-cgpt-explain-button-enabled {
+	--web-ui_button-background-color: var(--d-cgpt-secondary-color) !important;
+	--__internal__background-color: var(--d-cgpt-secondary-color) !important;
 	--__internal__background-color-disabled: var(--d-cgpt-secondary-color) !important;
+	--web-ui_button-border-color: var(--d-cgpt-accent-color) !important;
+	--__internal__border-color: var(--d-cgpt-accent-color) !important;
 	color: var(--d-cgpt-accent-color) !important;
 	background: var(--d-cgpt-secondary-color) !important;
 	background-color: var(--d-cgpt-secondary-color) !important;
