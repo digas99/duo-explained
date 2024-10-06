@@ -1,23 +1,7 @@
 
 const parseCharacterSelect = wrapper => {
 	const choicesWrapper = wrapper.querySelector("div[aria-label='choice']");
-	let choices = [], userAnswer = {};
-	if (choicesWrapper) {
-		choices = Array.from(choicesWrapper.children).map(choice => {
-			const [text, option] = choice.innerText.split("\n");
-			const object = {
-				option,
-				text
-			}
-
-			if (choice.ariaChecked === "true") {
-				userAnswer = object;
-			}
-
-			return object;
-		});
-	}
-	return {choices, userAnswer};
+	return choiceParser(choicesWrapper);
 }
 
 const parseCharacterMatch = wrapper => {
@@ -180,7 +164,14 @@ const parseCompleteReverseTranslation = wrapper => {
 }
 
 const parseReadComprehension = wrapper => {
+	const sections = wrapper.querySelectorAll("div[dir='ltr']");
+	const sentence = sections[0].innerText;
 
+	const answer = sections[1].innerText;
+	const choicesWrapper = wrapper.querySelector("div[aria-label='choice']");
+	const {choices, userAnswer} = choiceParser(choicesWrapper);
+
+	return { sentence, answer, choices, userAnswer };
 }
 
 const parseSelectTranscription = wrapper => {
@@ -193,4 +184,27 @@ const parseListenIsolation = wrapper => {
 
 const parseListenComplete = wrapper => {
 
+}
+
+
+/* Auxiliar parsing functions */
+
+const choiceParser = wrapper => {
+	let choices = [], userAnswer = {};
+	if (wrapper) {
+		choices = Array.from(wrapper.children).map(choice => {
+			const [option, text] = choice.innerText.split("\n");
+			const object = {
+				option,
+				text
+			}
+
+			if (choice.ariaChecked === "true") {
+				userAnswer = object;
+			}
+
+			return object;
+		});
+	}
+	return {choices, userAnswer};
 }

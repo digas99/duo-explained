@@ -14,6 +14,7 @@ Documentation to assist in the development of the Duolingo ChatGPT project.
          3. [completeReverseTranslation](#completereversetranslation)
          4. [gapFill](#gapfill)
          5. [match](#match)
+		 1. [readComprehension](#readcomprehension)
 		 6. [tapComplete](#tapcomplete)
 		 7. [translate](#translate)
 4. [ChatGPT Module](#chatgpt-module)
@@ -129,6 +130,22 @@ Select the matching pairs between a source list and a target list.
 		],
 		language: 'en'
 	}
+}
+```
+
+#### readComprehension
+
+Read the sentence and complete the answer provided with one of the options.
+
+```javascript
+{
+	answer: "Aujourd'hui, il...",
+	choices: [
+		{option: 1, text: 'prend le métro'},
+		...
+	],
+	sentence: "Je dois travailler aujourd'hui...",
+	userAnswer: {option: 1, text: 'prend le métro'}
 }
 ```
 
