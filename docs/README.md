@@ -9,8 +9,10 @@ Documentation to assist in the development of the Duolingo ChatGPT project.
    1. [Lesson](#lesson)
       1. [Question](#question)
       2. [Challenge Parsers](#challenge-parsers)
-         1. [characterSelect](#characterselect)
-         2. [match](#match)
+		 1. [characterMatch](#match)
+         2. [characterSelect](#characterselect)
+         3. [match](#match)
+		 4. [translate](#translate)
 4. [ChatGPT Module](#chatgpt-module)
 
 # Project Structure
@@ -67,11 +69,14 @@ Select the correct option from a list of vocabulary.
 	choices: [
 		{option: 1, text: '固く'},
 		...
-	]
+	],
+	userAnswer: {option: 1, text: '固く'}
 }
 ```
 
 #### match
+
+Same approach goes to `characterMatch`.
 
 Select the matching pairs between a source list and a target list.
 
@@ -93,6 +98,33 @@ Select the matching pairs between a source list and a target list.
 	}
 }
 ```
+
+#### translate
+
+Translate a sentence from one language to another.
+
+This may or may not have a word bank (it will be an empty array if it doesn't). The user answer will also be an array if word bank is present.
+
+```javascript
+{
+	question: 'Paris est une ville importante.',
+	userAnswer: ['Paris', 'is', ...],
+	wordBank: ['Where', 'important', ...]
+
+}
+```
+
+or
+
+```javascript
+{
+	question: 'Paris est une ville importante.',
+	userAnswer: 'Paris is an important city.'
+	wordBank: []
+}
+```
+
+
 
 # ChatGPT Module
 

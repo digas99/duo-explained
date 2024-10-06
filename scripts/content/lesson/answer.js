@@ -30,18 +30,24 @@
 			if (selectedMutation) {
 				const answerContent = answerMutation(selectedMutation);
 				
-				const data = {
+				const answerData = {
 					state: state,
 					wrapper: lessonFooter,
 					button: lessonFooter.querySelector(`button[data-test='player-next']`),
 				}
 
 				if (state === "incorrect") {
-					data.language = answerContent.querySelector("div[dir='ltr']")?.lang;
-					data.answer = answerContent.querySelector("div[dir='ltr']")?.textContent;
+					answerData.language = answerContent.querySelector("div[dir='ltr']")?.lang;
+					answerData.answer = answerContent.querySelector("div[dir='ltr']")?.textContent;
 				}
 
-				const event = new CustomEvent("answer", { detail: data });
+				const challenge = document.querySelector("div[data-test^='challenge']");
+				const challengeType = challenge?.dataset.test.replace("challenge challenge-", "");
+
+				const event = new CustomEvent("answer", { detail: {
+					"answer": answerData,
+					"question": parseChallenge(challengeType, challenge),
+				} });
 				document.dispatchEvent(event);
 			}
 		}

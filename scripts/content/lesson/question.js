@@ -36,39 +36,45 @@
 			}
 		}
 	}
-
-	const parseChallenge = (type, wrapper) => {
-		const questionHeader = wrapper.querySelector("h1[data-test='challenge-header']");
-		const question = questionHeader?.innerText;
-
-		let content;
-		switch(type) {
-			case "characterSelect":
-				content = parseCharacterSelect(wrapper);
-				break;
-			case "characterMatch":
-				content= parseCharacterMatch(wrapper);
-				break;
-			case "translate":
-				// either from source to target or target to source languages
-				content = parseTranslate(wrapper);
-				break;
-			case "listenTap":
-				content = parseListenTap(wrapper);
-				break;
-			case "match":
-				content = parseMatch(wrapper);
-				break;
-			case "selectPronunciation":
-				content = parseSelectPronunciation(wrapper);
-				break;
-		}
-
-		return {
-			type,
-			wrapper,
-			question,
-			content
-		};
-	}
 })();
+
+const parseChallenge = (type, wrapper) => {
+	const questionHeader = wrapper.querySelector("h1[data-test='challenge-header']");
+	const question = questionHeader?.innerText;
+
+	let content;
+	switch(type) {
+		case "characterSelect":
+			content = parseCharacterSelect(wrapper);
+			break;
+		case "translate":
+			content = parseTranslate(wrapper);
+			break;
+		case "listenTap":
+			content = parseListenTap(wrapper);
+			break;
+		case "characterMatch":
+		case "match":
+			content = parseMatch(wrapper);
+			break;
+		case "selectPronunciation":
+			content = parseSelectPronunciation(wrapper);
+			break;
+		case "tapComplete":
+			content = parseTapComplete(wrapper);
+			break;
+		case "gapFill":
+			content = parseGapFill(wrapper);
+			break;
+		case "completeReverseTranslation":
+			content = parseCompleteReverseTranslation(wrapper);
+			break;
+	}
+
+	return {
+		type,
+		wrapper,
+		question,
+		content
+	};
+}
