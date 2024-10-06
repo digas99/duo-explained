@@ -1,7 +1,7 @@
 :root {
-	--accent-color: #00ffa1;
-	--secondary-color: #0e0e0e;
-	--faded-accent-color: #3d554c;
+	--d-cgpt-accent-color: #00ffa1;
+	--d-cgpt-secondary-color: #0e0e0e;
+	--d-cgpt-faded-accent-color: #3d554c;
 }
 
 .d-cgpt-tab {
@@ -14,8 +14,8 @@
 }
 
 .d-cgpt-tab > a.active > span {
-	border: 2px solid var(--accent-color) !important;
-    background-color: var(--secondary-color) !important;
+	border: 2px solid var(--d-cgpt-accent-color) !important;
+    background-color: var(--d-cgpt-secondary-color) !important;
 }
 
 .d-cgpt-tab > a > span:hover {
@@ -23,7 +23,7 @@
 }
 
 .d-cgpt-tab > a.active > span span {
-	color: var(--accent-color) !important;
+	color: var(--d-cgpt-accent-color) !important;
 }
 
 .d-cgpt-prompt {
@@ -97,9 +97,16 @@
 }
 
 .d-cgpt-explain-button-enabled {
-	--web-ui_button-background-color: var(--secondary-color) !important;
-    --web-ui_button-border-color: var(--accent-color) !important;
-    --web-ui_button-color: var(--accent-color) !important;
+	--__internal__background-color-disabled: var(--d-cgpt-secondary-color) !important;
+	color: var(--d-cgpt-accent-color) !important;
+	background: var(--d-cgpt-secondary-color) !important;
+	background-color: var(--d-cgpt-secondary-color) !important;
+	border-color: var(--d-cgpt-accent-color) !important;
+	cursor: pointer !important;
+}
+
+.d-cgpt-explain-button-enabled:hover {
+	opacity: 0.8;
 }
 
 .d-cgpt-explain-button-disabled {

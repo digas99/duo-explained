@@ -4,34 +4,14 @@
 		console.log("Answer event detected");
 		const data = event.detail;
 		console.log(data);
-		
-		data.button.parentElement.classList.add("d-cgpt-explain-button-wrapper");
-		data.button.parentElement.insertBefore(makeButton(data.button, data, data.state === "correct"), data.button);
-		data.wrapper.parentElement.insertAdjacentHTML("beforeend", extraInputPrompt());
 
-		// clear for next question
-		data.button.addEventListener("click", () => {
-			const explainButton = document.querySelector("#d-cgpt-explain-button");
-			if (explainButton) {
-				explainButton.remove();
-			}
+		const footer = document.getElementById("session/PlayerFooter");
+		footer.classList.add("d-cgpt-footer");
 
-			const extraInput = document.querySelector(".d-cgpt-speech-bubble");
-			if (extraInput) {
-				extraInput.remove();
-			}
-
-			const explainArea = document.querySelector(".d-cgpt-explain-area");
-			if (explainArea) {
-				explainArea.remove();
-				const challangeWrapper = document.querySelector("div[data-test^='challenge']");
-				if (challangeWrapper) {
-					challangeWrapper.classList.remove("d-cgpt-explain-area-wrapper");
-				}
-			}
-
-			document.removeEventListener("answer", event);
-		});
+		const explainButton = document.querySelector("#d-cgpt-explain-button");
+		if (explainButton) {
+			enableButton(explainButton);
+		}
 	});
 
 	// listen for the challenge event
@@ -39,42 +19,86 @@
 		console.log("Challenge event detected");
 		const data = event.detail;
 		console.log(data);
+
+		const footer = document.getElementById("session/PlayerFooter");
+		footer.classList.add("d-cgpt-footer");
+
+		// clear previous
+		clearAll();
+
+		// add explain button
+		addExplainButton(data);
+		toggleExtraInput(false);
 	});
 
+
+
+	const clearAll = () => {
+		const explainButton = document.querySelector("#d-cgpt-explain-button");
+		if (explainButton) {
+			explainButton.remove();
+		}
+
+		const extraInput = document.querySelector(".d-cgpt-speech-bubble");
+		if (extraInput) {
+			extraInput.remove();
+		}
+
+		const explainArea = document.querySelector(".d-cgpt-explain-area");
+		if (explainArea) {
+			explainArea.remove();
+			const challangeWrapper = document.querySelector("div[data-test^='challenge']");
+			if (challangeWrapper) {
+				challangeWrapper.classList.remove("d-cgpt-explain-area-wrapper");
+			}
+		}
+	}
+
+	const addExplainButton = data => {
+		const answerButtonsWrapper = document.querySelector("button[data-test='player-next']")?.parentElement;
+		const answerWrapper = document.getElementById("session/PlayerFooter");
+		if (answerButtonsWrapper) {
+			answerButtonsWrapper.classList.add("d-cgpt-explain-button-wrapper");
+			answerButtonsWrapper.insertBefore(makeButton(answerButtonsWrapper.firstChild, data, false), answerButtonsWrapper.firstChild);
+			answerWrapper?.parentElement.insertAdjacentHTML("beforeend", extraInputPrompt());
+		}
+	}
+
+	document.addEventListener("mouseover", event => {
+		const target = event.target;
+		
+		// toggle extra input
+		if (target.closest(".d-cgpt-footer") && document.querySelector(".d-cgpt-explain-button-enabled")) {
+			toggleExtraInput(true);
+		}
+		else {
+			if (!target.closest(".d-cgpt-speech-bubble")) {
+				toggleExtraInput(false);
+			}
+		}
+	});
+
+
 	const makeButton = (template, data, disabled) => {
+		removeAllElements(".d-cgpt-explain-button");
+
 		const button = template.cloneNode(true);
 		delete button.dataset.test;
 		button.id = "d-cgpt-explain-button";
+		button.classList.add("d-cgpt-explain-button");
 		button.querySelector("span").textContent = "Explain";
 		if (disabled) {
 			disableButton(button);
 		}
 		else {
-			button.classList.add("d-cgpt-explain-button-enabled");
-			button.addEventListener("click", () => {
-				const query = {
-					state: data.state,
-				}
-				chrome.runtime.sendMessage({ type: "QUERY", query: query }, response => {
-					console.log(response);
-					const challangeWrapper = document.querySelector('div[data-test^="challenge"]');
-					if (challangeWrapper) {
-						challangeWrapper.classList.add("d-cgpt-explain-area-wrapper");
-						challangeWrapper.insertAdjacentHTML("beforeend", explanationPrompt(response));
-					}
-	
-					disableButton(button);
-					const extraInput = document.querySelector(".d-cgpt-speech-bubble");
-					if (extraInput) {
-						extraInput.remove();
-					}
-				});
-			});
+			enableButton(button);
 		}
 		return button;
 	}
 
 	const explanationPrompt = content => {
+		removeAllElements(".d-cgpt-explain-area");
+
 		return /*html*/`
 			<div class="d-cgpt-explain-area">
 				<div class="d-cgpt-explain-header">
@@ -90,7 +114,34 @@
 	const disableButton = button => {
 		button.disabled = true;
 		button.setAttribute('aria-disabled', 'true');
+		button.classList.remove("d-cgpt-explain-button-enabled");
 		button.classList.add("d-cgpt-explain-button-disabled");
+	}
+
+	const enableButton = button => {
+		button.disabled = false;
+		button.setAttribute('aria-disabled', 'false');
+		button.classList.remove("d-cgpt-explain-button-disabled");
+		button.classList.add("d-cgpt-explain-button-enabled");
+
+		if (!button.dataset.hasclick) {
+			button.addEventListener("click", () => {
+				const query = {
+				}
+				chrome.runtime.sendMessage({ type: "QUERY", query: query }, response => {
+					console.log(response);
+					const challangeWrapper = document.querySelector('div[data-test^="challenge"]');
+					if (challangeWrapper) {
+						challangeWrapper.classList.add("d-cgpt-explain-area-wrapper");
+						challangeWrapper.insertAdjacentHTML("beforeend", explanationPrompt(response));
+					}
+
+					disableButton(button);
+				});
+			});
+		}
+		
+		button.dataset.hasclick = true;
 	}
 
 	const extraInputPrompt = () => {
@@ -102,5 +153,33 @@
 				</div>
 			</div>
 		`;
+	}
+
+	const toggleExtraInput = show => {
+		const extraInput = document.querySelector(".d-cgpt-speech-bubble");
+		if (extraInput) {
+			if (show == null) {
+				if (extraInput.style.display == "none") {
+					extraInput.style.removeProperty("display");
+				}
+				else {
+					extraInput.style.display = "none";
+				}
+				return;
+			}
+
+			if (show) {
+				extraInput.style.removeProperty("display");
+			}
+			else {
+				extraInput.style.display = "none";
+			}
+		}
+	}
+
+	const removeAllElements = (selector) => {
+		const elements = document.querySelectorAll(selector);
+		if (elements)
+			elements.forEach(element => element.remove());
 	}
 })();
