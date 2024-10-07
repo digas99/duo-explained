@@ -162,11 +162,13 @@
 
 .d-cgpt-explain-header > h3 {
 	font-size: 25px;
+	cursor: text;
 }
 
 .d-cgpt-explain-content {
 	text-align: left;
 	white-space: pre-wrap;
+	cursor: text;
 }
 
 .cursor {

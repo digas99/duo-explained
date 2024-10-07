@@ -1,5 +1,5 @@
 (() => {
-	// watch for class .deV4C to be added
+	// kick starter
 	const observer = new MutationObserver(mutations => {
 		mutations.forEach(mutation => {
 			if (mutation.addedNodes.length) {
@@ -10,8 +10,14 @@
 			}
 		});
 	});
-
 	observer.observe(document.body, { childList: true, subtree: true });
+
+	// watch for theme change
+	document.addEventListener("duotheme", event => {
+		const theme = event.detail.theme;
+		chrome.storage.sync.set({ "THEME": theme });
+		localStorage.setItem("duo.theme", theme);
+	});
 
 	const injectElements = () => {
 		// Duo ChatGPT tab
