@@ -205,8 +205,6 @@
 
 .d-cgpt-explain-close > img {
     width: 30px;
-    filter: invert(26%) sepia(33%) saturate(298%) hue-rotate(158deg) brightness(88%) contrast(94%);
-    background-color: #93a3ad;
     border-radius: 50%;
     padding: 2px;
 }

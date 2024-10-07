@@ -17,9 +17,15 @@
 		const theme = event.detail.theme;
 		chrome.storage.sync.set({ "THEME": theme });
 		localStorage.setItem("duo.theme", theme);
+
+		updateTheme(theme);
 	});
 
 	const injectElements = () => {
+		// set theme from local storage
+		const theme = localStorage.getItem("duo.theme");
+		if (theme) updateTheme(theme);
+
 		// Duo ChatGPT tab
 		const moreNav = document.querySelector("a[data-test='home-nav']")?.parentElement;
 		const navbar = moreNav?.parentElement;

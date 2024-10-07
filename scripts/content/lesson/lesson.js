@@ -207,7 +207,7 @@ let answerData, challengeData;
 				<div class="d-cgpt-explain-content">
 				</div>
 				<div class="d-cgpt-explain-close">
-					<img src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/arrow-circle.png">
+					<img class="d-cgpt-icon" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/arrow-circle.png">
 				</div>
 			</div>
 		`;
