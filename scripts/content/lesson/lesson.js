@@ -89,19 +89,19 @@ let answerData, challengeData;
 	/* Functions */
 
 	const handleExplanation = callback => {
-		const query = {
+		const lesson = {
 			"answer": answerData,
 			"challenge": challengeData
 		}
 
 		const extraInput = document.querySelector(".d-cgpt-speech-bubble textarea");
 		if (extraInput) {
-			query["extra"] = extraInput.value;
+			lesson["extra"] = extraInput.value;
 		}
 
-		console.log(query);
+		console.log(lesson);
 
-		chrome.runtime.sendMessage({ type: "QUERY", query: query }, response => {
+		chrome.runtime.sendMessage({ type: "QUERY", lesson: lesson }, response => {
 			console.log(response);
 			const challangeWrapper = document.querySelector('div[data-test^="challenge"]');
 			if (challangeWrapper) {

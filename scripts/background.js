@@ -1,4 +1,4 @@
-import { OpenAIAgent } from "./chatgpt.js";
+import { OpenAIAgent } from "./ai/chatgpt.js";
 
 
 let agent = new OpenAIAgent();
@@ -33,11 +33,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	(async () => {
 		if (agent) {
 			try {
-        //! UNCOMMENT THIS LINE WHEN API IS READY
-				// const response = await agent.query(agent.model, request.query);
-        // response lorem ipsum for now
-        const response = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.";
-				sendResponse(response);
+                console.log(request);
+                //! UNCOMMENT THIS LINE WHEN API IS READY
+                // const response = await agent.query(agent.model, request.query);
+                // response lorem ipsum for now
+                const response = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.";
+                sendResponse(response);
 			} catch (error) {
 				sendResponse({ error: error.message });
 			}
