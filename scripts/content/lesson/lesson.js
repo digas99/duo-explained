@@ -46,6 +46,17 @@ let answerData, challengeData;
 		}
 	});
 
+	document.addEventListener("click", event => {
+		const target = event.target;
+		
+		if (!target.closest(".d-cgpt-explain-area") && window.innerWidth <= 1050) {
+			const explainArea = document.querySelector(".d-cgpt-explain-area");
+			if (explainArea) {
+				explainArea.style.removeProperty("right");
+				explainArea.classList.add("d-cgpt-explain-area-closed");
+			}
+		}
+	});
 
 	/* Functions */
 
@@ -68,6 +79,34 @@ let answerData, challengeData;
 			if (challangeWrapper) {
 				challangeWrapper.classList.add("d-cgpt-explain-area-wrapper");
 				challangeWrapper.insertAdjacentHTML("beforeend", explanationPrompt(response));
+				const explainArea = document.querySelector(".d-cgpt-explain-area");
+				
+				// slide in explanation
+				if (explainArea && window.innerWidth <= 1050) {
+					explainArea.style.setProperty("right", "-420px", "important");
+					setTimeout(() => explainArea.style.removeProperty("right"));
+				}
+
+				const explanationClose = document.querySelector(".d-cgpt-explain-close");
+				explanationClose.addEventListener("click", () => {
+					const explainArea = document.querySelector(".d-cgpt-explain-area");
+					if (explainArea) {
+						explainArea.style.removeProperty("right");
+						explainArea.classList.toggle("d-cgpt-explain-area-closed");
+					}
+				});
+				explanationClose.addEventListener("mouseover", () => {
+					const explainArea = document.querySelector(".d-cgpt-explain-area");
+					if (explainArea && explainArea.classList.contains("d-cgpt-explain-area-closed")) {
+						explainArea.style.setProperty("right", "-360px", "important");
+					}
+				});
+				explanationClose.addEventListener("mouseout", () => {
+					const explainArea = document.querySelector(".d-cgpt-explain-area");
+					if (explainArea) {
+						explainArea.style.removeProperty("right");
+					}
+				});
 			}
 
 			if (callback)
@@ -135,6 +174,9 @@ let answerData, challengeData;
 				</div>
 				<div class="d-cgpt-explain-content">
 					${content}
+				</div>
+				<div class="d-cgpt-explain-close">
+					<img src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/arrow-circle.png">
 				</div>
 			</div>
 		`;

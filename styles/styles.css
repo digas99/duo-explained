@@ -11,6 +11,7 @@
 .d-cgpt-tab > a > span {
 	border: unset !important;
     background-color: unset !important;
+	border-radius: 12px !important;
 }
 
 .d-cgpt-tab > a.active > span {
@@ -141,9 +142,14 @@
 .d-cgpt-explain-area {
 	width: 30%;
 	border: 1px solid rgb(var(--color-swan));
+	background-color: rgb(var(--color-snow));
 	border-radius: 16px;
 	padding: 20px;
 	min-height: 400px;
+}
+
+.d-cgpt-explain-area-closed {
+	right: -380px !important;
 }
 
 .d-cgpt-explain-area > div {
@@ -160,6 +166,33 @@
 
 .d-cgpt-explain-content {
 	text-align: left;
+}
+
+.d-cgpt-explain-area-closed .d-cgpt-explain-close > img {
+	transform: rotate(-180deg) !important;
+}
+
+.d-cgpt-explain-close {
+	display: none;
+	position: absolute;
+    left: -40px;
+    top: 0;
+    bottom: 0;
+    align-items: center;
+    padding: unset;
+	cursor: pointer;
+}
+
+.d-cgpt-explain-close:hover {
+	opacity: 0.8;
+}
+
+.d-cgpt-explain-close > img {
+    width: 30px;
+    filter: invert(26%) sepia(33%) saturate(298%) hue-rotate(158deg) brightness(88%) contrast(94%);
+    background-color: #93a3ad;
+    border-radius: 50%;
+    padding: 2px;
 }
 
 .d-cgpt-speech-bubble {
@@ -200,4 +233,25 @@
     top: unset;
     left: unset;
     right: 58px;
+}
+
+
+/* screen until 920px */
+
+@media screen and (max-width: 1050px) {
+	.d-cgpt-explain-area {
+		position: absolute;
+		background-color: rgb(var(--color-snow));
+		height: 95%;
+		right: 0;
+		width: 400px;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		padding: 20px 0px;
+		transition: 0.3s;
+	}
+
+	.d-cgpt-explain-close {
+		display: flex;
+	}
 }
