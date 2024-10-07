@@ -49,13 +49,45 @@ let answerData, challengeData;
 	document.addEventListener("click", event => {
 		const target = event.target;
 		
-		if (!target.closest(".d-cgpt-explain-area") && window.innerWidth <= 1050) {
+		if (!target.closest(".d-cgpt-explain-area") && !(document.querySelector(".d-cgpt-explain-area")?.dataset.mouseDown == "true") && window.innerWidth <= 1050) {
+			console.log("click");
 			const explainArea = document.querySelector(".d-cgpt-explain-area");
 			if (explainArea) {
 				explainArea.style.removeProperty("right");
 				explainArea.classList.add("d-cgpt-explain-area-closed");
 			}
 		}
+	});
+
+	let mouseDownTime = 0;
+
+	document.addEventListener("mousedown", event => {
+		const target = event.target;
+		
+		mouseDownTime = new Date().getTime();
+
+		if (target.closest(".d-cgpt-explain-close")) {
+			const explainArea = document.querySelector(".d-cgpt-explain-area");
+			if (explainArea && !explainArea.classList.contains("d-cgpt-explain-area-closed")) {
+				explainArea.classList.add("d-cgpt-explain-area-closed");
+				explainArea.dataset.mouseDown = true;
+			}
+		}
+	});
+
+	document.addEventListener("mouseup", event => {
+		console.log("mouseup");
+		const mouseUpTime = new Date().getTime();
+		const timeDiff = mouseUpTime - mouseDownTime;
+		console.log(timeDiff);
+		
+		const explainArea = document.querySelector(".d-cgpt-explain-area");
+		if (timeDiff > 500 && explainArea && explainArea.dataset.mouseDown == "true" && explainArea.classList.contains("d-cgpt-explain-area-closed")) {
+			console.log("inside");
+			explainArea.classList.remove("d-cgpt-explain-area-closed");
+			setTimeout(() => explainArea.dataset.mouseDown = false);
+		}
+		mouseDownTime = 0;
 	});
 
 	/* Functions */
@@ -78,7 +110,7 @@ let answerData, challengeData;
 			const challangeWrapper = document.querySelector('div[data-test^="challenge"]');
 			if (challangeWrapper) {
 				challangeWrapper.classList.add("d-cgpt-explain-area-wrapper");
-				challangeWrapper.insertAdjacentHTML("beforeend", explanationPrompt(response));
+				challangeWrapper.insertAdjacentHTML("beforeend", explanationPrompt());
 				const explainArea = document.querySelector(".d-cgpt-explain-area");
 				
 				// slide in explanation
@@ -107,8 +139,12 @@ let answerData, challengeData;
 						explainArea.style.removeProperty("right");
 					}
 				});
-			}
 
+				const explainContent = document.querySelector(".d-cgpt-explain-content");
+				if (explainContent) {
+					type(explainContent, response);
+				}
+			}
 			if (callback)
 				callback();
 		});
@@ -164,7 +200,7 @@ let answerData, challengeData;
 		return button;
 	}
 
-	const explanationPrompt = content => {
+	const explanationPrompt = () => {
 		removeAllElements(".d-cgpt-explain-area");
 
 		return /*html*/`
@@ -173,7 +209,6 @@ let answerData, challengeData;
 					<h3>Explanation from ChatGPT</h3>
 				</div>
 				<div class="d-cgpt-explain-content">
-					${content}
 				</div>
 				<div class="d-cgpt-explain-close">
 					<img src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/arrow-circle.png">

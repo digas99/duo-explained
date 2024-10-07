@@ -166,7 +166,21 @@
 
 .d-cgpt-explain-content {
 	text-align: left;
+	white-space: pre-wrap;
 }
+
+.cursor {
+	display: inline-block;
+	width: 8px;
+	background-color: rgb(var(--color-black-text));
+    color: rgb(var(--color-snow));
+	margin-left: 2px;
+	animation: blink 0.8s steps(1) infinite;
+  }
+
+  @keyframes blink {
+	50% { opacity: 0; }
+  }
 
 .d-cgpt-explain-area-closed .d-cgpt-explain-close > img {
 	transform: rotate(-180deg) !important;
