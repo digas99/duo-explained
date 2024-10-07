@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Extension kick starter with only the essential elements to atleast toggle the extension on and off.
+ */
+
 (async () => {
 	// kick starter
 	const observer = new MutationObserver(mutations => {

@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Script to setup the 'answer' event listener on a Duolingo lesson.
+ */
+
 (async () => {
 	if (!(await extensionActive())) return; 
 	

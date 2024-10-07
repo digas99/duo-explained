@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Script to setup the 'challenge' event listener on a Duolingo lesson.
+ */
+
 (async () => {
 	if (!(await extensionActive())) return; 
 

@@ -1,6 +1,8 @@
 /**
- * OpenAIAgent class for interacting with the OpenAI API.
+ * @fileoverview OpenAIAgent class for interacting with the OpenAI API.
  */
+
+
 export class OpenAIAgent {
   /**
    * Constructs an instance of the OpenAIAgent.

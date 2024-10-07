@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Script to handle the theme change event on Duolingo.
+ */
+
 const duolingoTheme = () => {
 	const blackWhiteValue = getComputedStyle(document.documentElement).getPropertyValue("--color-black-white");
 	return blackWhiteValue === '0, 0, 0' ? 'light' : 'dark';
