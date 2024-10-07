@@ -50,7 +50,6 @@ let answerData, challengeData;
 		const target = event.target;
 		
 		if (!target.closest(".d-cgpt-explain-area") && !(document.querySelector(".d-cgpt-explain-area")?.dataset.mouseDown == "true") && window.innerWidth <= 1050) {
-			console.log("click");
 			const explainArea = document.querySelector(".d-cgpt-explain-area");
 			if (explainArea) {
 				explainArea.style.removeProperty("right");
@@ -76,14 +75,11 @@ let answerData, challengeData;
 	});
 
 	document.addEventListener("mouseup", event => {
-		console.log("mouseup");
 		const mouseUpTime = new Date().getTime();
 		const timeDiff = mouseUpTime - mouseDownTime;
-		console.log(timeDiff);
 		
 		const explainArea = document.querySelector(".d-cgpt-explain-area");
 		if (timeDiff > 500 && explainArea && explainArea.dataset.mouseDown == "true" && explainArea.classList.contains("d-cgpt-explain-area-closed")) {
-			console.log("inside");
 			explainArea.classList.remove("d-cgpt-explain-area-closed");
 			setTimeout(() => explainArea.dataset.mouseDown = false);
 		}
