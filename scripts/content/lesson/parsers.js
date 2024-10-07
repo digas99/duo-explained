@@ -181,6 +181,13 @@ const parseTransliterate = wrapper => {
 	return {word, language, userAnswer};
 }
 
+const parsePartialReverseTranslate = wrapper => {
+	const sentence = wrapper.querySelector("div[dir='ltr']").innerText;
+	const answerWrapper = wrapper.querySelector("label[dir='ltr']");
+	const answer = (answerWrapper.innerText).replace(/\\n|\nl/g, '');
+	const language = answerWrapper.lang;
+	return {sentence, answer, language}
+}
 
 /* Auxiliar parsing functions */
 

@@ -79,6 +79,10 @@ const parseChallenge = (type, wrapper) => {
 		case "transliterate":
 			content = parseTransliterate(wrapper);
 			break;
+		case "partialReverseTranslate":
+			content = parsePartialReverseTranslate(wrapper);
+			content.answer = content.answer.replace(/\\n|\n/g, "");
+			break;
 		default:
 			content = undefined;
 			break;

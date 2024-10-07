@@ -89,7 +89,7 @@ export class OpenAIAgent {
    * @param {number} [temperature=0.7] - Sampling temperature to use.
    * @returns {Promise<string|null>} - The response from the OpenAI API, or null if an error occurred.
    */
-  async query(model, prompt, temperature = 0.7) {
+  async query(model, prompt, temperature = 0.2) {
     const url = "https://api.openai.com/v1/chat/completions";
 
     const body = JSON.stringify({
