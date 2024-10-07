@@ -1,8 +1,13 @@
-let answerData, challengeData;
 
-(() => {
+(async () => {
+	if (!(await extensionActive())) return; 
+
+	let answerData, challengeData;
+
 	// listen for the answer event
-	document.addEventListener("answer", event => {
+	document.addEventListener("answer", async event => {
+		if (!(await extensionActive())) return; 
+
 		console.log("Answer event detected");
 		answerData = event.detail;
 		console.log(answerData);
@@ -16,7 +21,9 @@ let answerData, challengeData;
 	});
 
 	// listen for the challenge event
-	document.addEventListener("challenge", event => {
+	document.addEventListener("challenge", async event => {
+		if (!(await extensionActive())) return; 
+
 		console.log("Challenge event detected");
 		challengeData = event.detail;
 		console.log(challengeData);
@@ -32,7 +39,7 @@ let answerData, challengeData;
 	});
 
 
-	document.addEventListener("mouseover", event => {
+	document.addEventListener("mouseover", async event => {
 		const target = event.target;
 		
 		// toggle extra input
@@ -46,7 +53,7 @@ let answerData, challengeData;
 		}
 	});
 
-	document.addEventListener("click", event => {
+	document.addEventListener("click", async event => {
 		const target = event.target;
 		
 		if (!target.closest(".d-cgpt-explain-area") && !(document.querySelector(".d-cgpt-explain-area")?.dataset.mouseDown == "true") && window.innerWidth <= 1050) {
@@ -60,7 +67,7 @@ let answerData, challengeData;
 
 	let mouseDownTime = 0;
 
-	document.addEventListener("mousedown", event => {
+	document.addEventListener("mousedown", async event => {
 		const target = event.target;
 		
 		mouseDownTime = new Date().getTime();
@@ -74,7 +81,7 @@ let answerData, challengeData;
 		}
 	});
 
-	document.addEventListener("mouseup", event => {
+	document.addEventListener("mouseup", async event => {
 		const mouseUpTime = new Date().getTime();
 		const timeDiff = mouseUpTime - mouseDownTime;
 		

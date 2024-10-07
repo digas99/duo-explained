@@ -1,6 +1,10 @@
-(() => {
+(async () => {
+	if (!(await extensionActive())) return; 
+	
 	// detect answers
-	const observer = new MutationObserver((mutationsList, observer) => {
+	const observer = new MutationObserver(async (mutationsList, observer) => {
+		if (!(await extensionActive())) return; 
+
 		const lessonFooter = document.getElementById("session/PlayerFooter");
 		if (lessonFooter) {
 			answered(mutationsList, "incorrect");

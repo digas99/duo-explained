@@ -45,7 +45,7 @@ const updateTheme = theme => {
 	});
 }
 
-(() => {
+(async () => {
 	let event;
 	window.onload = () => {
 		event = new CustomEvent("duotheme", { detail: {

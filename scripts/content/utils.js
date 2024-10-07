@@ -1,3 +1,8 @@
+const extensionActive = async () => {
+	const data = await chrome.storage.sync.get("EXTENSION_ACTIVE");
+	return data.EXTENSION_ACTIVE;
+}
+
 const parseJapaneseFurigana = textWrapper => {
 	textWrapper = textWrapper.querySelector("ruby") || textWrapper;
 	const nonFuriganaSpans = Array.from(textWrapper.querySelectorAll("span")).filter(span => span.lang);

@@ -1,6 +1,10 @@
-(() => {
+(async () => {
+	if (!(await extensionActive())) return; 
+
 	// observe mutations to the content of div[data-test^="challenge"]
-	const observer = new MutationObserver((mutationsList, observer) => {
+	const observer = new MutationObserver(async (mutationsList, observer) => {
+		if (!(await extensionActive())) return; 
+
 		const challengeWrapper = document.querySelector("div[data-test^='challenge']");
 		if (challengeWrapper) {
 			nextChallenge(mutationsList);
@@ -37,61 +41,3 @@
 		}
 	}
 })();
-
-const parseChallenge = (type, wrapper) => {
-	const questionHeader = wrapper.querySelector("h1[data-test='challenge-header']");
-	const question = questionHeader?.innerText;
-
-	let content;
-	switch(type) {
-		case "syllableTap":
-		case "translate":
-			content = parseTranslate(wrapper);
-			break;
-		case "characterMatch":
-		case "match":
-			content = parseMatch(wrapper);
-			break;
-		case "tapComplete":
-			content = parseTapComplete(wrapper);
-			break;
-		case "gapFill":
-			content = parseGapFill(wrapper);
-			break;
-		case "completeReverseTranslation":
-			content = parseCompleteReverseTranslation(wrapper);
-			break;
-		case "readComprehension":
-			content = parseReadComprehension(wrapper);
-			break;
-		case "speak":
-			content = parseSpeak(wrapper);
-			break;
-		case "transliterationAssist":
-		case "reverseAssist":
-		case "assist":
-			content = parseAssist(wrapper);
-			break;
-		case "characterSelect":
-		case "select":
-			content = parseSelect(wrapper);
-			break;
-		case "transliterate":
-			content = parseTransliterate(wrapper);
-			break;
-		case "partialReverseTranslate":
-			content = parsePartialReverseTranslate(wrapper);
-			content.answer = content.answer.replace(/\\n|\n/g, "");
-			break;
-		default:
-			content = undefined;
-			break;
-	}
-
-	return {
-		type,
-		wrapper,
-		question,
-		content
-	};
-}

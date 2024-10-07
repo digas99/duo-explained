@@ -27,6 +27,7 @@ chrome.storage.sync.get("API_KEY", (result) => {
  * If the message type is "QUERY", a message is sent to the agent to query the OpenAI API.
  * If the message type is "SET_API_KEY, the API key is set in the agent and stored in local storage.
  * If the message type is "SET_MODEL", the model is set in the agent and stored in local storage.
+ * If the message type is "RELOAD", the content scripts are reloaded.
  */
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === "QUERY") {
@@ -63,6 +64,19 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // Model value is managed by the content script, therefore always in accordance with the available models
     chrome.storage.sync.set({ MODEL: request.model }, () => {
       sendResponse({ message: "Model set." });
+    });
+  }
+
+  // Reoload the content scripts
+  if (request.type === "RELOAD") {
+    // inject the content scripts again
+    chrome.scripting.executeScript({
+      target: { tabId: sender.tab.id },
+      files: [
+        "/scripts/content/lesson/answer.js",
+        "/scripts/content/lesson/question.js",
+        "/scripts/content/lesson/lesson.js",
+      ]
     });
   }
 

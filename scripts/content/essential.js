@@ -1,4 +1,4 @@
-(() => {
+(async () => {
 	// kick starter
 	const observer = new MutationObserver(mutations => {
 		mutations.forEach(mutation => {
@@ -59,12 +59,14 @@
 							setupPrompt(newTab, 100);
 						} else {
 							if (newTab.querySelector("a").classList.contains("active")) {
+								// disable extension
 								newTab.querySelector("a").classList.remove("active");
 							}
 							else {
+								// enable extension
 								newTab.querySelector("a").classList.add("active");
 							}
-							chrome.storage.sync.set({ "EXTENSION_ACTIVE": newTab.querySelector("a").classList.contains("active") });
+							chrome.storage.sync.set({ "EXTENSION_ACTIVE": newTab.querySelector("a").classList.contains("active") }, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
 						}
 					});
 				});

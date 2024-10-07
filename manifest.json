@@ -19,7 +19,7 @@
 			"js": [
                 "scripts/content/utils.js",
                 "scripts/content/theme.js", 
-                "scripts/content/home.js",
+                "scripts/content/essential.js",
 
                 "scripts/content/lesson/answer.js",
                 "scripts/content/lesson/question.js",
