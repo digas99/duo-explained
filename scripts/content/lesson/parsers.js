@@ -7,18 +7,12 @@ const parseTranslate = wrapper => {
 
 	const sections = wrapper.querySelectorAll("div[dir='ltr']");
 	let sentence = sections[0]?.innerText;
-	if (sections[0].lang === "ja")
-		sentence = parseJapaneseFurigana(sections[0]);
 
 	let userAnswer = sections[1] ? sections[1].innerText : wrapper.querySelector("textarea[data-test='challenge-translate-input']").value; 
 	if (wordBankWrapper)
 		userAnswer = userAnswer.split("\n");
 
 	return {sentence, userAnswer, wordBank};
-}
-
-const parseListenTap = wrapper => {
-	
 }
 
 const parseMatch = wrapper => {
@@ -34,7 +28,7 @@ const parseMatch = wrapper => {
 				text = parseJapaneseFurigana(choice);
 
 			return {
-				option,
+				"option": parseInt(option),
 				text
 			};
 		}
@@ -55,10 +49,6 @@ const parseMatch = wrapper => {
 		"source": {},
 		"target": {}
 	};
-}
-
-const parseSelectPronunciation = wrapper => {querySelector("div[dir='ltr']").innerText.split("\n \n").map(text => text.replaceAll("\n", ""))
-	
 }
 
 const parseTapComplete = wrapper => {
@@ -164,18 +154,6 @@ const parseReadComprehension = wrapper => {
 	return { sentence, answer, choices, userAnswer };
 }
 
-const parseSelectTranscription = wrapper => {
-
-}
-
-const parseListenIsolation = wrapper => {
-
-}
-
-const parseListenComplete = wrapper => {
-
-}
-
 const parseSpeak = wrapper => {
 	const sentenceWrapper = wrapper.querySelector("div[dir='ltr']");
 	const sentence = sentenceWrapper.innerText;
@@ -195,6 +173,14 @@ const parseSelect = wrapper => {
 	return choiceParser(choicesWrapper, true);
 }
 
+const parseTransliterate = wrapper => {
+	const wordWrapper = wrapper.querySelector("span[dir='ltr']");
+	const word = wordWrapper.innerText;
+	const language = wordWrapper.lang;
+	const userAnswer = wrapper.querySelector("input[data-test='challenge-text-input']").value;
+	return {word, language, userAnswer};
+}
+
 
 /* Auxiliar parsing functions */
 
@@ -207,16 +193,17 @@ const choiceParser = (wrapper, reverse=false) => {
 				[option, text] = [text, option];
 			
 			// if it has an image
-			let image = "";
+			let image;
 			const img = choice.querySelector("div[style^='background-image']");
 			if (img)
 				image = img.style.backgroundImage.match(/url\("(.*)"\)/)[1];
 
 			const object = {
 				"option": parseInt(option),
-				text,
-				image
+				text
 			}
+
+			if (image) object.image = image;
 
 			if (choice.ariaChecked === "true") {
 				userAnswer = object;

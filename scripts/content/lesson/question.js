@@ -44,18 +44,13 @@ const parseChallenge = (type, wrapper) => {
 
 	let content;
 	switch(type) {
+		case "syllableTap":
 		case "translate":
 			content = parseTranslate(wrapper);
-			break;
-		case "listenTap":
-			content = parseListenTap(wrapper);
 			break;
 		case "characterMatch":
 		case "match":
 			content = parseMatch(wrapper);
-			break;
-		case "selectPronunciation":
-			content = parseSelectPronunciation(wrapper);
 			break;
 		case "tapComplete":
 			content = parseTapComplete(wrapper);
@@ -69,24 +64,20 @@ const parseChallenge = (type, wrapper) => {
 		case "readComprehension":
 			content = parseReadComprehension(wrapper);
 			break;
-		case "selectTranscription":
-			content = parseSelectTranscription(wrapper);
-			break;
-		case "listenIsolation":
-			content = parseListenIsolation(wrapper);
-			break;
-		case "listenComplete":
-			content = parseListenComplete(wrapper);
-			break;
 		case "speak":
 			content = parseSpeak(wrapper);
 			break;
+		case "transliterationAssist":
+		case "reverseAssist":
 		case "assist":
 			content = parseAssist(wrapper);
 			break;
 		case "characterSelect":
 		case "select":
 			content = parseSelect(wrapper);
+			break;
+		case "transliterate":
+			content = parseTransliterate(wrapper);
 			break;
 		default:
 			content = undefined;

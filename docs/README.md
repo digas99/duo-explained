@@ -16,10 +16,14 @@ Documentation to assist in the development of the Duolingo ChatGPT project.
          5. [gapFill](#gapfill)
          6. [match](#match)
 		 7. [readComprehension](#readcomprehension)
+		 1. [reverseAssist](#assist)
 		 8. [select](#select)
 		 9. [speak](#speka)
+		 1. [syllableTap](#translate)
 		 10. [tapComplete](#tapcomplete)
 		 11. [translate](#translate)
+		 12. [transliterate](#transliterate)
+		 13. [transliterationAssist](#assist)
 4. [ChatGPT Module](#chatgpt-module)
 
 # Project Structure
@@ -68,6 +72,8 @@ Because Duolingo exercises are dynamic and can change, the `Challenge Parsers` a
 The challenges and their respective data are:
 
 #### assist
+
+Same approach goes to `reverseAssist` and `transliterationAssist`.
 
 Select the correct option that translates the sentence provided.
 
@@ -216,6 +222,8 @@ The `userAnswer` array contains the words that the user selected in that exact o
 
 #### translate
 
+Same approach goes to `syllableTap`.
+
 Translate a sentence from one language to another.
 
 This may or may not have a `word bank` (it will be an empty array if it doesn't). The user answer will also be an array if word bank is present.
@@ -231,6 +239,19 @@ This may or may not have a `word bank` (it will be an empty array if it doesn't)
 }
 ```
 
+#### transliterate
+
+Transliterate the given word.
+
+[Visual reference](/docs/types/duolingo-transliterate.png)
+
+```javascript
+{
+	word: '固く',
+	language: 'ja',
+	userAnswer: 'kataku'
+}
+```
 
 
 # ChatGPT Module
