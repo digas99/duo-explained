@@ -35,7 +35,7 @@ python3 clean_page.py <filename>
 
 ## Running Tests
 
-To run the tests, first make sure that you have the `expected.js` file with the expected output for the test of each challenge. Then, run the following command:
+To run the tests, first make sure that you have the `json` file with the expected output for the test of each challenge inside the folder `expected`. Then, run the following command:
 
 ```bash
 npx jest
