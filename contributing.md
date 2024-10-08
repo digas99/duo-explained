@@ -21,11 +21,14 @@ Please ensure that the tests are passing when submitting a pull request. If you'
   - [Ground Rules](#ground-rules)
   - [Your First Contribution](#your-first-contribution)
   - [Getting Started](#getting-started)
-    - [Small or Obvious Fixes](#small-or-obvious-fixes)
+    - [How to load an unpacked extension](#how-to-load-an-unpacked-extension)
+    - [Reload the extension](#reload-the-extension)
+    - [When to reload the extension](#when-to-reload-the-extension)
+    - [Debugging](#debugging)
+  - [Small or Obvious Fixes](#small-or-obvious-fixes)
   - [How to Report a Bug](#how-to-report-a-bug)
   - [How to Suggest a Feature or Enhancement](#how-to-suggest-a-feature-or-enhancement)
   - [Code Review Process](#code-review-process)
-  - [Community](#community)
   - [License](#license)
 
 ## Introduction
@@ -60,9 +63,47 @@ For something that is bigger than a one or two line fix:
 3. Ensure that your code follows the current code style and tests have been added.
 4. Submit a pull request.
 
-### Small or Obvious Fixes
-Small contributions such as fixing spelling errors, where the content is small enough to not be considered intellectual property, can be submitted by a contributor as a patch.
+### How to load an unpacked extension
+To load an unpacked extension in developer mode:
 
+1. Go to the Extensions page by entering `chrome://extensions` in a new tab. (By design `chrome://` URLs are not linkable.)
+   - Alternatively, click the Extensions menu puzzle button and select **Manage Extensions** at the bottom of the menu.
+   - Or, click the Chrome menu, hover over **More Tools**, then select **Extensions**.
+2. Enable Developer **Mode** by clicking the toggle switch next to **Developer mode**.
+3. Click the **Load unpacked** button and select the extension directory.
+
+<p align="center">
+  <img src="https://developer.chrome.com/static/docs/extensions/get-started/tutorial/hello-world/image/extensions-page-e0d64d89a6acf_856.png" width="400" alt="Load unpacked extension">
+</p>
+
+### Reload the extension
+Go back to the code and change it.
+
+After saving the file, to see this change in the browser you also have to refresh the extension. Go to the Extensions page and click the refresh icon next to the **on/off** toggle:
+
+<p align="center">
+  <img src="https://developer.chrome.com/static/docs/extensions/get-started/tutorial/hello-world/image/reload-extension-241cc5378fffb_856.png" width="400" alt="Load unpacked extension">
+</p>
+
+### When to reload the extension
+The following table shows which components need to be reloaded to see changes:
+
+| Extension component	        | Requires extension reload |
+-----------------------------|---------------------------| 
+| The manifest	              | Yes                       | 
+| Service worker	            | Yes                       | 
+| Content scripts	            | Yes (plus the host page)  | 
+| The popup	                  | No                        |     
+| Options page	              | No                        | 
+| Other extension HTML pages  | No                        |
+
+### Debugging
+To debug the extension, you can use the Chrome DevTools. To open the DevTools, right-click on the extension icon and select **Inspect popup**.
+
+To debug content scripts, you can access the browser's console by right-clicking on the page and selecting **Inspect**.
+
+
+## Small or Obvious Fixes
 As a rule of thumb, changes are obvious fixes if they do not introduce any new functionality or creative thinking. As long as the change does not affect functionality, some likely examples include the following:
 
 - Spelling / grammar fixes
@@ -82,7 +123,6 @@ To file a bug report:
 
 1. **Check existing issues** to avoid duplicates.
 2. Open a new issue and include:
-   - Your operating system and version.
    - What you did.
    - What you expected to see.
    - What you actually saw.
@@ -102,15 +142,7 @@ We value features that align with our project philosophy: lightweight, robust, a
 After submitting a pull request:
 
 - The core team will review your contribution.
-- Expect feedback within two weeks.
-- We may close pull requests that do not show activity after two weeks.
-
-## Community
-
-Join our community for questions and discussions:
-
-- **[Discussion Forum](#)** - Open for general questions and help.
-- **Gitter/Slack Channel** - Chat with the core team for real-time support.
+- We may close pull requests that do not show activity.
 
 ## License
 
