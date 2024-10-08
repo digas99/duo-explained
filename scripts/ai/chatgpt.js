@@ -115,9 +115,14 @@ export class OpenAIAgent {
             }
 
             const data = await response.json();
+            console.log(data);
             const content = data.choices[0].message.content;
             console.log(content);
-            return content;
+            return {
+                content,
+                model: data.model,
+                usage: data.usage
+            }
         } catch (error) {
             console.error(
                 "There has been a problem with your fetch operation:",

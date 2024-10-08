@@ -109,12 +109,14 @@
 
 		console.log(lesson);
 
-		chrome.runtime.sendMessage({ type: "QUERY", data: lesson }, response => {
-			console.log(response);
-			const challengeWrapper = document.querySelector('div[data-test^="challenge"]');
-			if (challengeWrapper) {
-				challengeWrapper.classList.add("d-cgpt-explain-area-wrapper");
-				challengeWrapper.insertAdjacentHTML("beforeend", explanationPrompt());
+		const challengeWrapper = document.querySelector('div[data-test^="challenge"]');
+		if (challengeWrapper) {
+			challengeWrapper.classList.add("d-cgpt-explain-area-wrapper");
+			challengeWrapper.insertAdjacentHTML("beforeend", explanationPrompt("Loading explanation..."));
+
+			chrome.runtime.sendMessage({ type: "QUERY", data: lesson }, response => {
+				console.log(response);
+
 				const explainArea = document.querySelector(".d-cgpt-explain-area");
 				
 				// slide in explanation
@@ -144,14 +146,34 @@
 					}
 				});
 
+				// model
+				const explainModel = document.querySelector(".d-cgpt-explain-model span");
+				if (explainModel && response.model) {
+					explainModel.textContent = response.model;
+					explainModel.parentElement.style.removeProperty("display");
+				}
+
+				// tokens
+				const explainTokens = document.querySelector(".d-cgpt-explain-tokens span");
+				if (explainTokens && response.usage) {
+					explainTokens.textContent = response.usage.total_tokens;
+				}
+
+				// answer content
 				const explainContent = document.querySelector(".d-cgpt-explain-content");
 				if (explainContent) {
-					type(explainContent, response);
+					explainContent.innerHTML = "";
+					if (response && response.content) {
+						const text = response.content.split(". ").join(".\n");
+						type(explainContent, text);
+					}
+					else
+						explainContent.innerHTML = "Something went wrong. Could not get an explanation.\nWe appologize for the inconvenience.";
 				}
-			}
-			if (callback)
-				callback();
-		});
+				if (callback)
+					callback();
+			});
+		}
 			
 	}
 
@@ -204,7 +226,7 @@
 		return button;
 	}
 
-	const explanationPrompt = () => {
+	const explanationPrompt = content => {
 		removeAllElements(".d-cgpt-explain-area");
 
 		return /*html*/`
@@ -212,10 +234,13 @@
 				<div class="d-cgpt-explain-header">
 					<h3>Explanation from ChatGPT</h3>
 				</div>
-				<div class="d-cgpt-explain-content">
-				</div>
+				<div class="d-cgpt-explain-content">${content}</div>
 				<div class="d-cgpt-explain-close">
 					<img class="d-cgpt-icon" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/arrow-circle.png">
+				</div>
+				<div class="d-cgpt-explain-bottom">
+					<div class="d-cgpt-explain-model" style="display: none;"><span></span></div>
+					<div class="d-cgpt-explain-tokens"><img class="d-cgpt-icon-accent" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/token.png"><span>0</span></div>
 				</div>
 			</div>
 		`;

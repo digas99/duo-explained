@@ -9,13 +9,18 @@ const duolingoTheme = () => {
 
 const INTERFACE_COLORS = {
 	"light": {
-		"accent-color": "#00ffa1",
+		"accent-color": "#00de8c",
 		"secondary-color": "#cff2e5",
+		"faded-accent-color": "#cff2e5",
 		"styles": [
 			`
 				.d-cgpt-icon {
 					filter: invert(100%) sepia(46%) saturate(136%) hue-rotate(294deg) brightness(116%) contrast(80%);
 					background-color: #5d4d29;
+				}
+
+				.d-cgpt-icon-accent {
+					filter: invert(83%) sepia(29%) saturate(5497%) hue-rotate(102deg) brightness(90%) contrast(101%);
 				}
 			`
 		]
@@ -23,11 +28,16 @@ const INTERFACE_COLORS = {
 	"dark": {
 		"accent-color": "#00ffa1",
 		"secondary-color": "#0e0e0e",
+		"faded-accent-color": "#3d554c",
 		"styles": [
 			`
 				.d-cgpt-icon {
 					filter: invert(26%) sepia(33%) saturate(298%) hue-rotate(158deg) brightness(88%) contrast(94%);
 					background-color: rgb(147, 163, 173);
+				}
+
+				.d-cgpt-icon-accent {
+					filter: invert(99%) sepia(74%) saturate(4779%) hue-rotate(76deg) brightness(97%) contrast(117%);
 				}
 			`
 		]
