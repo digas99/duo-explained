@@ -13,8 +13,6 @@
 
 		console.log("Answer event detected");
 		answerData = event.detail;
-		console.log(answerData);
-
 
 		const footer = document.getElementById("session/PlayerFooter");
 		footer.classList.add("d-cgpt-footer");
@@ -111,7 +109,7 @@
 
 		console.log(lesson);
 
-		chrome.runtime.sendMessage({ type: "QUERY", lesson: lesson }, response => {
+		chrome.runtime.sendMessage({ type: "QUERY", data: lesson }, response => {
 			console.log(response);
 			const challengeWrapper = document.querySelector('div[data-test^="challenge"]');
 			if (challengeWrapper) {

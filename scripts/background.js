@@ -1,4 +1,9 @@
+/**
+ * @fileoverview Background script for handling messages from the content scripts and querying the OpenAI API.
+ */
+
 import { OpenAIAgent } from "./ai/chatgpt.js";
+import { QueryGenerator } from "./ai/query.js";
 
 
 let agent = new OpenAIAgent();
@@ -30,56 +35,56 @@ chrome.storage.sync.get("API_KEY", (result) => {
  * If the message type is "RELOAD", the content scripts are reloaded.
  */
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === "QUERY") {
-	(async () => {
-		if (agent) {
-			try {
-                console.log(request);
-                //! UNCOMMENT THIS LINE WHEN API IS READY
-                // const response = await agent.query(agent.model, request.query);
-                // response lorem ipsum for now
-                const response = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.";
+    if (request.type === "QUERY") {
+    (async () => {
+        if (agent) {
+            try {
+                // Generate the prompt using QueryGenerator
+                const prompt = QueryGenerator.generatePrompt(request.data);
+                console.log(prompt);
+                const response = await agent.query(agent.model, prompt);
+                // const response = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.";
                 sendResponse(response);
-			} catch (error) {
-				sendResponse({ error: error.message });
-			}
-		} else {
-			sendResponse({ error: "Agent not initialized yet." });
-		}
-	})();
-  }
+            } catch (error) {
+                sendResponse({ error: error.message });
+            }
+        } else {
+            sendResponse({ error: "Agent not initialized yet." });
+        }
+    })();
+    }
 
-  // Set the API key
-  if (request.type === "SET_API_KEY") {
-	const apiKey = request.apiKey;
-	(async () => {
-		agent.setApiKey(apiKey);
-		await chrome.storage.sync.set({ API_KEY: apiKey });
-		sendResponse({ message: "API Key set" });
-	})();
-  }
+    // Set the API key
+    if (request.type === "SET_API_KEY") {
+        const apiKey = request.apiKey;
+        (async () => {
+            agent.setApiKey(apiKey);
+            await chrome.storage.sync.set({ API_KEY: apiKey });
+            sendResponse({ message: "API Key set" });
+        })();
+    }
 
-  // Set the model
-  if (request.type === "SET_MODEL") {
-    agent.setModel(request.model);
-    // Model value is managed by the content script, therefore always in accordance with the available models
-    chrome.storage.sync.set({ MODEL: request.model }, () => {
-      sendResponse({ message: "Model set." });
-    });
-  }
+    // Set the model
+    if (request.type === "SET_MODEL") {
+        agent.setModel(request.model);
+        // Model value is managed by the content script, therefore always in accordance with the available models
+        chrome.storage.sync.set({ MODEL: request.model }, () => {
+            sendResponse({ message: "Model set." });
+        });
+    }
 
-  // Reoload the content scripts
-  if (request.type === "RELOAD") {
-    // inject the content scripts again
-    chrome.scripting.executeScript({
-      target: { tabId: sender.tab.id },
-      files: [
-        "/scripts/content/lesson/answer.js",
-        "/scripts/content/lesson/question.js",
-        "/scripts/content/lesson/lesson.js",
-      ]
-    });
-  }
+    // Reoload the content scripts
+    if (request.type === "RELOAD") {
+        // inject the content scripts again
+        chrome.scripting.executeScript({
+            target: { tabId: sender.tab.id },
+            files: [
+                "/scripts/content/lesson/answer.js",
+                "/scripts/content/lesson/question.js",
+                "/scripts/content/lesson/lesson.js",
+            ]
+        });
+    }
 
-  return true;
+    return true;
 });
