@@ -1,0 +1,29 @@
+{
+	"content": {
+		"sentence": "Bonjour Marc, c'est moi, Elsa ; <blank>, devant ta maison.",
+		"userAnswer": "Bonjour Marc, c'est moi, Elsa ; je suis ici, devant ta maison.",
+		"options": [
+			{
+				"option": 1,
+				"choices": [
+					"je suis professeur"
+				]
+			},
+			{
+				"option": 2,
+				"choices": [
+					"j'ai un lit"
+				]
+			},
+			{
+				"option": 3,
+				"choices": [
+					"je suis ici"
+				]
+			}
+		]
+	},
+	"question": "Fill in the blank",
+	"wrapper": {},
+	"type": "gapFill"
+}

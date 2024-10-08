@@ -1,0 +1,10 @@
+{
+	"content": {
+		"sentence": "I have to turn here.",
+		"answer": "Je dois <blank> ici.",
+		"userAnswer": "Je dois tourner ici."
+	},
+	"question": "Type the missing word",
+	"wrapper": {},
+	"type": "completeReverseTranslation"
+}

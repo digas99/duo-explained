@@ -1,0 +1,30 @@
+{
+	"content": {
+		"sentence": "Tu dois aller à New York.",
+		"userAnswer": [
+			"You",
+			"have",
+			"to",
+			"go",
+			"to",
+			"New",
+			"York"
+		],
+		"wordBank": [
+			"after",
+			"for",
+			"to",
+			"go",
+			"streets",
+			"You",
+			"have",
+			"York",
+			"tree",
+			"New",
+			"to"
+		]
+	},
+	"question": "Write this in English",
+	"wrapper": {},
+	"type": "translate"
+}
