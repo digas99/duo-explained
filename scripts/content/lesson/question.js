@@ -37,7 +37,7 @@
 				const challengeContent = challengeMutation(selectedMutation);
 				const type = challengeContent?.dataset.test.replace("challenge challenge-", "");
 				if (type) {
-					const data = parseChallenge(type, challengeContent);
+					const data = ChallengeParser.parse(type, challengeContent);
 					const event = new CustomEvent("challenge", { detail: data });
 					document.dispatchEvent(event);
 				}

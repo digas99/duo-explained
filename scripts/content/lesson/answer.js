@@ -54,7 +54,7 @@
 
 				const event = new CustomEvent("answer", { detail: {
 					"answer": answerData,
-					"question": parseChallenge(challengeType, challenge),
+					"question": ChallengeParser.parse(challengeType, challenge),
 				} });
 				document.dispatchEvent(event);
 			}
