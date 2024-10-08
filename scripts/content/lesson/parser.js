@@ -26,7 +26,7 @@ class ChallengeParser {
 				content = this.parseTapComplete(wrapper);
 				break;
 			case "gapFill":
-				content = this.parseGapFill();
+				content = this.parseGapFill(wrapper);
 				break;
 			case "completeReverseTranslation":
 				content = this.parseCompleteReverseTranslation(wrapper);
@@ -92,7 +92,7 @@ class ChallengeParser {
 	
 		let userAnswer = sections[1] ? sections[1].innerText : wrapper.querySelector("textarea[data-test='challenge-translate-input']").value; 
 		if (wordBankWrapper)
-			userAnswer = userAnswer.split("\n");
+			userAnswer = userAnswer?.split("\n");
 	
 		return {sentence, userAnswer, wordBank};
 	}
@@ -220,7 +220,7 @@ class ChallengeParser {
 		const questionSection = wrapper.querySelector("div[dir='ltr']");
 		if (questionSection) {
 			sentence = Array.from(questionSection.children)
-				.map(span => span.innerText)
+				.map(span => span.textContent)
 				.map(text => text == '' ? "<blank>" : text)
 				.join("");
 		}
@@ -229,9 +229,8 @@ class ChallengeParser {
 		const optionsWrapper = wrapper.querySelector("div[aria-label='choice']");
 		if (optionsWrapper) {
 			options = Array.from(optionsWrapper.children).map(child => {
-				const innerText = child.innerText.split("\n");
-				const option = innerText[0];
-				const choices = innerText[1].split(" ... ");
+				const option = parseInt(child.children[0].textContent);
+				const choices = child.children[1]?.textContent.split(" ... ");
 				return {option, choices};
 			});
 		}
@@ -282,8 +281,8 @@ class ChallengeParser {
 					userAnswer += (span.querySelector("input").value || "<blank>");
 				}
 				else {
-					original += span.innerText;
-					userAnswer += span.innerText;
+					original += span.textContent;
+					userAnswer += span.textContent;
 				}
 			});
 		}
@@ -436,7 +435,12 @@ class ChallengeParser {
 	}
 }
 
-window.ChallengeParser = ChallengeParser;
+if (typeof window !== 'undefined') {
+    window.ChallengeParser = ChallengeParser;
+} else {
+    // Export for Node.js environment
+    module.exports = ChallengeParser;
+}
 
 
 /* Auxiliar parsing functions */

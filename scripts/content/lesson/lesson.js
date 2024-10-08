@@ -113,10 +113,10 @@
 
 		chrome.runtime.sendMessage({ type: "QUERY", lesson: lesson }, response => {
 			console.log(response);
-			const challangeWrapper = document.querySelector('div[data-test^="challenge"]');
-			if (challangeWrapper) {
-				challangeWrapper.classList.add("d-cgpt-explain-area-wrapper");
-				challangeWrapper.insertAdjacentHTML("beforeend", explanationPrompt());
+			const challengeWrapper = document.querySelector('div[data-test^="challenge"]');
+			if (challengeWrapper) {
+				challengeWrapper.classList.add("d-cgpt-explain-area-wrapper");
+				challengeWrapper.insertAdjacentHTML("beforeend", explanationPrompt());
 				const explainArea = document.querySelector(".d-cgpt-explain-area");
 				
 				// slide in explanation
@@ -171,9 +171,9 @@
 		const explainArea = document.querySelector(".d-cgpt-explain-area");
 		if (explainArea) {
 			explainArea.remove();
-			const challangeWrapper = document.querySelector("div[data-test^='challenge']");
-			if (challangeWrapper) {
-				challangeWrapper.classList.remove("d-cgpt-explain-area-wrapper");
+			const challengeWrapper = document.querySelector("div[data-test^='challenge']");
+			if (challengeWrapper) {
+				challengeWrapper.classList.remove("d-cgpt-explain-area-wrapper");
 			}
 		}
 	}
