@@ -28,7 +28,7 @@ describe('Duolingo Challenge Parsing Tests with DOM', () => {
 	});
 
 	// test each challenge
-	test.each(challenges)('Should parse %s', async challenge => {
+	test.each(challenges)('should parse %s', async challenge => {
 		const html = fs.readFileSync(path.resolve(__dirname, 'pages', challenge), 'utf8');
 		
 		await page.setContent(html);			

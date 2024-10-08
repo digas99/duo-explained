@@ -38,11 +38,5 @@ python3 clean_page.py <filename>
 To run the tests, first make sure that you have the `json` file with the expected output for the test of each challenge inside the folder `expected`. Then, run the following command:
 
 ```bash
-npx jest
-```
-
-To run a specific test, use the following command:
-
-```bash
-npx jest -t <challenge>
+npm test
 ```
