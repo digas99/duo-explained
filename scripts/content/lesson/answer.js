@@ -2,6 +2,26 @@
  * @fileoverview Script to setup the 'answer' event listener on a Duolingo lesson.
  */
 
+/**
+ * Answer data object used in lesson.js as lesson.answer.
+ * @typedef {Object} AnswerData
+ * @example
+ * {
+ *     "details": {
+ *         "solution": "Je suis un homme.",	    // The correct answer from Duolingo
+ *!        "language": "fr",					// The language of the solution maybe
+ *         "state": "correct",					// The state of the answer (correct or incorrect)
+ *     	   "wrapper": <HTMLElement>,
+ * 	   	   "button": <HTMLElement>,
+ *     },
+ *    "challenge": @instance {Challenge}		// The challenge object from challenge.js
+ * }
+ */
+
+ class AnswerData {
+	
+ }
+
 (async () => {
 	if (!(await extensionActive())) return; 
 	
@@ -46,14 +66,14 @@
 
 				if (state === "incorrect") {
 					answerData.language = answerContent.querySelector("div[dir='ltr']")?.lang;
-					answerData.answer = answerContent.querySelector("div[dir='ltr']")?.textContent;
+					answerData.solution = answerContent.querySelector("div[dir='ltr']")?.textContent;
 				}
 
 				const challenge = document.querySelector("div[data-test^='challenge']");
 				const challengeType = challenge?.dataset.test.replace("challenge challenge-", "");
 
 				const event = new CustomEvent("answer", { detail: {
-					"answer": answerData,
+					"details": answerData,
 					"question": ChallengeParser.parse(challengeType, challenge),
 				} });
 				document.dispatchEvent(event);

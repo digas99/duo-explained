@@ -4,6 +4,9 @@
 
 
 class QueryGenerator {
+
+    //! if lesson.answer not defined/null use lesson.challenge to explain the exercise to the user
+    //! if lesson.answer is defined, ignore challenge 
     
     /**
      * Generates a prompt for ChatGPT to explain the exercise.
