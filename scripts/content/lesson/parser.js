@@ -9,8 +9,8 @@ class ChallengeParser {
 	 * @returns {Object} The parsed challenge content.
 	 */
 	static parse(type, wrapper) {
-		const questionHeader = wrapper.querySelector("h1[data-test='challenge-header']");
-		const question = questionHeader?.innerText;
+		const exerciseHeader = wrapper.querySelector("h1[data-test='challenge-header']");
+		const exercise = exerciseHeader?.innerText;
 	
 		let content;
 		switch(type) {
@@ -61,7 +61,7 @@ class ChallengeParser {
 		return {
 			type,
 			wrapper,
-			question,
+			exercise,
 			content
 		};
 	}
@@ -71,12 +71,12 @@ class ChallengeParser {
 	 * @param {Element} wrapper - The DOM element containing the exercise.
 	 * @returns {Object} An object containing:
 	 *   - sentence: {string} The sentence to be translated.
-	 *   - userAnswer: {Array<string>|string} The user's answer, either as an array of selected words or a typed string.
+	 *   - answer: {Array<string>|string} The user's answer, either as an array of selected words or a typed string.
 	 *   - wordBank: {Array<string>} The available words in the word bank.
 	 * @example
 	 * {
 	 *   sentence: "I am a student.",
-	 *   userAnswer: ["I", "am", "a", "student"],
+	 *   answer: ["I", "am", "a", "student"],
 	 *   wordBank: ["I", "am", "a", "student", "teacher", "you"]
 	 * }
 	 */
@@ -90,11 +90,11 @@ class ChallengeParser {
 		const sections = wrapper.querySelectorAll("div[dir='ltr']");
 		let sentence = sections[0]?.innerText;
 	
-		let userAnswer = sections[1] ? sections[1].innerText : wrapper.querySelector("textarea[data-test='challenge-translate-input']").value; 
+		let answer = sections[1] ? sections[1].innerText : wrapper.querySelector("textarea[data-test='challenge-translate-input']").value; 
 		if (wordBankWrapper)
-			userAnswer = userAnswer?.split("\n");
+			answer = answer?.split("\n");
 	
-		return {sentence, userAnswer, wordBank};
+		return {sentence, answer, wordBank};
 	}
 
 	/**
@@ -163,17 +163,17 @@ class ChallengeParser {
 	 * @param {Element} wrapper - The DOM element containing the exercise.
 	 * @returns {Object} An object containing:
 	 *   - sentence: {string} The sentence with blanks indicated by "<blank>".
-	 *   - userAnswer: {string|Array<string>} The user's answer, either as a string or array of selected words.
+	 *   - answer: {string|Array<string>} The user's answer, either as a string or array of selected words.
 	 *   - wordBank: {Array<string>} The available words in the word bank.
 	 * @example
 	 * {
 	 *   sentence: "She is <blank> teacher.",
-	 *   userAnswer: ["She", "is", "a", "teacher"],
+	 *   answer: ["She", "is", "a", "teacher"],
 	 *   wordBank: ["a", "an", "the", "teacher", "student"]
 	 * }
 	 */
 	static parseTapComplete(wrapper) {
-		let sentence = "", userAnswer = [];
+		let sentence = "", answer = [];
 
 		const questionSection = wrapper.querySelector("div[dir='ltr']");
 		if (questionSection) {
@@ -182,7 +182,7 @@ class ChallengeParser {
 				.map(span => span.innerText)
 				.join("").split("  ").join(" <blank> ");
 
-			userAnswer = Array.from(questionSection.children)
+			answer = Array.from(questionSection.children)
 				.map(span => span.innerText)
 				.join("").split("  ").join(" <blank> ");
 		}
@@ -193,7 +193,7 @@ class ChallengeParser {
 			wordBank = Array.from(wordBankWrapper.children).map(wordElem => wordElem.innerText);
 		}
 	
-		return {sentence, userAnswer, wordBank};
+		return {sentence, answer, wordBank};
 	}
 
 	/**
@@ -201,15 +201,15 @@ class ChallengeParser {
 	 * @param {Element} wrapper - The DOM element containing the exercise.
 	 * @returns {Object} An object containing:
 	 *   - sentence: {string} The sentence with blanks indicated by "<blank>".
-	 *   - userAnswer: {string} The user's answer with filled words.
+	 *   - answer: {string} The user's answer with filled words.
 	 *   - options: {Array<Object>} Options for each blank.
 	 *     - option: {string} The option identifier (e.g., "A", "B").
 	 *     - choices: {Array<string>} The choices available for the blank.
 	 * @example
 	 * {
 	 *   sentence: "He <blank> to school.",
-	 *   userAnswer: "He goes to school.",
-	 *   options: [
+	 *   answer: "He goes to school.",
+	 *   choices: [
 	 *     { option: "A", choices: ["goes", "go", "gone"] }
 	 *   ]
 	 * }
@@ -250,8 +250,8 @@ class ChallengeParser {
 	
 		return {
 			sentence: original,
-			userAnswer: sentence,
-			options
+			answer: sentence,
+			choices: options
 		};
 	}
 
@@ -260,37 +260,37 @@ class ChallengeParser {
 	 * @param {Element} wrapper - The DOM element containing the exercise.
 	 * @returns {Object} An object containing:
 	 *   - sentence: {string} The original sentence in the source language.
-	 *   - answer: {string} The translation with blanks indicated by "<blank>".
-	 *   - userAnswer: {string} The user's filled-in translation.
+	 *   - prompt: {string} The translation with blanks indicated by "<blank>".
+	 *   - answer: {string} The user's filled-in translation.
 	 * @example
 	 * {
 	 *   sentence: "Je suis un étudiant.",
-	 *   answer: "I am <blank> student.",
-	 *   userAnswer: "I am a student."
+	 *   prompt: "I am <blank> student.",
+	 *   answer: "I am a student."
 	 * }
 	 */
 	static parseCompleteReverseTranslation(wrapper) {
 		const sentence = wrapper.querySelector("div[dir='ltr']").innerText;
 		
 		const answerWrapper = wrapper.querySelector("label[dir='ltr']");
-		let original = "", userAnswer = "";
+		let original = "", answer = "";
 		if (answerWrapper) {
 			Array.from(answerWrapper.children).forEach(span => {
 				if (span.querySelector("input")) {
 					original += "<blank>";
-					userAnswer += (span.querySelector("input").value || "<blank>");
+					answer += (span.querySelector("input").value || "<blank>");
 				}
 				else {
 					original += span.textContent;
-					userAnswer += span.textContent;
+					answer += span.textContent;
 				}
 			});
 		}
 	
 		return {
 			sentence,
-			answer: original,
-			userAnswer
+			prompt: original,
+			answer
 		}
 	}
 
@@ -299,30 +299,30 @@ class ChallengeParser {
 	 * @param {Element} wrapper - The DOM element containing the exercise.
 	 * @returns {Object} An object containing:
 	 *   - sentence: {string} The text to read.
-	 *   - answer: {string} The correct answer.
+	 *   - prompt: {string} The correct answer.
 	 *   - choices: {Array<Choice>} Possible answer choices.
-	 *   - userAnswer: {Choice} The choice selected by the user.
+	 *   - answer: {Choice} The choice selected by the user.
 	 * @example
 	 * {
 	 *   sentence: "The cat sat on the mat.",
-	 *   answer: "The cat is sitting.",
+	 *   prompt: "The cat is sitting.",
 	 *   choices: [
 	 *     { option: 1, text: "The cat is sleeping." },
 	 *     { option: 2, text: "The cat is sitting." },
 	 *     { option: 3, text: "The cat is eating." }
 	 *   ],
-	 *   userAnswer: { option: 2, text: "The cat is sitting." }
+	 *   answer: { option: 2, text: "The cat is sitting." }
 	 * }
 	 */
 	static parseReadComprehension(wrapper) {
 		const sections = wrapper.querySelectorAll("div[dir='ltr']");
 		const sentence = sections[0].innerText;
 	
-		const answer = sections[1].innerText;
+		const prompt = sections[1].innerText;
 		const choicesWrapper = wrapper.querySelector("div[aria-label='choice']");
-		const {choices, userAnswer} = choiceParser(choicesWrapper);
+		const {choices, answer} = choiceParser(choicesWrapper);
 	
-		return { sentence, answer, choices, userAnswer };
+		return { sentence, prompt, choices, answer };
 	}
 
 	/**
@@ -350,7 +350,7 @@ class ChallengeParser {
 	 * @returns {Object} An object containing:
 	 *   - sentence: {string} The question or prompt.
 	 *   - choices: {Array<Choice>} Possible answer choices.
-	 *   - userAnswer: {Choice} The choice selected by the user.
+	 *   - answer: {Choice} The choice selected by the user.
 	 * @example
 	 * {
 	 *   sentence: "Select the correct translation for 'apple'.",
@@ -359,14 +359,14 @@ class ChallengeParser {
 	 *     { option: 2, text: "banane" },
 	 *     { option: 3, text: "orange" }
 	 *   ],
-	 *   userAnswer: { option: 1, text: "pomme" }
+	 *   answer: { option: 1, text: "pomme" }
 	 * }
 	 */
 	static parseAssist(wrapper) {
 		const sentence = wrapper.querySelector("div[dir='ltr']").innerText;
 		const choicesWrapper = wrapper.querySelector("div[aria-label='choice']");
-		const {choices, userAnswer} = choiceParser(choicesWrapper);
-		return {sentence, choices, userAnswer};
+		const {choices, answer} = choiceParser(choicesWrapper);
+		return {sentence, choices, answer};
 	}
 
 	/**
@@ -374,7 +374,7 @@ class ChallengeParser {
 	 * @param {Element} wrapper - The DOM element containing the exercise.
 	 * @returns {Object} An object containing:
 	 *   - choices: {Array<Choice>} Possible answer choices.
-	 *   - userAnswer: {Choice} The choice selected by the user.
+	 *   - answer: {Choice} The choice selected by the user.
 	 * @example
 	 * {
 	 *   choices: [
@@ -382,7 +382,7 @@ class ChallengeParser {
 	 *     { option: 2, text: "Cat" },
 	 *     { option: 3, text: "Bird" }
 	 *   ],
-	 *   userAnswer: { option: 2, text: "Cat" }
+	 *   answer: { option: 2, text: "Cat" }
 	 * }
 	 */
 	static parseSelect(wrapper) {
@@ -396,20 +396,20 @@ class ChallengeParser {
 	 * @returns {Object} An object containing:
 	 *   - word: {string} The word to transliterate.
 	 *   - language: {string} The language code of the word.
-	 *   - userAnswer: {string} The user's transliteration.
+	 *   - answer: {string} The user's transliteration.
 	 * @example
 	 * {
 	 *   word: "こんにちは",
 	 *   language: "ja",
-	 *   userAnswer: "konnichiwa"
+	 *   answer: "konnichiwa"
 	 * }
 	 */
 	static parseTransliterate(wrapper) {
 		const wordWrapper = wrapper.querySelector("span[dir='ltr']");
 		const word = wordWrapper.innerText;
 		const language = wordWrapper.lang;
-		const userAnswer = wrapper.querySelector("input[data-test='challenge-text-input']").value;
-		return {word, language, userAnswer};
+		const answer = wrapper.querySelector("input[data-test='challenge-text-input']").value;
+		return {word, language, answer};
 	}
 
 	/**
@@ -446,7 +446,7 @@ if (typeof window !== 'undefined') {
 /* Auxiliar parsing functions */
 
 const choiceParser = (wrapper, reverse=false) => {
-	let choices = [], userAnswer = {};
+	let choices = [], answer = {};
 	if (wrapper) {
 		choices = Array.from(wrapper.children).map(choice => {
 			let [option, text] = choice.innerText.split("\n");
@@ -467,11 +467,11 @@ const choiceParser = (wrapper, reverse=false) => {
 			if (image) object.image = image;
 
 			if (choice.ariaChecked === "true") {
-				userAnswer = object;
+				answer = object;
 			}
 
 			return object;
 		});
 	}
-	return {choices, userAnswer};
+	return {choices, answer};
 }

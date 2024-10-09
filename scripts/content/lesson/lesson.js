@@ -28,7 +28,7 @@
 		const footer = document.getElementById("session/PlayerFooter");
 		footer.classList.add("d-cgpt-footer");
 
-		addExplainButton(answerData.question.content === undefined);
+		addExplainButton(answerData.challenge.content === undefined);
 		toggleExtraInput(false);
 	});
 
@@ -212,6 +212,8 @@
 				challengeWrapper.classList.remove("d-cgpt-explain-area-wrapper");
 			}
 		}
+
+		answerData = null;
 	}
 
 	const addExplainButton = disabled => {

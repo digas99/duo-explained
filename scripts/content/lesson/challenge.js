@@ -10,7 +10,6 @@
  * {
  *     "content": {
  * 	       "sentence": "I am student",						// The sentence of question itself
- *         "exercise": "Translate the sentence.",			// The description of the exercise 
  *         (optional) "prompt":								// The prompt of the exercise
  *         (optional) "answer":
  *         (optional) "wordBank":
@@ -21,6 +20,8 @@
  *	       "source": "en",									// The source language of the sentence
  *	       "target": "fr"									// The target language of the user answer
  *		},
+ *      "exercise": "Translate the sentence.",				// The description of the exercise 
+ *      "type": "translate",								// The type of the exercise
  * }
  */
 
