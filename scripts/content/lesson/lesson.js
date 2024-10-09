@@ -2,6 +2,17 @@
  * @fileoverview Content script for all the interactions with the Duolingo lesson page.
  */
 
+/**
+ * Lesson data object used in query.js.
+ * @typedef {Object} LessonData
+ * @example
+ * {
+ *	   "answer": @instance {AnswerData},			// The answer object from answer.js
+ *     "challenge": @instance {Challenge}			// The challenge object from challenge.js
+ *     "extra": "Why is this sentence like this?"	// The extra input from the user
+ * }
+ */
+
 (async () => {
 	if (!(await extensionActive())) return; 
 
@@ -27,7 +38,6 @@
 
 		console.log("Challenge event detected");
 		challengeData = event.detail;
-		console.log(challengeData);
 
 		const footer = document.getElementById("session/PlayerFooter");
 		footer.classList.add("d-cgpt-footer");
@@ -115,8 +125,6 @@
 			challengeWrapper.insertAdjacentHTML("beforeend", explanationPrompt("Loading explanation..."));
 
 			chrome.runtime.sendMessage({ type: "QUERY", data: lesson }, response => {
-				console.log(response);
-
 				const explainArea = document.querySelector(".d-cgpt-explain-area");
 				
 				// slide in explanation
