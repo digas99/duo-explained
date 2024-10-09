@@ -36,6 +36,8 @@ body:
         - Chrome
         - Firefox
         - Other
+    validations:
+      required: false
   - type: input
     id: version
     attributes:

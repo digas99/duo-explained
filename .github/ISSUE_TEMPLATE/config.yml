@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Contributing Guidelines
+    url: https://github.com/digas99/duolingo-chatgpt/blob/main/CONTRIBUTING.md
+    about: Please read the contributing guidelines before opening an issue.
+  - name: Code of Conduct
+    url: https://github.com/digas99/duolingo-chatgpt/blob/main/CODE_OF_CONDUCT.md
+    about: Please read the code of conduct before opening an issue.
