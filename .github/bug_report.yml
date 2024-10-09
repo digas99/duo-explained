@@ -1,0 +1,85 @@
+name: Bug Report
+description: File a bug report.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this issue report!
+        Please, provide a general idea of the issue in the title and fill out the following form to the best of your ability.
+  - type: dropdown
+    id: bug-type
+    attributes:
+      label: Context
+      description: On Duolingo, when did the issue occur?
+      options:
+        - During lesson - before answering
+        - During lesson - after answering - correctly
+        - During lesson - after answering - incorrectly
+        - Outside of a lesson
+        - Other. Please specify in Issue Description.
+    validations:
+      required: true
+  - type: textarea
+    id: issue-description
+    attributes:
+      label: Issue Description
+      description: A concise description of what happened.
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: The browser you are using.
+      options:
+        - Chrome
+        - Firefox
+        - Other
+  - type: input
+    id: version
+    attributes:
+      label: Extension Version
+      description: The version of the extension you are using (please check either the extension Popup or the extension settings page of your browser).
+      placeholder: 0.0.1
+    validations:
+      required: false
+  - type: input
+    id: source-language
+    attributes:
+      label: Your Language
+      description: The language you are using to learn the language in question.
+      placeholder: English
+    validations:
+      required: false
+  - type: input
+    id: target-language
+    attributes:
+      label: Target Language
+      description: The language you are learning.
+      placeholder: Spanish
+    validations:
+      required: false
+  - type: input
+    id: exercise-type
+    attributes:
+      label: Exercise Type
+      description: Please provide the type of exercise you were doing when the issue occurred.
+      placeholder: translate
+    validations:
+      required: false
+  - type: checkboxes
+    id: explain-enabled
+    attributes:
+      label: Explain Button
+      options:
+        - label: Was the Explain button enabled?
+          required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to abide by the [Code of Conduct](https://github.com/digas99/duolingo-chatgpt/blob/main/CODE_OF_CONDUCT.md).
+      options:
+        - label: I agree to abide by this project's Code of Conduct.
+          required: true
