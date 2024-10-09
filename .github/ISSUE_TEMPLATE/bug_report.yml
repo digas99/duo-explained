@@ -13,11 +13,11 @@ body:
       label: Context
       description: On Duolingo, when did the issue occur?
       options:
-        - During lesson - before answering
-        - During lesson - after answering - correctly
-        - During lesson - after answering - incorrectly
+        - During lesson, before answering
+        - During lesson, after answering, correctly
+        - During lesson, after answering, incorrectly
         - Outside of a lesson
-        - Other. Please specify in Issue Description.
+        - Other. Please specify in Issue Description
     validations:
       required: true
   - type: textarea
