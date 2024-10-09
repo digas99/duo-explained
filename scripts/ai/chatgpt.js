@@ -3,7 +3,7 @@
  */
 
 
-export class OpenAIAgent {
+class OpenAIAgent {
     /**
      * Constructs an instance of the OpenAIAgent.
      */

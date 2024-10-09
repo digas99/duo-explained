@@ -14,6 +14,11 @@ const INTERFACE_COLORS = {
 		"faded-accent-color": "#cff2e5",
 		"styles": [
 			`
+				.d-cgpt-button {
+				 	filter: unset !important;
+					opacity: 0.2;
+				}
+
 				.d-cgpt-icon {
 					filter: invert(100%) sepia(46%) saturate(136%) hue-rotate(294deg) brightness(116%) contrast(80%);
 					background-color: #5d4d29;
@@ -31,6 +36,11 @@ const INTERFACE_COLORS = {
 		"faded-accent-color": "#3d554c",
 		"styles": [
 			`
+				.d-cgpt-button {
+					filter: invert(1) !important;
+					opacity: 0.2;
+				}
+
 				.d-cgpt-icon {
 					filter: invert(26%) sepia(33%) saturate(298%) hue-rotate(158deg) brightness(88%) contrast(94%);
 					background-color: rgb(147, 163, 173);

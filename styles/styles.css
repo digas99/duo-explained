@@ -88,7 +88,6 @@
 
 .d-cgpt-prompt > div > img:last-child {
 	width: 20px;
-	filter: invert(1);
 }
 
 .d-cgpt-explain-button-wrapper {

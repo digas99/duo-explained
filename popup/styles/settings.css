@@ -1,0 +1,64 @@
+.d-cgpt-settings-checkbox {
+	display: flex;
+    align-items: center;
+    padding: 8px 10px;
+	column-gap: 10px;
+	color: rgb(var(--color-eel));
+}
+
+.d-cgpt-settings-checkbox > label {
+	font-size: 15px;
+	font-weight: bold;
+	opacity: 0.6;
+	transition: 0.3s;
+}
+
+.d-cgpt-settings-checkbox > label > div {
+    font-size: 12px;
+    font-weight: normal;
+	color: rgb(var(--color-wolf));
+}
+
+.d-cgpt-custom-checkbox {
+    position: relative;
+    text-align: right;
+	cursor: pointer;
+}
+
+.d-cgpt-custom-checkbox > input {
+	pointer-events: none;
+	display: none;
+}
+
+.d-cgpt-custom-checkbox-back {
+    width: 45px;
+    height: 22px;
+    border-radius: 10px;
+    background-color: rgb(var(--color-swan));
+}
+
+.d-cgpt-custom-checkbox-ball {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgb(var(--color-swan));
+    border-bottom-width: 4px;
+    border-radius: 6px;
+    position: absolute;
+    top: -2px;
+    transition: 0.4s;
+    background-color: rgb(var(--color-snow));
+}
+
+.d-cgpt-settings-checkbox-enabled label {
+	color: var(--d-cgpt-accent-color);
+	opacity: 1;
+}
+
+.d-cgpt-settings-checkbox-enabled .d-cgpt-custom-checkbox-back {
+	background-color: var(--d-cgpt-accent-color);
+}
+
+.d-cgpt-settings-checkbox-enabled .d-cgpt-custom-checkbox-ball {
+    margin-left: 22px;
+    border-color: var(--d-cgpt-accent-color);
+}

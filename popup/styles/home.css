@@ -1,0 +1,44 @@
+:root {
+	--color-swan: 229, 229, 229;
+	--color-snow: 255, 255, 255;
+	--color-eel: 75, 75, 75;
+	--color-wolf: 119, 119, 119;
+
+	--d-cgpt-accent-color: #00de8c;
+	--d-cgpt-secondary-color: #cff2e5;
+	--d-cgpt-faded-accent-color: #cff2e5;
+}
+
+body {
+	min-width: 300px;
+	font-family: din-round, sans-serif;
+	color: rgb(var(--color-eel));
+}
+
+#settings {
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
+}
+
+.footer {
+	text-align: center;
+	margin: 25px 0;
+}
+
+.footer > img {
+	width: 35px;
+}
+
+.footer #version {
+	font-size: 12px;
+	color: rgb(var(--color-wolf));
+	margin-top: 5px;
+}
+
+.separator {
+	width: 93%;
+    height: 2px;
+    background-color: rgb(var(--color-swan));
+    margin: 20px auto;
+}

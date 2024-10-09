@@ -1,6 +1,6 @@
 const extensionActive = async () => {
-	const data = await chrome.storage.sync.get("EXTENSION_ACTIVE");
-	return data.EXTENSION_ACTIVE;
+	const data = await chrome.storage.sync.get("SETTINGS");
+	return data.SETTINGS?.["extension-enabled"];
 }
 
 const parseJapaneseFurigana = textWrapper => {

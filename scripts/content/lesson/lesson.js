@@ -165,7 +165,15 @@
 					explainContent.innerHTML = "";
 					if (response && response.content) {
 						const text = response.content.split(". ").join(".\n");
-						type(explainContent, text);
+						chrome.storage.sync.get("SETTINGS", data => {
+							const typeAnimation = data.SETTINGS?.["typing-animation"];
+							if (typeAnimation) {
+								type(explainContent, text);
+							}
+							else {
+								explainContent.textContent = text;
+							}
+						});
 					}
 					else
 						explainContent.innerHTML = "Something went wrong. Could not get an explanation.\nWe appologize for the inconvenience.";

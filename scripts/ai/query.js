@@ -3,7 +3,7 @@
  */
 
 
-export class QueryGenerator {
+class QueryGenerator {
     
     /**
      * Generates a prompt for ChatGPT to explain the exercise.

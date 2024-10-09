@@ -40,10 +40,11 @@
 		}
 
 		// API Key prompt
-		chrome.storage.sync.get(["API_KEY", "API_KEY_PROMPT_CLOSED", "EXTENSION_ACTIVE"], data => {
+		chrome.storage.sync.get(["API_KEY", "API_KEY_PROMPT_CLOSED", "SETTINGS"], data => {
 			const apiKey = data.API_KEY;
 			const promptClosed = data.API_KEY_PROMPT_CLOSED;
-			const extensionActive = data.EXTENSION_ACTIVE;
+			const settings = data.SETTINGS || {};
+			const extensionActive = settings?.["extension-enabled"];
 			if (!apiKey && !promptClosed) {
 				setupPrompt(newTab);
 			}
@@ -70,7 +71,9 @@
 								// enable extension
 								newTab.querySelector("a").classList.add("active");
 							}
-							chrome.storage.sync.set({ "EXTENSION_ACTIVE": newTab.querySelector("a").classList.contains("active") }, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
+
+							settings["extension-enabled"] = newTab.querySelector("a").classList.contains("active");
+							chrome.storage.sync.set({"SETTINGS": settings}, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
 						}
 					});
 				});
@@ -121,7 +124,7 @@
 		delete tabLink.dataset.test;
 		tabLink.href = "javascript: void(0)";
 		const tabText = tab.querySelector("span span");
-		tabText.innerText = "Duo ChatGPT";
+		tabText.innerText = "Duo Explained";
 		const tabIcon = tab.querySelector("img");
 		tabIcon.src = "https://andreclerigo.github.io/duolingo-chatgpt-assets/logo.png";
 		return tab;
@@ -134,9 +137,23 @@
 					<img src="https://andreclerigo.github.io/duolingo-chatgpt-assets/logo-stroke.png">
 					<input type="text" placeholder="ChatGPT API Key">
 					<button>Submit</button>
-					<img id="d-cgpt-prompt-close" class="d-cgpt-prompt-icon" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/close-thick.png">
+					<img id="d-cgpt-prompt-close" class="d-cgpt-prompt-icon d-cgpt-button" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/close-thick.png">
 				</div>
 			</div>
 		`;
 	};
+
+	chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+		if (request.type === "TOGGLE_EXTENSION") {
+			const extensionTab = document.querySelector(".d-cgpt-tab");
+			if (extensionTab) {
+				if (request.value && !extensionTab.querySelector("a").classList.contains("active")) {
+					extensionTab.querySelector("a").classList.add("active");
+				}
+				else if (!request.value && extensionTab.querySelector("a").classList.contains("active")) {
+					extensionTab.querySelector("a").classList.remove("active");
+				}
+			}
+		}
+	});
 })();
