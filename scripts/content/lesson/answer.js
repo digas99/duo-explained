@@ -8,13 +8,13 @@
  * @example
  * {
  *     "details": {
- *         "solution": "Je suis un homme.",	    // The correct answer from Duolingo
  *!        "language": "fr",					// The language of the solution maybe
  *         "state": "correct",					// The state of the answer (correct or incorrect)
  *     	   "wrapper": <HTMLElement>,
  * 	   	   "button": <HTMLElement>,
  *     },
- *    "challenge": @instance {Challenge}		// The challenge object from challenge.js
+ *     "challenge": @instance {Challenge}		// The challenge object from challenge.js
+ *     "solution": "Je suis un homme.",	    	// The correct answer from Duolingo
  * }
  */
 
@@ -57,6 +57,7 @@
 			const selectedMutation = validMutations.find(answerMutation);
 			if (selectedMutation) {
 				const answerContent = answerMutation(selectedMutation);
+				let solution;
 				
 				const answerData = {
 					state: state,
@@ -66,7 +67,7 @@
 
 				if (state === "incorrect") {
 					answerData.language = answerContent.querySelector("div[dir='ltr']")?.lang;
-					answerData.solution = answerContent.querySelector("div[dir='ltr']")?.textContent;
+					solution = answerContent.querySelector("div[dir='ltr']")?.textContent;
 				}
 
 				const challenge = document.querySelector("div[data-test^='challenge']");
@@ -74,7 +75,8 @@
 
 				const event = new CustomEvent("answer", { detail: {
 					"details": answerData,
-					"question": ChallengeParser.parse(challengeType, challenge),
+					"challenge": ChallengeParser.parse(challengeType, challenge),
+					"solution": solution
 				} });
 				document.dispatchEvent(event);
 			}

@@ -2,6 +2,32 @@
  * @fileoverview Script to setup the 'challenge' event listener on a Duolingo lesson.
  */
 
+/**
+ * Challenge data object used in lesson.js as lesson.challenge as the snapshot of challenge not answered by the user.
+ * Challenge data ojbect can also be used in answer.js as answer.challenge as the challenge answered by the user. 
+ * @typedef {Object} ChallengeData
+ * @example
+ * {
+ *     "content": {
+ * 	       "sentence": "I am student",						// The sentence of question itself
+ *         "exercise": "Translate the sentence.",			// The description of the exercise 
+ *         (optional) "prompt":								// The prompt of the exercise
+ *         (optional) "answer":
+ *         (optional) "wordBank":
+ * 	       (optional) "choices":
+ *     },
+ *     "wrapper": <HTMLElement>,							// The wrapper of the challenge
+ *TODO:"language": {
+ *	       "source": "en",									// The source language of the sentence
+ *	       "target": "fr"									// The target language of the user answer
+ *		},
+ * }
+ */
+
+class ChallengeData {
+
+}
+
 (async () => {
 	if (!(await extensionActive())) return; 
 
