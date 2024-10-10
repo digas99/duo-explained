@@ -179,18 +179,26 @@ class ChallengeParser {
 		if (questionSection) {
 			sentence = Array.from(questionSection.children)
 				.filter(span => !span.querySelector("button"))
-				.map(span => span.innerText)
+				.map(span => span.textContent)
 				.join("").split("  ").join(" <blank> ");
 
 			answer = Array.from(questionSection.children)
-				.map(span => span.innerText)
+				.map(span => {
+					if (span.tagName === "DIV") {
+						const button = Array.from(span.querySelectorAll("button"))
+							.find(button => getComputedStyle(button.parentElement.parentElement).getPropertyValue("visibility") !== "hidden");
+
+						return button?.textContent || "<blank>";
+					}
+					return span.textContent;
+				})
 				.join("").split("  ").join(" <blank> ");
 		}
 	
 		let wordBank = [];
 		const wordBankWrapper = wrapper.querySelector("div[data-test='word-bank']");
 		if (wordBankWrapper) {
-			wordBank = Array.from(wordBankWrapper.children).map(wordElem => wordElem.innerText);
+			wordBank = Array.from(wordBankWrapper.children).map(wordElem => wordElem.textContent);
 		}
 	
 		return {sentence, answer, wordBank};

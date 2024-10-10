@@ -56,6 +56,11 @@ class ChallengeData {
 	}
 
 	validateContent() {
+		// not having content means the challenge hasn't been dealed with yet
+		// so we don't throw an error
+		if (!this.content)
+			return;
+
 		if (!this.content.sentence)
 			throw new Error("ChallengeData content.sentence is required.");
 
