@@ -67,11 +67,16 @@
 	document.addEventListener("click", async event => {
 		const target = event.target;
 		
-		if (!target.closest(".d-cgpt-explain-area") && !(document.querySelector(".d-cgpt-explain-area")?.dataset.mouseDown == "true") && window.innerWidth <= 1050) {
-			const explainArea = document.querySelector(".d-cgpt-explain-area");
-			if (explainArea) {
-				explainArea.style.removeProperty("right");
-				explainArea.classList.add("d-cgpt-explain-area-closed");
+		if (window.innerWidth <= 1050) {
+			if (!target.closest(".d-cgpt-explain-area") && document.querySelector(".d-cgpt-explain-area")?.dataset.mouseDown !== "true" && !target.closest(".d-cgpt-explain-button")) {
+				const explainArea = document.querySelector(".d-cgpt-explain-area");
+				if (explainArea) {
+					explainArea.style.removeProperty("right");
+					explainArea.classList.add("d-cgpt-explain-area-closed");
+
+					const closeButton = document.querySelector(".d-cgpt-explain-close");
+					closeButton.classList.remove("d-cgpt-explain-close-accent")
+				}
 			}
 		}
 	});
@@ -88,6 +93,9 @@
 			if (explainArea && !explainArea.classList.contains("d-cgpt-explain-area-closed")) {
 				explainArea.classList.add("d-cgpt-explain-area-closed");
 				explainArea.dataset.mouseDown = true;
+
+				const closeButton = document.querySelector(".d-cgpt-explain-close");
+				closeButton.classList.add("d-cgpt-explain-close-accent");
 			}
 		}
 	});
@@ -99,8 +107,16 @@
 		const explainArea = document.querySelector(".d-cgpt-explain-area");
 		if (timeDiff > 500 && explainArea && explainArea.dataset.mouseDown == "true" && explainArea.classList.contains("d-cgpt-explain-area-closed")) {
 			explainArea.classList.remove("d-cgpt-explain-area-closed");
+			
+			const closeButton = document.querySelector(".d-cgpt-explain-close");
+			setTimeout(() => closeButton.classList.remove("d-cgpt-explain-close-accent"), 400);
+
 			setTimeout(() => explainArea.dataset.mouseDown = false);
 		}
+
+		if (timeDiff <= 500)
+			explainArea.dataset.mouseDown = false;
+
 		mouseDownTime = 0;
 	});
 
@@ -139,6 +155,9 @@
 					if (explainArea) {
 						explainArea.style.removeProperty("right");
 						explainArea.classList.toggle("d-cgpt-explain-area-closed");
+
+						const closeButton = document.querySelector(".d-cgpt-explain-close");
+						closeButton.classList.remove("d-cgpt-explain-close-accent");
 					}
 				});
 				explanationClose.addEventListener("mouseover", () => {
@@ -254,6 +273,7 @@
 				</div>
 				<div class="d-cgpt-explain-content">${content}</div>
 				<div class="d-cgpt-explain-close">
+					<div class="d-cgpt-explain-close-border"></div>
 					<img class="d-cgpt-icon" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/arrow-circle.png">
 				</div>
 				<div class="d-cgpt-explain-bottom">

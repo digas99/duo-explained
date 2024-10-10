@@ -56,9 +56,6 @@ class ChallengeData {
 	}
 
 	validateContent() {
-		if (!this.content)
-			throw new Error("ChallengeData content is required.");
-
 		if (!this.content.sentence)
 			throw new Error("ChallengeData content.sentence is required.");
 

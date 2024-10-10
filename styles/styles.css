@@ -1,7 +1,27 @@
 :root {
+	--d-cgpt-accent-color: #00de8c;
+	--d-cgpt-secondary-color: #cff2e5;
+	--d-cgpt-faded-accent-color: #cff2e5;
+
+	--d-cgpt-accent-icon-invert: 83%;
+	--d-cgpt-accent-icon-sepia: 29%;
+	--d-cgpt-accent-icon-saturate: 5497%;
+	--d-cgpt-accent-icon-hue: 102deg;
+	--d-cgpt-accent-icon-brightness: 90%;
+	--d-cgpt-accent-icon-contrast: 101%;
+}
+
+:root[data-duo-theme="dark"] {
 	--d-cgpt-accent-color: #00ffa1;
 	--d-cgpt-secondary-color: #0e0e0e;
 	--d-cgpt-faded-accent-color: #3d554c;
+
+	--d-cgpt-accent-icon-invert: 99%;
+	--d-cgpt-accent-icon-sepia: 74%;
+	--d-cgpt-accent-icon-saturate: 4779%;
+	--d-cgpt-accent-icon-hue: 76deg;
+	--d-cgpt-accent-icon-brightness: 97%;
+	--d-cgpt-accent-icon-contrast: 117%;
 }
 
 .d-cgpt-tab {
@@ -144,6 +164,7 @@
 	background-color: rgb(var(--color-snow));
 	border-radius: 16px;
 	padding: 20px;
+	padding-bottom: 40px;
 	min-height: 400px;
 	position: relative;
 }
@@ -235,14 +256,30 @@
 	cursor: pointer;
 }
 
-.d-cgpt-explain-close:hover {
-	opacity: 0.8;
+.d-cgpt-explain-close-border {
+	background-color: rgb(var(--color-swan));
+    position: absolute;
+    left: 3px;
+    right: 0;
+    margin: auto;
+    height: 95%;
+    transition: 0.3s;
+    width: 1px;
+}
+
+.d-cgpt-explain-close:hover .d-cgpt-explain-close-border, .d-cgpt-explain-close-accent > .d-cgpt-explain-close-border {
+	background-color: var(--d-cgpt-accent-color);
 }
 
 .d-cgpt-explain-close > img {
     width: 30px;
     border-radius: 50%;
     padding: 2px;
+}
+
+.d-cgpt-explain-close:hover > img, .d-cgpt-explain-close-accent > img {
+	filter: invert(var(--d-cgpt-accent-icon-invert)) sepia(var(--d-cgpt-accent-icon-sepia)) saturate(var(--d-cgpt-accent-icon-saturate)) hue-rotate(var(--d-cgpt-accent-icon-hue)) brightness(var(--d-cgpt-accent-icon-brightness)) contrast(var(--d-cgpt-accent-icon-contrast)) !important;
+	background-color: black !important;
 }
 
 .d-cgpt-speech-bubble {
@@ -303,5 +340,11 @@
 
 	.d-cgpt-explain-close {
 		display: flex;
+	}
+}
+
+@media screen and (min-width: 1050px) {
+	.d-cgpt-explain-area {
+		right: unset !important;
 	}
 }

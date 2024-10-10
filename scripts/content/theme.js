@@ -3,6 +3,9 @@
  */
 
 const duolingoTheme = () => {
+	if (document.documentElement.hasAttribute("data-duo-theme"))
+		return document.documentElement.getAttribute("data-duo-theme");
+
 	const blackWhiteValue = getComputedStyle(document.documentElement).getPropertyValue("--color-black-white");
 	return blackWhiteValue === '0, 0, 0' ? 'light' : 'dark';
 }
