@@ -79,7 +79,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             target: { tabId: sender.tab.id },
             files: [
                 "/scripts/content/lesson/answer.js",
-                "/scripts/content/lesson/question.js",
+                "/scripts/content/lesson/challenge.js",
                 "/scripts/content/lesson/lesson.js",
             ]
         });

@@ -5,6 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Home</title>
 	
+	<link rel="stylesheet" href="/styles/styles.css">
+
 	<link rel="stylesheet" href="styles/settings.css">
 	<link rel="stylesheet" href="styles/home.css">
 
@@ -18,6 +20,18 @@
 	<div id="settings"></div>
 
 	<div class="separator"></div>
+
+	<div class="element">
+		<div class="title">ChatGPT API Key</div>
+		<div class="input-wrapper">
+			<input type="text" id="api-key" placeholder="API Key">
+			<img id="copy-api-key" src="/images/icons/copy.png" alt="copy">
+		</div>
+		<div class="buttons">
+			<button class="button-disabled" id="save-api-key">Save</button>
+			<button id="remove-api-key">Remove</button>
+		</div>
+	</div>
 
 	<div class="footer">
 		<img src="/images/logo/logo.png" alt="">

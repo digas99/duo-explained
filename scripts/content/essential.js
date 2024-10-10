@@ -143,17 +143,60 @@
 		`;
 	};
 
+	const toggleExtension = value => {
+		const extensionTab = document.querySelector(".d-cgpt-tab");
+		if (extensionTab) {
+			if (value && !extensionTab.querySelector("a").classList.contains("active")) {
+				console.log("Enabling extension");
+				extensionTab.querySelector("a").classList.add("active");
+			}
+			else if (!value && extensionTab.querySelector("a").classList.contains("active")) {
+				console.log("Disabling extension");
+				extensionTab.querySelector("a").classList.remove("active");
+			}
+		}
+	}
+
+	navigation.addEventListener("navigate", (event) => {
+		// check if entering a lesson
+		if (event.destination.url.split("duolingo.com/")[1] === "lesson") {
+			const prompt = document.querySelector(".d-cgpt-prompt");
+			if (prompt)
+				prompt.remove();
+		}
+	});
+
 	chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 		if (request.type === "TOGGLE_EXTENSION") {
-			const extensionTab = document.querySelector(".d-cgpt-tab");
-			if (extensionTab) {
-				if (request.value && !extensionTab.querySelector("a").classList.contains("active")) {
-					extensionTab.querySelector("a").classList.add("active");
+			chrome.storage.sync.get("API_KEY", data =>
+				toggleExtension(data.API_KEY && request.value)
+			);
+		}
+
+		if (request.type === "RESET") {
+			chrome.storage.sync.remove("API_KEY", () => {
+				const newTab = document.querySelector(".d-cgpt-tab");
+				if (newTab)
+					setupPrompt(newTab);
+
+				setTimeout(() => toggleExtension(false), 500);
+
+				chrome.runtime.sendMessage({ type: "RELOAD" });
+			});
+		}
+
+		if (request.type === "SAVED_KEY") {
+			chrome.runtime.sendMessage({ type: "SET_API_KEY", apiKey: request.key }, response => {
+				if (response) {
+					const prompt = document.querySelector(".d-cgpt-prompt");
+					if (prompt)
+						prompt.remove();
+
+					toggleExtension(true);
+
+					chrome.runtime.sendMessage({ type: "RELOAD" });
 				}
-				else if (!request.value && extensionTab.querySelector("a").classList.contains("active")) {
-					extensionTab.querySelector("a").classList.remove("active");
-				}
-			}
+			});
 		}
 	});
 })();

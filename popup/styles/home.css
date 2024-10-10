@@ -3,10 +3,6 @@
 	--color-snow: 255, 255, 255;
 	--color-eel: 75, 75, 75;
 	--color-wolf: 119, 119, 119;
-
-	--d-cgpt-accent-color: #00de8c;
-	--d-cgpt-secondary-color: #cff2e5;
-	--d-cgpt-faded-accent-color: #cff2e5;
 }
 
 body {
@@ -41,4 +37,68 @@ body {
     height: 2px;
     background-color: rgb(var(--color-swan));
     margin: 20px auto;
+}
+
+.element {
+	padding: 8px 10px;
+}
+
+.element > .title {
+	padding-bottom: 5px;
+    font-size: 15px;
+}
+
+.element input {
+    width: 97%;
+    border: unset;
+    border-bottom: 1px solid rgb(var(--color-swan));
+    padding: 7px 2px;
+	color: rgb(var(--color-wolf));
+}
+
+.element .buttons {
+	display: flex;
+	justify-content: space-between;
+	margin: 12px 45px;
+}
+
+.element .buttons button {
+	padding: 8px 0px;
+    border-radius: 10px;
+	border: unset;
+	cursor: pointer;
+	width: 80px;
+}
+
+.element .buttons button:hover {
+    background-color: var(--d-cgpt-accent-color);
+    color: white;
+    font-weight: bold;
+}
+
+.button-disabled {
+	color: rgb(var(--color-wolf));
+	pointer-events: none;
+}
+
+.input-wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	column-gap: 10px;
+}
+
+.input-wrapper > img {
+	width: 20px;
+	opacity: 0.3;
+	cursor: pointer;
+}
+
+.input-wrapper > img:hover {
+	opacity: 1;
+}
+
+.icon-accent {
+	filter: invert(83%) sepia(29%) saturate(5497%) hue-rotate(102deg) brightness(90%) contrast(101%);
+	opacity: 1 !important;
 }

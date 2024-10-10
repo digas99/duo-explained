@@ -114,7 +114,7 @@
 			setTimeout(() => explainArea.dataset.mouseDown = false);
 		}
 
-		if (timeDiff <= 500)
+		if (timeDiff <= 500 && explainArea)
 			explainArea.dataset.mouseDown = false;
 
 		mouseDownTime = 0;
