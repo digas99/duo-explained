@@ -23,6 +23,8 @@
 		localStorage.setItem("duo.theme", theme);
 
 		updateTheme(theme);
+
+		chrome.runtime.sendMessage({ type: "UPDATE_THEME", theme });
 	});
 
 	const injectElements = () => {

@@ -85,6 +85,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
     }
 
+    // Drive update theme to the popup
+    if (request.type === "UPDATE_THEME") chrome.runtime.sendMessage(request);
+
     return true;
 });
 

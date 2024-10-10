@@ -3,12 +3,38 @@
 	--color-snow: 255, 255, 255;
 	--color-eel: 75, 75, 75;
 	--color-wolf: 119, 119, 119;
+
+	--button-back: #9d9d9d;
+	--button-color: #f3f3f3;
+	--button-disabled: #e3e3e3;
+	--button-disabled-color: #b5b5b5;
+}
+
+:root[data-duo-theme="dark"] {
+	--color-swan: 55, 70, 79;
+	--color-snow: 19, 31, 36;
+    --color-eel: 241, 247, 251;
+	--color-wolf: 220, 230, 236;
+
+	--button-back: #37464f;
+	--button-color: #f1f7fb;
+	--button-disabled: #2c3a41;
+	--button-disabled-color: #b5b5b5;
+}
+
+:root[data-duo-theme="dark"] .icon {
+	filter: invert(1);
 }
 
 body {
-	min-width: 300px;
+	min-width: 325px;
 	font-family: din-round, sans-serif;
 	color: rgb(var(--color-eel));
+	background-color: rgb(var(--color-snow));
+}
+
+a {
+	color: var(--d-cgpt-accent-color);
 }
 
 #settings {
@@ -18,8 +44,12 @@ body {
 }
 
 .footer {
-	text-align: center;
-	margin: 25px 0;
+    text-align: center;
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
 }
 
 .footer > img {
@@ -30,6 +60,18 @@ body {
 	font-size: 12px;
 	color: rgb(var(--color-wolf));
 	margin-top: 5px;
+}
+
+.footer .links {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    width: fit-content;
+    margin: auto;
+}
+
+.footer .links a {
+
 }
 
 .separator {
@@ -54,6 +96,7 @@ body {
     border-bottom: 1px solid rgb(var(--color-swan));
     padding: 7px 2px;
 	color: rgb(var(--color-wolf));
+	background-color: rgb(var(--color-snow));
 }
 
 .element .buttons {
@@ -68,17 +111,21 @@ body {
 	border: unset;
 	cursor: pointer;
 	width: 80px;
+	font-weight: bold;
+	background-color: var(--button-back);
+	color: var(--button-color);
 }
 
 .element .buttons button:hover {
     background-color: var(--d-cgpt-accent-color);
-    color: white;
-    font-weight: bold;
+    color: rgb(var(--color-snow));
 }
 
 .button-disabled {
 	color: rgb(var(--color-wolf));
 	pointer-events: none;
+	background-color: var(--button-disabled) !important;
+	color: var(--button-disabled-color) !important;
 }
 
 .input-wrapper {
@@ -90,15 +137,14 @@ body {
 
 .input-wrapper > img {
 	width: 20px;
-	opacity: 0.3;
 	cursor: pointer;
+	filter: invert(83%) sepia(29%) saturate(5497%) hue-rotate(102deg) brightness(90%) contrast(101%) !important;
 }
 
 .input-wrapper > img:hover {
-	opacity: 1;
+	opacity: 0.5;
 }
 
 .icon-accent {
-	filter: invert(83%) sepia(29%) saturate(5497%) hue-rotate(102deg) brightness(90%) contrast(101%);
 	opacity: 1 !important;
 }

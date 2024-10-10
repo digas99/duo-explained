@@ -1,22 +1,36 @@
-.d-cgpt-settings-checkbox {
-	display: flex;
-    align-items: center;
-    padding: 8px 10px;
-	column-gap: 10px;
-	color: rgb(var(--color-eel));
+.d-cgpt-settings select {
+    border: 2px solid var(--d-cgpt-accent-color);
+    background-color: unset;
+    padding: 5px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: var(--d-cgpt-accent-color);
+    border-bottom-width: 4px;
+    cursor: pointer;
 }
 
-.d-cgpt-settings-checkbox > label {
+.d-cgpt-settings {
+	color: rgb(var(--color-eel));
+    padding: 8px 10px;
+	display: flex;
+    align-items: center;
+	column-gap: 10px;
+}
+
+.d-cgpt-settings > label {
 	font-size: 15px;
 	font-weight: bold;
 	opacity: 0.6;
 	transition: 0.3s;
 }
 
-.d-cgpt-settings-checkbox > label > div {
+.d-cgpt-settings > label > div {
     font-size: 12px;
     font-weight: normal;
 	color: rgb(var(--color-wolf));
+}
+
+.d-cgpt-settings-checkbox {
 }
 
 .d-cgpt-custom-checkbox {
@@ -49,16 +63,27 @@
     background-color: rgb(var(--color-snow));
 }
 
-.d-cgpt-settings-checkbox-enabled label {
+.d-cgpt-settings-enabled label {
 	color: var(--d-cgpt-accent-color);
 	opacity: 1;
 }
 
-.d-cgpt-settings-checkbox-enabled .d-cgpt-custom-checkbox-back {
+.d-cgpt-settings-enabled .d-cgpt-custom-checkbox-back {
 	background-color: var(--d-cgpt-accent-color);
 }
 
-.d-cgpt-settings-checkbox-enabled .d-cgpt-custom-checkbox-ball {
+.d-cgpt-settings-enabled .d-cgpt-custom-checkbox-ball {
     margin-left: 22px;
     border-color: var(--d-cgpt-accent-color);
+}
+
+.d-cgpt-settings-select > label {
+    opacity: 1;
+}
+
+/* select options */
+.d-cgpt-settings-select select option {
+    background-color: rgb(var(--color-snow));
+    color: rgb(var(--color-wolf));
+    font-weight: bold;
 }

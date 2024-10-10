@@ -2,7 +2,7 @@
 	window.settings = new Settings(Settings.defaults, document.querySelector("#settings"), 'SETTINGS');
 	window.settings.build();
 
-	chrome.storage.sync.get(["SETTINGS", "API_KEY"], data => {
+	chrome.storage.sync.get(["SETTINGS", "API_KEY", "THEME"], data => {
 		const settings = data.SETTINGS || {};
 		window.settings.update(settings);
 
@@ -17,6 +17,21 @@
 				extensionEnabled.click();
 			}
 			extensionEnabled.closest(".d-cgpt-settings-checkbox").style.pointerEvents = "none";
+		}
+
+		model = settings["model"];
+		if (model) {
+			document.querySelector("#d-cgpt-model").value = model;
+			localStorage.setItem("model", model);
+		}
+		else {
+			document.querySelector("#d-cgpt-model").value = Settings.defaults.find(setting => setting.key === "model").default;
+		}
+
+		theme = data.THEME;
+		if (theme) {
+			document.documentElement.dataset.duoTheme = theme;
+			localStorage.setItem("theme", theme);
 		}
 	});
 
@@ -34,6 +49,17 @@
 		apiKeyRemove.classList.add("button-disabled");
 		apiKeySave.classList.remove("button-disabled");
 	}
+
+	// model select
+	const modelSelect = document.querySelector("#d-cgpt-model");
+	let model = localStorage.getItem("model");
+	if (model)
+		modelSelect.value = model;
+
+	// theme select
+	let theme = localStorage.getItem("theme");
+	if (theme)
+		document.documentElement.dataset.duoTheme = theme;
 
 	// version
 	let version = localStorage.getItem("version");
@@ -87,6 +113,7 @@
 		}
 	});
 
+	// api key save button
 	apiKeySave.addEventListener("click", () => {
 		const apiKey = document.querySelector("#api-key").value;
 		if (apiKey) {
@@ -104,6 +131,24 @@
 			});
 
 			window.location.reload();
+		}
+	});
+
+	// model select
+	modelSelect.addEventListener("change", () => {
+		const model = modelSelect.value;
+		chrome.storage.sync.get("SETTINGS", data => {
+			const settings = data.SETTINGS || {};
+			settings["model"] = model;
+			chrome.storage.sync.set({ SETTINGS: settings }, () => chrome.runtime.sendMessage({ type: "SET_MODEL", model: model }));
+		});
+	});
+
+	chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+		console.log(request);
+		if (request.type === "UPDATE_THEME") {
+			document.documentElement.dataset.duoTheme = request.theme;
+			localStorage.setItem("theme", request.theme);
 		}
 	});
 })();
