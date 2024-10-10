@@ -14,7 +14,11 @@
     },
 	"content_scripts": [
 		{
-			"matches": ["https://duolingo.com/*", "https://preview.duolingo.com/*"],
+			"matches": [
+                "https://duolingo.com/*",
+                "https://www.duolingo.com/*",
+                "https://preview.duolingo.com/*"
+            ],
 			"js": [
                 "scripts/content/utils.js",
                 "scripts/content/theme.js", 
@@ -38,7 +42,8 @@
         "storage"
     ],
     "host_permissions": [
-        "https://duolingo.com/*", 
+        "https://duolingo.com/*",
+        "https://www.duolingo.com/*",
         "https://preview.duolingo.com/*"
     ]
 }
