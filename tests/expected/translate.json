@@ -1,7 +1,7 @@
 {
 	"content": {
 		"sentence": "Tu dois aller à New York.",
-		"userAnswer": [
+		"answer": [
 			"You",
 			"have",
 			"to",
@@ -24,7 +24,7 @@
 			"to"
 		]
 	},
-	"question": "Write this in English",
+	"exercise": "Write this in English",
 	"wrapper": {},
 	"type": "translate"
 }

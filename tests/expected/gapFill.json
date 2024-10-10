@@ -1,8 +1,8 @@
 {
 	"content": {
 		"sentence": "Bonjour Marc, c'est moi, Elsa ; <blank>, devant ta maison.",
-		"userAnswer": "Bonjour Marc, c'est moi, Elsa ; je suis ici, devant ta maison.",
-		"options": [
+		"answer": "Bonjour Marc, c'est moi, Elsa ; je suis ici, devant ta maison.",
+		"choices": [
 			{
 				"option": 1,
 				"choices": [
@@ -23,7 +23,7 @@
 			}
 		]
 	},
-	"question": "Fill in the blank",
+	"exercise": "Fill in the blank",
 	"wrapper": {},
 	"type": "gapFill"
 }
