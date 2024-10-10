@@ -1,0 +1,13 @@
+{
+    "content": {
+        "sentence": "C'est la première rue <blank> droite. Nous allons <blank> zoo.",
+        "answer": "C'est la première rue à droite. Nous allons au zoo.",
+        "wordBank": [
+			"au",
+            "à"
+        ]
+    },
+    "wrapper": {},
+    "exercise": "Fill in the blanks",
+    "type": "tapComplete"
+}
