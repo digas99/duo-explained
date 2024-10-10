@@ -80,12 +80,20 @@ class AnswerData {
 	}
 }
 
+if (typeof window !== 'undefined') {
+    window.AnswerData = AnswerData;
+} else {
+    module.exports = AnswerData;
+}
+
 (async () => {
-	if (!(await extensionActive())) return; 
+	if (typeof extensionActive == "function" && !(await extensionActive())) return; 
+
+	if (typeof MutationObserver === "undefined") return;
 	
 	// detect answers
 	const observer = new MutationObserver(async (mutationsList, observer) => {
-		if (!(await extensionActive())) return; 
+		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
 
 		const lessonFooter = document.getElementById("session/PlayerFooter");
 		if (lessonFooter) {

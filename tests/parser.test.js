@@ -3,6 +3,7 @@ const path = require('path');
 const puppeteer = require('puppeteer');
 
 const ChallengeParser = require('../scripts/content/lesson/parser');
+const ChallengeData = require('../scripts/content/lesson/challenge');
 
 describe('Duolingo Challenge Parsing Tests with DOM', () => {
 	let browser, page, expectedResults;
@@ -42,7 +43,7 @@ describe('Duolingo Challenge Parsing Tests with DOM', () => {
 			return ChallengeParser.parse(type, challengeContent);
 		}, parserString, challengeContent, type);
 
-		expect(result).toEqual(expectedResults[type]);
+		expect(new ChallengeData(result)).toEqual(expectedResults[type]);
 	});
 });
 

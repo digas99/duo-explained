@@ -22,6 +22,10 @@
  *		},
  *      "exercise": "Translate the sentence.",				// The description of the exercise 
  *      "type": "translate",								// The type of the exercise
+ * 		"language": {										// The source and target languages of the sentence	
+ * 			"source": "en",
+ * 			"target": "fr"
+ * 		}
  * }
  */
 
@@ -33,6 +37,7 @@ class ChallengeData {
 		this.wrapper = data.wrapper;
 		this.exercise = data.exercise;
 		this.type = data.type;
+		this.language = data.language;
 
 		console.log("ChallengeData", this.get());
 
@@ -41,10 +46,11 @@ class ChallengeData {
 
 	get() {
 		return {
-		content: this.content,
-		wrapper: this.wrapper,
-		exercise: this.exercise,
-		type: this.type,
+			content: this.content,
+			wrapper: this.wrapper,
+			exercise: this.exercise,
+			type: this.type,
+			language: this.language
 		};
 	}
 
@@ -52,6 +58,7 @@ class ChallengeData {
 		this.validateContent();
 		this.validateExcercise();
 		this.validateType();
+		// this.validateLanguage(); TODO: Uncomment this line when all parser have this implemented
 	}
 
 	validateContent() {
@@ -61,25 +68,23 @@ class ChallengeData {
 			return;
 
 		if (!this.content.sentence)
-		throw new Error("ChallengeData content.sentence is required.");
+			throw new Error("ChallengeData content.sentence is required.");
 
 		if (this.content.prompt && typeof this.content.prompt !== "string")
-		throw new Error("ChallengeData content.prompt must be a string.");
+			throw new Error("ChallengeData content.prompt must be a string.");
 
 		if (
-		this.content.answer &&
-		typeof this.content.answer !== "string" &&
-		!Array.isArray(this.content.answer)
+			this.content.answer &&
+			typeof this.content.answer !== "string" &&
+			!Array.isArray(this.content.answer)
 		)
-		throw new Error(
-			"ChallengeData content.answer must be a string or an array."
-		);
+			throw new Error("ChallengeData content.answer must be a string or an array.");
 
 		if (this.content.wordBank && !Array.isArray(this.content.wordBank))
-		throw new Error("ChallengeData content.wordBank must be an array.");
+			throw new Error("ChallengeData content.wordBank must be an array.");
 
 		if (this.content.choices && !Array.isArray(this.content.choices))
-		throw new Error("ChallengeData content.choices must be an array.");
+			throw new Error("ChallengeData content.choices must be an array.");
 	}
 
 	validateExcercise() {
@@ -91,13 +96,26 @@ class ChallengeData {
 
 	validateType() {
 		if (!(this.type && typeof this.type === "string"))
-		throw new Error("ChallengeData type is required and must be a string.");
+			throw new Error("ChallengeData type is required and must be a string.");
 	}
+
+	validateLanguage() {
+		if (this.content && !(this.language && this.language.source && this.language.target))
+			throw new Error("ChallengeData language.source and language.target are required.");
+	}
+}
+
+if (typeof window !== 'undefined') {
+    window.ChallengeData = ChallengeData;
+} else {
+    module.exports = ChallengeData;
 }
 
 
 (async () => {
-	if (!(await extensionActive())) return; 
+	if (typeof extensionActive == "function" && !(await extensionActive())) return; 
+
+	if (typeof MutationObserver === "undefined") return;
 
 	// observe mutations to the content of div[data-test^="challenge"]
 	const observer = new MutationObserver(async (mutationsList, observer) => {

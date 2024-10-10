@@ -25,5 +25,9 @@
 	},
 	"exercise": "Fill in the blank",
 	"wrapper": {},
-	"type": "gapFill"
+	"type": "gapFill",
+	"language": {
+		"source": "fr",
+		"target": "fr"
+	}
 }

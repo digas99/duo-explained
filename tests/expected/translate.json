@@ -26,5 +26,9 @@
 	},
 	"exercise": "Write this in English",
 	"wrapper": {},
-	"type": "translate"
+	"type": "translate",
+	"language": {
+		"source": "fr",
+		"target": "en"
+	}
 }

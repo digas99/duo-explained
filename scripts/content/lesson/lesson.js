@@ -14,13 +14,13 @@
  */
 
 (async () => {
-	if (!(await extensionActive())) return; 
+	if (typeof extensionActive == "function" && !(await extensionActive())) return; 
 
 	let answerData, challengeData;
 
 	// listen for the answer event
 	document.addEventListener("answer", async event => {
-		if (!(await extensionActive())) return; 
+		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
 
 		console.log("Answer event detected");
 		answerData = event.detail;
@@ -34,7 +34,7 @@
 
 	// listen for the challenge event
 	document.addEventListener("challenge", async event => {
-		if (!(await extensionActive())) return; 
+		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
 
 		console.log("Challenge event detected");
 		challengeData = event.detail;

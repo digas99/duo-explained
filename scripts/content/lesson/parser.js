@@ -12,7 +12,7 @@ class ChallengeParser {
 		const exerciseHeader = wrapper.querySelector("h1[data-test='challenge-header']");
 		const exercise = exerciseHeader?.innerText;
 	
-		let content;
+		let content, language;
 		switch(type) {
 			case "syllableTap":
 			case "translate":
@@ -57,12 +57,19 @@ class ChallengeParser {
 				content = undefined;
 				break;
 		}
-	
+
+		// handle source and target language
+		if (content && content.language) {
+			language = content.language;
+			delete content.language;
+		}
+
 		return {
 			type,
 			wrapper,
 			exercise,
-			content
+			content,
+			language
 		};
 	}
 
@@ -81,20 +88,24 @@ class ChallengeParser {
 	 * }
 	 */
 	static parseTranslate(wrapper) {
-		let wordBank = [];
+		let wordBank = [], language = {};
 		const wordBankWrapper = wrapper.querySelector("div[data-test='word-bank']");
+		language.target = wordBankWrapper?.querySelector("button")?.lang;
 		if (wordBankWrapper) {
 			wordBank = Array.from(wordBankWrapper.children).map(wordElem => wordElem.innerText);
 		}
 	
 		const sections = wrapper.querySelectorAll("div[dir='ltr']");
 		let sentence = sections[0]?.innerText;
+		language.source = sections[0]?.lang;
 	
 		let answer = sections[1] ? sections[1].innerText : wrapper.querySelector("textarea[data-test='challenge-translate-input']").value; 
 		if (wordBankWrapper)
 			answer = answer?.split("\n");
+		else
+			language.target = wrapper.querySelector("textarea[data-test='challenge-translate-input']")?.lang;
 	
-		return {sentence, answer, wordBank};
+		return {sentence, answer, wordBank, language}
 	}
 
 	/**
@@ -173,9 +184,10 @@ class ChallengeParser {
 	 * }
 	 */
 	static parseTapComplete(wrapper) {
-		let sentence = "", answer = [];
+		let sentence = "", answer = [], language = {};
 
 		const questionSection = wrapper.querySelector("div[dir='ltr']");
+		language.source = questionSection?.firstElementChild.lang;
 		if (questionSection) {
 			sentence = Array.from(questionSection.children)
 				.filter(span => !span.querySelector("button"))
@@ -197,11 +209,12 @@ class ChallengeParser {
 	
 		let wordBank = [];
 		const wordBankWrapper = wrapper.querySelector("div[data-test='word-bank']");
+		language.target = wordBankWrapper?.querySelector("button")?.lang;
 		if (wordBankWrapper) {
 			wordBank = Array.from(wordBankWrapper.children).map(wordElem => wordElem.textContent);
 		}
 	
-		return {sentence, answer, wordBank};
+		return {sentence, answer, wordBank, language};
 	}
 
 	/**
@@ -223,9 +236,10 @@ class ChallengeParser {
 	 * }
 	 */
 	static parseGapFill(wrapper) {
-		let sentence = "";
+		let sentence = "", language = {};
 	
 		const questionSection = wrapper.querySelector("div[dir='ltr']");
+		language.source = questionSection.firstElementChild.lang;
 		if (questionSection) {
 			sentence = Array.from(questionSection.children)
 				.map(span => span.textContent)
@@ -235,6 +249,7 @@ class ChallengeParser {
 	
 		let options = [];
 		const optionsWrapper = wrapper.querySelector("div[aria-label='choice']");
+		language.target = optionsWrapper?.querySelector("span[dir='ltr']")?.lang;
 		if (optionsWrapper) {
 			options = Array.from(optionsWrapper.children).map(child => {
 				const option = parseInt(child.children[0].textContent);
@@ -259,7 +274,8 @@ class ChallengeParser {
 		return {
 			sentence: original,
 			answer: sentence,
-			choices: options
+			choices: options,
+			language
 		};
 	}
 
@@ -278,9 +294,13 @@ class ChallengeParser {
 	 * }
 	 */
 	static parseCompleteReverseTranslation(wrapper) {
+		const language = {};
+
 		const sentence = wrapper.querySelector("div[dir='ltr']").innerText;
+		language.source = wrapper.querySelector("div[dir='ltr']").lang;
 		
 		const answerWrapper = wrapper.querySelector("label[dir='ltr']");
+		language.target = answerWrapper?.lang;
 		let original = "", answer = "";
 		if (answerWrapper) {
 			Array.from(answerWrapper.children).forEach(span => {
@@ -294,11 +314,15 @@ class ChallengeParser {
 				}
 			});
 		}
+		else {
+			language.target = wrapper.querySelector("textarea[data-test='challenge-translate-input']")?.lang;
+		}
 	
 		return {
 			sentence,
 			prompt: original,
-			answer
+			answer,
+			language
 		}
 	}
 
@@ -446,7 +470,6 @@ class ChallengeParser {
 if (typeof window !== 'undefined') {
     window.ChallengeParser = ChallengeParser;
 } else {
-    // Export for Node.js environment
     module.exports = ChallengeParser;
 }
 

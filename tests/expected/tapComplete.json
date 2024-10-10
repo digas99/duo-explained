@@ -9,5 +9,9 @@
     },
     "wrapper": {},
     "exercise": "Fill in the blanks",
-    "type": "tapComplete"
+    "type": "tapComplete",
+    "language": {
+        "source": "fr",
+        "target": "fr"
+    }
 }

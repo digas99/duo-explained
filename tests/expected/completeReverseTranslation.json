@@ -6,5 +6,9 @@
 	},
 	"exercise": "Type the missing word",
 	"wrapper": {},
-	"type": "completeReverseTranslation"
+	"type": "completeReverseTranslation",
+	"language": {
+		"source": "en",
+		"target": "fr"
+	}
 }
