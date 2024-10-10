@@ -18,7 +18,7 @@
  * }
  */
 
- class AnswerData {
+class AnswerData {
 	constructor(data) {
 		if (!data)
 			throw new Error("AnswerData constructor requires an object.");
@@ -78,7 +78,7 @@
 		if (this.details.state === "incorrect" && !(this.solution && typeof this.solution === "string"))
 			throw new Error("AnswerData solution is required for incorrect answers and must be a string.");
 	}
- }
+}
 
 (async () => {
 	if (!(await extensionActive())) return; 
