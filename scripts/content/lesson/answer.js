@@ -18,70 +18,67 @@
  * }
  */
 
-// IIFE to encapsulate the AnswerData class, avoiding global scope pollution with multiple declarations
-(function () {
-	class AnswerData {
-		constructor(data) {
-			if (!data)
-				throw new Error("AnswerData constructor requires an object.");
+class AnswerData {
+	constructor(data) {
+		if (!data)
+			throw new Error("AnswerData constructor requires an object.");
 
-			this.details = data.details;
-			this.challenge = data.challenge;
-			this.solution = data.solution;
+		this.details = data.details;
+		this.challenge = data.challenge;
+		this.solution = data.solution;
 
-			console.log("AnswerData", this.get());
+		console.log("AnswerData", this.get());
 
-			this.validate();
-		}
-		
-		get() {
-			return {
-				details: this.details,
-				challenge: this.challenge,
-				solution: this.solution
-			}
-		}
-
-		validate() {
-			this.validateDetails();
-			this.validateChallenge();
-			this.validateSolution();
-		}
-
-		validateDetails() {
-			if (!this.details)
-				throw new Error("AnswerData details is required.");
-
-			if (!this.details.state)
-				throw new Error("AnswerData details.state is required.");
-
-			if (this.details.state === "incorrect" && !this.details.language)
-				throw new Error("AnswerData details.language is required for incorrect answers.");
-
-			if (this.details.language && typeof this.details.language !== "string")
-				throw new Error("AnswerData details.language must be a string.");
-
-			if (this.details.state && typeof this.details.state !== "string")
-				throw new Error("AnswerData details.state must be a string.");
-
-			if (this.details.state !== "correct" && this.details.state !== "incorrect")
-				throw new Error("AnswerData details.state must be 'correct' or 'incorrect'.");
-		}
-
-		validateChallenge() {
-			if (!this.challenge)
-				throw new Error("AnswerData challenge is required.");
-		
-			if (this.challenge && !(this.challenge instanceof ChallengeData))
-				throw new Error("AnswerData challenge must be an instance of ChallengeData.");
-		}
-
-		validateSolution() {
-			if (this.details.state === "incorrect" && !(this.solution && typeof this.solution === "string"))
-				throw new Error("AnswerData solution is required for incorrect answers and must be a string.");
+		this.validate();
+	}
+	
+	get() {
+		return {
+			details: this.details,
+			challenge: this.challenge,
+			solution: this.solution
 		}
 	}
-})();
+
+	validate() {
+		this.validateDetails();
+		this.validateChallenge();
+		this.validateSolution();
+	}
+
+	validateDetails() {
+		if (!this.details)
+			throw new Error("AnswerData details is required.");
+
+		if (!this.details.state)
+			throw new Error("AnswerData details.state is required.");
+
+		if (this.details.state === "incorrect" && !this.details.language)
+			throw new Error("AnswerData details.language is required for incorrect answers.");
+
+		if (this.details.language && typeof this.details.language !== "string")
+			throw new Error("AnswerData details.language must be a string.");
+
+		if (this.details.state && typeof this.details.state !== "string")
+			throw new Error("AnswerData details.state must be a string.");
+
+		if (this.details.state !== "correct" && this.details.state !== "incorrect")
+			throw new Error("AnswerData details.state must be 'correct' or 'incorrect'.");
+	}
+
+	validateChallenge() {
+		if (!this.challenge)
+			throw new Error("AnswerData challenge is required.");
+	
+		if (this.challenge && !(this.challenge instanceof ChallengeData))
+			throw new Error("AnswerData challenge must be an instance of ChallengeData.");
+	}
+
+	validateSolution() {
+		if (this.details.state === "incorrect" && !(this.solution && typeof this.solution === "string"))
+			throw new Error("AnswerData solution is required for incorrect answers and must be a string.");
+	}
+}
 
 (async () => {
 	if (!(await extensionActive())) return; 

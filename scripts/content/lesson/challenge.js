@@ -25,73 +25,71 @@
  * }
  */
 
-// IIFE to encapsulate the ChallengeData class, avoiding global scope pollution with multiple declarations
-(function () {
-	class ChallengeData {
-		constructor(data) {
-			if (!data) throw new Error("ChallengeData constructor requires an object.");
+class ChallengeData {
+	constructor(data) {
+		if (!data) throw new Error("ChallengeData constructor requires an object.");
 
-			this.content = data.content;
-			this.wrapper = data.wrapper;
-			this.exercise = data.exercise;
-			this.type = data.type;
+		this.content = data.content;
+		this.wrapper = data.wrapper;
+		this.exercise = data.exercise;
+		this.type = data.type;
 
-			console.log("ChallengeData", this.get());
+		console.log("ChallengeData", this.get());
 
-			this.validate();
-		}
-
-		get() {
-			return {
-			content: this.content,
-			wrapper: this.wrapper,
-			exercise: this.exercise,
-			type: this.type,
-			};
-		}
-
-		validate() {
-			this.validateContent();
-			this.validateExcercise();
-			this.validateType();
-		}
-
-		validateContent() {
-			if (!this.content.sentence)
-			throw new Error("ChallengeData content.sentence is required.");
-
-			if (this.content.prompt && typeof this.content.prompt !== "string")
-			throw new Error("ChallengeData content.prompt must be a string.");
-
-			if (
-			this.content.answer &&
-			typeof this.content.answer !== "string" &&
-			!Array.isArray(this.content.answer)
-			)
-			throw new Error(
-				"ChallengeData content.answer must be a string or an array."
-			);
-
-			if (this.content.wordBank && !Array.isArray(this.content.wordBank))
-			throw new Error("ChallengeData content.wordBank must be an array.");
-
-			if (this.content.choices && !Array.isArray(this.content.choices))
-			throw new Error("ChallengeData content.choices must be an array.");
-		}
-
-		validateExcercise() {
-			if (!(this.exercise && typeof this.exercise === "string"))
-			throw new Error(
-				"ChallengeData exercise is required and must be a string."
-			);
-		}
-
-		validateType() {
-			if (!(this.type && typeof this.type === "string"))
-			throw new Error("ChallengeData type is required and must be a string.");
-		}
+		this.validate();
 	}
-})();
+
+	get() {
+		return {
+		content: this.content,
+		wrapper: this.wrapper,
+		exercise: this.exercise,
+		type: this.type,
+		};
+	}
+
+	validate() {
+		this.validateContent();
+		this.validateExcercise();
+		this.validateType();
+	}
+
+	validateContent() {
+		if (!this.content.sentence)
+		throw new Error("ChallengeData content.sentence is required.");
+
+		if (this.content.prompt && typeof this.content.prompt !== "string")
+		throw new Error("ChallengeData content.prompt must be a string.");
+
+		if (
+		this.content.answer &&
+		typeof this.content.answer !== "string" &&
+		!Array.isArray(this.content.answer)
+		)
+		throw new Error(
+			"ChallengeData content.answer must be a string or an array."
+		);
+
+		if (this.content.wordBank && !Array.isArray(this.content.wordBank))
+		throw new Error("ChallengeData content.wordBank must be an array.");
+
+		if (this.content.choices && !Array.isArray(this.content.choices))
+		throw new Error("ChallengeData content.choices must be an array.");
+	}
+
+	validateExcercise() {
+		if (!(this.exercise && typeof this.exercise === "string"))
+		throw new Error(
+			"ChallengeData exercise is required and must be a string."
+		);
+	}
+
+	validateType() {
+		if (!(this.type && typeof this.type === "string"))
+		throw new Error("ChallengeData type is required and must be a string.");
+	}
+}
+
 
 (async () => {
 	if (!(await extensionActive())) return; 
