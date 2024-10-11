@@ -149,7 +149,6 @@ class Settings {
 	update(settings) {
 		Object.keys(settings).forEach(key => {
 			const setting = this.wrapper.querySelector(`#d-cgpt-${key}`);
-			console.log(setting, key, settings[key]);
 			if (setting) {
 				switch (setting.dataset.type) {
 					case "checkbox":

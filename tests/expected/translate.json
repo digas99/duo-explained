@@ -29,6 +29,13 @@
 	"type": "translate",
 	"language": {
 		"source": "fr",
-		"target": "en"
+		"target": "en",
+		"ui": {
+			"client": {
+				"main": "en-US",
+				"options": ["en-US"]
+			},
+			"document": "en"
+		}
 	}
 }

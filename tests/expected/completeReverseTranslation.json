@@ -9,6 +9,13 @@
 	"type": "completeReverseTranslation",
 	"language": {
 		"source": "en",
-		"target": "fr"
+		"target": "fr",
+		"ui": {
+			"client": {
+				"main": "en-US",
+				"options": ["en-US"]
+			},
+			"document": "en"
+		}
 	}
 }

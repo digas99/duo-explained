@@ -32,6 +32,12 @@
 			"css": ["styles/styles.css"]
 		}
 	],
+    "web_accessible_resources": [
+        {
+            "resources": ["scripts/content/duo.js"],
+            "matches": ["https://duolingo.com/*", "https://www.duolingo.com/*", "https://preview.duolingo.com/*"]
+        }
+    ],
     "action": {
         "default_popup": "popup/home.html"
     },

@@ -2,7 +2,7 @@
 	window.settings = new Settings(Settings.defaults, document.querySelector("#settings"), 'SETTINGS');
 	window.settings.build();
 
-	chrome.storage.sync.get(["SETTINGS", "API_KEY", "THEME"], data => {
+	chrome.storage.sync.get(["SETTINGS", "API_KEY", "THEME", "UI_LANGUAGE"], data => {
 		const settings = data.SETTINGS || {};
 		window.settings.update(settings);
 
@@ -33,11 +33,19 @@
 			document.documentElement.dataset.duoTheme = theme;
 			localStorage.setItem("theme", theme);
 		}
+
+		uiLanguage = data.UI_LANGUAGE;
+		if (uiLanguage) {
+			localStorage.setItem("uiLanguage", uiLanguage);
+			const autoOption = languageSelect.querySelector("option[value='Auto']");
+			autoOption.textContent = "Auto ("+uiLanguage+")";
+		}
 	});
 
 	const apiKeyInput = document.querySelector("#api-key");
 	const apiKeyRemove = document.querySelector("#remove-api-key");
 	const apiKeySave = document.querySelector("#save-api-key");
+	const languageSelect = document.querySelector("#d-cgpt-language");
 
 	// api key input
 	let apiKey = localStorage.getItem("apiKey");
@@ -65,6 +73,13 @@
 	let version = localStorage.getItem("version");
 	if (version)
 		document.querySelector("#version").innerText = "v"+version;
+
+	// ui language
+	let uiLanguage = localStorage.getItem("uiLanguage");
+	if (uiLanguage) {
+		const autoOption = languageSelect.querySelector("option[value='Auto']");
+		autoOption.textContent = "Auto ("+uiLanguage+")";
+	}
 
 	fetch("/manifest.json")
 		.then(response => response.json())
@@ -145,7 +160,6 @@
 	});
 
 	chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-		console.log(request);
 		if (request.type === "UPDATE_THEME") {
 			document.documentElement.dataset.duoTheme = request.theme;
 			localStorage.setItem("theme", request.theme);

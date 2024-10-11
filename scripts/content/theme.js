@@ -61,6 +61,9 @@ const updateTheme = theme => {
 	// set custom colors
 	const colors = INTERFACE_COLORS[theme];
 	for (const [key, value] of Object.entries(colors)) {
+		if (key === "styles")
+			continue;
+		
 		document.documentElement.style.setProperty(`--d-cgpt-${key}`, value);
 	}
 

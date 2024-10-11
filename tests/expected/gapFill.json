@@ -28,6 +28,13 @@
 	"type": "gapFill",
 	"language": {
 		"source": "fr",
-		"target": "fr"
+		"target": "fr",
+		"ui": {
+			"client": {
+				"main": "en-US",
+				"options": ["en-US"]
+			},
+			"document": "en"
+		}
 	}
 }

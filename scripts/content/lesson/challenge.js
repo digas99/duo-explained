@@ -119,7 +119,7 @@ if (typeof window !== 'undefined') {
 
 	// observe mutations to the content of div[data-test^="challenge"]
 	const observer = new MutationObserver(async (mutationsList, observer) => {
-		if (!(await extensionActive())) return; 
+		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
 
 		const challengeWrapper = document.querySelector("div[data-test^='challenge']");
 		if (challengeWrapper) {

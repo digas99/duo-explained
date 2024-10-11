@@ -28,6 +28,12 @@
 	});
 
 	const injectElements = () => {
+		// backdoor to the duo object
+		const script = document.createElement("script");
+		script.src = chrome.runtime.getURL("scripts/content/duo.js");
+		script.type = "text/javascript";
+		document.documentElement.appendChild(script);
+
 		// set theme from local storage
 		const theme = localStorage.getItem("duo.theme");
 		if (theme) updateTheme(theme);
@@ -128,7 +134,7 @@
 		const tabText = tab.querySelector("span span");
 		tabText.innerText = "Duo Explained";
 		const tabIcon = tab.querySelector("img");
-		tabIcon.src = "https://andreclerigo.github.io/duo-explained-assets/logo.png";
+		tabIcon.src = "https://andreclerigo.github.io/duolingo-chatgpt-assets/logo.png";
 		return tab;
 	}
 
@@ -136,10 +142,10 @@
 		return /* html */`
 			<div class="d-cgpt-prompt" style="bottom: -100px;">
 				<div>
-					<img src="https://andreclerigo.github.io/duo-explained-assets/logo-stroke.png">
+					<img src="https://andreclerigo.github.io/duolingo-chatgpt-assets/logo-stroke.png">
 					<input type="text" placeholder="ChatGPT API Key">
 					<button>Submit</button>
-					<img id="d-cgpt-prompt-close" class="d-cgpt-prompt-icon d-cgpt-button" src="https://andreclerigo.github.io/duo-explained-assets/icons/close-thick.png">
+					<img id="d-cgpt-prompt-close" class="d-cgpt-prompt-icon d-cgpt-button" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/close-thick.png">
 				</div>
 			</div>
 		`;
@@ -199,6 +205,12 @@
 					chrome.runtime.sendMessage({ type: "RELOAD" });
 				}
 			});
+		}
+	});
+
+	window.addEventListener("message", event => {
+		if (event.data.type === "DUO") {
+			chrome.storage.sync.set({ "UI_LANGUAGE": event.data.language});
 		}
 	});
 })();
