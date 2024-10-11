@@ -14,7 +14,8 @@
     padding: 8px 10px;
 	display: flex;
     align-items: center;
-	column-gap: 10px;
+	column-gap: 15px;
+    cursor: pointer;
 }
 
 .d-cgpt-settings > label {
@@ -22,6 +23,7 @@
 	font-weight: bold;
 	opacity: 0.6;
 	transition: 0.3s;
+    cursor: pointer;
 }
 
 .d-cgpt-settings > label > div {

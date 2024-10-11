@@ -27,7 +27,7 @@
 }
 
 body {
-	min-width: 325px;
+	min-width: 350px;
 	font-family: din-round, sans-serif;
 	color: rgb(var(--color-eel));
 	background-color: rgb(var(--color-snow));
@@ -35,6 +35,59 @@ body {
 
 a {
 	color: var(--d-cgpt-accent-color);
+}
+
+.top {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.top > * {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 0px 15px;
+}
+
+.version {
+    border: 2px solid var(--d-cgpt-accent-color);
+    border-radius: 20px;
+    font-size: 11px;
+	overflow: hidden;
+	text-decoration: none;
+}
+
+.version > * {
+	padding: 4px 5px;
+}
+
+.version > div {
+	color: rgb(var(--color-snow));
+    background-color: var(--d-cgpt-accent-color);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.version #version {
+    color: var(--d-cgpt-accent-color);
+    padding: 4px 6px;
+}
+
+.app-info {
+	column-gap: 15px;
+}
+
+.app-info img {
+	width: 24px;
+}
+
+.app-info div {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 #settings {
@@ -45,7 +98,8 @@ a {
 
 .footer {
     text-align: center;
-    margin: 15px 0;
+    margin-bottom: 15px;
+	margin-top: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,7 +156,7 @@ a {
 .element .buttons {
 	display: flex;
 	justify-content: space-between;
-	margin: 12px 45px;
+	margin: 15px 65px;
 }
 
 .element .buttons button {

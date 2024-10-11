@@ -43,6 +43,42 @@ class Settings {
 				"gpt-4-turbo",
 			],
 			key: "model"
+		},
+		{
+			type: "select",
+			label: "Explanation language",
+			description: "The language that ChatGPT will use to explain the exercise.",
+			default: "Auto",
+			options: [
+				"Auto",
+				"Bahasa Ind.",
+				"Čeština",
+				"Deutsch",
+				"English",
+				"Español",
+				"Français",
+				"Italiano",
+				"Magyar",
+				"Nederlands",
+				"Polski",
+				"Português",
+				"Română",
+				"Tagalog",
+				"Tiếng Việt",
+				"Türkçe",
+				"Ελληνικά",
+				"Русский",
+				"Українською",
+				"العربية",
+				"हिंदी",
+				"বাংলা",
+				"తెలుగు",
+				"ภาษาไทย",
+				"한국어",
+				"中文",
+				"日本語"
+			],
+			key: "language"
 		}
 	];
 
@@ -98,14 +134,24 @@ class Settings {
 					});
 				}
 			}
+
+			if (target.closest("select")) {
+				const select = target.closest("select");
+				chrome.storage.sync.get([this.storeKey], result => {
+					const settings = result[this.storeKey] || {};
+					settings[select.id.replace("d-cgpt-", "")] = select.value;
+					chrome.storage.sync.set({ [this.storeKey]: settings });
+				});
+			}
 		});
 	}
 
 	update(settings) {
 		Object.keys(settings).forEach(key => {
 			const setting = this.wrapper.querySelector(`#d-cgpt-${key}`);
+			console.log(setting, key, settings[key]);
 			if (setting) {
-				switch (setting.type) {
+				switch (setting.dataset.type) {
 					case "checkbox":
 						if (settings[key] && !setting.checked) {
 							setting.click();
@@ -139,7 +185,7 @@ class Settings {
 			<div class="d-cgpt-settings d-cgpt-settings-checkbox" title="${setting.description}">
 				<label for="d-cgpt-${setting.key}">${setting.label} <div>${setting.description}</div></label>
 				<div class="d-cgpt-custom-checkbox">
-					<input type="checkbox" id="d-cgpt-${setting.key}">
+					<input data-type="checkbox" type="checkbox" id="d-cgpt-${setting.key}">
 					<div class="d-cgpt-custom-checkbox-back"></div>
 					<div class="d-cgpt-custom-checkbox-ball"></div>
 				</div>
@@ -155,7 +201,7 @@ class Settings {
 		return /* html */ `
 			<div class="d-cgpt-settings d-cgpt-settings-select" title="${setting.description}">
 				<label for="d-cgpt-${setting.key}">${setting.label} <div>${setting.description}</div></label>
-				<select id="d-cgpt-${setting.key}">
+				<select data-type="select" id="d-cgpt-${setting.key}">
 					${options}
 				</select>
 			</div>
