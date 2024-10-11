@@ -1,6 +1,6 @@
-# Contributing to Duolingo ChatGPT
+# Contributing to Duo Explained
 
-First off, thank you for considering contributing to **Duolingo ChatGPT**! It's people like you that make Duolingo ChatGPT such a great tool to increase your language skills.
+First off, thank you for considering contributing to **Duo Explained**! It's people like you that make Duo Explained such a great tool to increase your language skills.
 
 Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open-source project. In return, they should reciprocate that respect in addressing your issue, assessing changes, and helping you finalize your pull requests.
 
@@ -14,7 +14,7 @@ Please ensure that the tests are passing when submitting a pull request. If you'
 
 
 # Table of Contents
-- [Contributing to Duolingo ChatGPT](#contributing-to-duolingo-chatgpt)
+- [Contributing to Duo Explained](#contributing-to-duo-explained)
 - [Pull requests](#pull-requests)
 - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
@@ -33,7 +33,7 @@ Please ensure that the tests are passing when submitting a pull request. If you'
 
 ## Introduction
 
-We love to receive contributions from our community — you! There are many ways to contribute, from writing tutorials or blog posts, improving documentation, submitting bug reports, feature requests, or even writing code that can be incorporated into **Duolingo ChatGPT**.
+We love to receive contributions from our community — you! There are many ways to contribute, from writing tutorials or blog posts, improving documentation, submitting bug reports, feature requests, or even writing code that can be incorporated into **Duo Explained**.
 
 Feel free to use the issue tracker for support questions
 

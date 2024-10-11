@@ -128,7 +128,7 @@
 		const tabText = tab.querySelector("span span");
 		tabText.innerText = "Duo Explained";
 		const tabIcon = tab.querySelector("img");
-		tabIcon.src = "https://andreclerigo.github.io/duolingo-chatgpt-assets/logo.png";
+		tabIcon.src = "https://andreclerigo.github.io/duo-explained-assets/logo.png";
 		return tab;
 	}
 
@@ -136,10 +136,10 @@
 		return /* html */`
 			<div class="d-cgpt-prompt" style="bottom: -100px;">
 				<div>
-					<img src="https://andreclerigo.github.io/duolingo-chatgpt-assets/logo-stroke.png">
+					<img src="https://andreclerigo.github.io/duo-explained-assets/logo-stroke.png">
 					<input type="text" placeholder="ChatGPT API Key">
 					<button>Submit</button>
-					<img id="d-cgpt-prompt-close" class="d-cgpt-prompt-icon d-cgpt-button" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/close-thick.png">
+					<img id="d-cgpt-prompt-close" class="d-cgpt-prompt-icon d-cgpt-button" src="https://andreclerigo.github.io/duo-explained-assets/icons/close-thick.png">
 				</div>
 			</div>
 		`;

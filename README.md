@@ -1,4 +1,4 @@
-# duolingo-chatgpt
+# duo-explained
 
 Browser extension that integrates OpenAI's interface to ChatGPT with Duolingo's exercises.
 

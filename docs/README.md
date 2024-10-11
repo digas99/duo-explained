@@ -1,6 +1,6 @@
-# Duolingo ChatGPT Documentation
+# Duo Explained Documentation
 
-Documentation to assist in the development of the Duolingo ChatGPT project.
+Documentation to assist in the development of the Duo Explained project.
 
 # Table of Contents
 1. [Project Structure](#project-structure)

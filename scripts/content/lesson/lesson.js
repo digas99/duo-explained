@@ -274,11 +274,11 @@
 				<div class="d-cgpt-explain-content">${content}</div>
 				<div class="d-cgpt-explain-close">
 					<div class="d-cgpt-explain-close-border"></div>
-					<img class="d-cgpt-icon" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/arrow-circle.png">
+					<img class="d-cgpt-icon" src="https://andreclerigo.github.io/duo-explained-assets/icons/arrow-circle.png">
 				</div>
 				<div class="d-cgpt-explain-bottom">
 					<div class="d-cgpt-explain-model" style="display: none;"><span></span></div>
-					<div class="d-cgpt-explain-tokens"><img class="d-cgpt-icon-accent" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/token.png"><span>0</span></div>
+					<div class="d-cgpt-explain-tokens"><img class="d-cgpt-icon-accent" src="https://andreclerigo.github.io/duo-explained-assets/icons/token.png"><span>0</span></div>
 				</div>
 			</div>
 		`;

@@ -1,4 +1,4 @@
-# Duolingo ChatGPT Tests
+# Duo Explained Tests
 
 This directory contains tests for the Duolingo challenges parsers.
 
