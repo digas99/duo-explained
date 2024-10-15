@@ -95,7 +95,9 @@
 	apiKeyRemove.addEventListener("click", () => {
 		confirm("Are you sure you want to remove the API key?") && removeApiKey(() => {
 			chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
-				chrome.tabs.sendMessage(tabs[0].id, {type: "RESET"}, () => window.chrome.runtime.lastError);
+				chrome.tabs.sendMessage(tabs[0].id, {type: "RESET"}, () => {
+					chrome.storage.sync.remove("API_KEY_PROMPT_CLOSED");
+				});
 			});
 
 			window.location.reload();
@@ -118,23 +120,35 @@
 	});
 
 	// api key save button
-	apiKeySave.addEventListener("click", () => {
+	apiKeySave.addEventListener("click", async () => {
 		const apiKey = document.querySelector("#api-key").value;
 		if (apiKey) {
-			chrome.storage.sync.set({ API_KEY: apiKey }, () => {
-				localStorage.setItem("apiKey", apiKey);
-				chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
-					chrome.tabs.sendMessage(tabs[0].id, {type: "SAVED_KEY", key: apiKey}, () => window.chrome.runtime.lastError);
+			const result = await validApiKey(apiKey);
+			if (result.valid) {
+				chrome.storage.sync.set({ API_KEY: apiKey }, () => {
+					localStorage.setItem("apiKey", apiKey);
+					chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
+						chrome.tabs.sendMessage(tabs[0].id, {type: "SAVED_KEY", key: apiKey}, () => window.chrome.runtime.lastError);
+					});
+
+					chrome.storage.sync.get("SETTINGS", data => {
+						const settings = data.SETTINGS || {};
+						settings["extension-enabled"] = true;
+						chrome.storage.sync.set({ SETTINGS: settings }, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
+					});
 				});
 
-				chrome.storage.sync.get("SETTINGS", data => {
-					const settings = data.SETTINGS || {};
-					settings["extension-enabled"] = true;
-					chrome.storage.sync.set({ SETTINGS: settings }, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
-				});
-			});
+				window.location.reload();
+			}
+			else {
+				let error = result.message;
 
-			window.location.reload();
+				if (result.status === 429) {
+					error += " Please check <a href='apikey.html#update-tier'>here</a> how to solve this issue.";
+				}
+
+				popupMessage(document.body, error, "error");
+			}
 		}
 	});
 
@@ -148,6 +162,22 @@
 		});
 	});
 
+	const validApiKey = async apiKey => {
+		// not starts with sk-
+		if (!apiKey.startsWith("sk-")) return {
+			valid: false,
+			message: "OpenAI API Key must start with <b>sk-</b>"
+		}
+
+		return await new Promise((resolve, reject) => {
+			chrome.runtime.sendMessage({ type: "CHECK_API_KEY", apiKey }, response => {
+				if (chrome.runtime.lastError) {
+					return reject(chrome.runtime.lastError);
+				}
+				resolve(response);
+			});	
+		});
+	}
 })();
 
 const removeApiKey = callback => {

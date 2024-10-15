@@ -222,3 +222,52 @@ a {
 .icon-accent {
 	opacity: 1 !important;
 }
+
+.popup {
+    background-color: rgb(var(--color-snow));
+	border-top: 4px solid var(--d-cgpt-accent-color);
+	border-radius: 5px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 75%;
+    height: fit-content;
+    padding: 5px 15px;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.popup p {
+    text-align: left;
+}
+
+.popup button {
+	padding: 8px 15px;
+	border-radius: 10px;
+	border: unset;
+	cursor: pointer;
+	font-weight: bold;
+	background-color: var(--button-back);
+	color: var(--button-color);
+}
+
+.popup button:hover {
+	background-color: var(--d-cgpt-accent-color);
+	color: rgb(var(--color-snow));
+}
+
+.darken {
+	width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: black;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    opacity: 0.8;
+}

@@ -19,3 +19,20 @@
 		}
 	});
 })();
+
+const popupMessage = (wrapper, message, type = "info") => {
+	const popup = /*html*/`
+		<div class="darken"></div>
+		<div class="popup" data-type="${type}">
+			<p>${message}</p>
+			<button class="popup-close">Close</button>
+		</div>
+	`;
+	wrapper.insertAdjacentHTML("beforeend", popup);
+
+	const popupClose = wrapper.querySelector(".popup-close");
+	popupClose.addEventListener("click", () => {
+		document.querySelector(".darken").remove();
+		document.querySelector(".popup").remove();
+	});
+};

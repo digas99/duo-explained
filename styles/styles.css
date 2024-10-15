@@ -78,6 +78,20 @@
 	transition: 0.3s;
 }
 
+.d-cgpt-prompt-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 20px;
+    background: rgb(var(--color-snow));
+    border: 2px solid rgb(var(--color-swan));
+    border-radius: 16px;
+    max-width: 700px;
+    margin: auto;
+	transition: 0.2s;
+}
+
 .d-cgpt-prompt > div {
 	display: flex;
 	justify-content: center;
@@ -92,6 +106,7 @@
 	display: flex;
     align-items: center;
     column-gap: 30px;
+	position: relative;
 }
 
 .d-cgpt-prompt > div > input {

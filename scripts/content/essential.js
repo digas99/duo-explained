@@ -103,15 +103,35 @@
 				return;
 			}
 
-			chrome.runtime.sendMessage({ type: "SET_API_KEY", apiKey: apiKey }, response => {
-				if (response) {
-					document.querySelector(".d-cgpt-prompt").remove();
-					if (newTab) {
-						newTab.querySelector("a").classList.add("active");
+			chrome.runtime.sendMessage({ type: "CHECK_API_KEY", apiKey }, result => {
+				if (result.valid) {
+					chrome.runtime.sendMessage({ type: "SET_API_KEY", apiKey: apiKey }, response => {
+						if (response) {
+							document.querySelector(".d-cgpt-prompt").remove();
+							if (newTab) {
+								newTab.querySelector("a").classList.add("active");
+							}
+						}
+					});
+				}
+				else {
+					console.log(result);
+					let error = result.message;
+					
+					if (result.status === 429) {
+						error += " Please check your <a style='color: rgb(var(--color-macaw));' target='_blank' href='https://platform.openai.com/settings/organization/billing/overview'>API Tier</a>.";
 					}
+
+					const promptMessage = document.querySelector(".d-cgpt-prompt-message");
+					promptMessage.innerHTML = error;
+					promptMessage.style.height = "100px";
+					promptMessage.style.top = "-45px";
+					const promptDiv = document.querySelector(".d-cgpt-prompt div");
+					promptDiv.style.borderRadius = "0px 0px 16px 16px";
 				}
 			});
 		});
+
 
 		// slide up prompt
 		setTimeout(() => document.querySelector(".d-cgpt-prompt").style.removeProperty("bottom"), delay);
@@ -146,6 +166,7 @@
 	const makePrompt = () => {
 		return /* html */`
 			<div class="d-cgpt-prompt" style="bottom: -100px;">
+				<p class="d-cgpt-prompt-message"></p>
 				<div>
 					<img src="https://andreclerigo.github.io/duolingo-chatgpt-assets/logo-stroke.png">
 					<input type="text" placeholder="ChatGPT API Key">

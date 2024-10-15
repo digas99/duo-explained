@@ -32,6 +32,8 @@ class OpenAIAgent {
             "gpt-4",
             "gpt-4-turbo",
         ];
+
+        this.endpoint = "https://api.openai.com/v1/chat/completions";
     }
 
     /**
@@ -70,6 +72,58 @@ class OpenAIAgent {
     }
 
     /**
+     * Sends a dummy request to the OpenAI API to validate the API key.
+     * @param {string} apiKey - Your OpenAI API key.
+     * @returns {Object} - The result of the API key validation.
+     */
+    async validateApiKey(apiKey) {
+        const response = await fetch(this.endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({
+                model: "gpt-4o-mini",
+                messages: [{ role: "user", content: "Hello, World!" }],
+                temperature: 0.2,
+                max_completion_tokens: 1,
+            }),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            return {
+                valid: true,
+                message: "API Key is valid",
+                tokens: result.usage.total_tokens,
+            };
+        } else {
+            if (response.status === 401) {
+                return {
+                    valid: false,
+                    message: "API Key is not valid!",
+                    status: response.status,
+                }
+            }
+
+            if (response.status === 429) {
+                return {
+                    valid: false,
+                    message: "API Key either exceeded the rate limit or is on a Free tier.",
+                    status: response.status,
+                }
+            }
+
+            return {
+                valid: false,
+                message: "Something went wrong. Please try again.",
+                status: response.status,
+            }
+        }
+    }
+
+    /**
      * Sets the model for the agent after verifying its availability.
      * @param {string} model - The model to use for the completion (e.g., "gpt-4").
      */
@@ -92,8 +146,6 @@ class OpenAIAgent {
      * @returns {Promise<string|null>} - The response from the OpenAI API, or null if an error occurred.
      */
     async query(model, prompt, temperature = 0.2) {
-        const url = "https://api.openai.com/v1/chat/completions";
-        
         const body = JSON.stringify({
             model: model,
             messages: [{ role: "user", content: prompt }],
@@ -101,7 +153,7 @@ class OpenAIAgent {
         });
 
         try {
-            const response = await fetch(url, {
+            const response = await fetch(this.endpoint, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -111,6 +163,10 @@ class OpenAIAgent {
             });
 
             if (!response.ok) {
+                console.log(response);
+                const data = await response.json();
+                console.log(data);
+
                 throw new Error(`Network response was not ok: ${response.statusText}`);
             }
 

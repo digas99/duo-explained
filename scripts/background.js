@@ -10,6 +10,10 @@ importScripts(
 
 let agent = new OpenAIAgent();
 
+// agent.validateApiKey("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");
+// agent.validateApiKey("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");
+// agent.validateApiKey("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");
+
 /**
  * Load local storage values from user settings for API key and model chosen for ChatGPT.
  * This is useful for persisting the API key and model across browser sessions.
@@ -30,36 +34,66 @@ chrome.storage.sync.get(["API_KEY", "MODEL"], (result) => {
  * Listen for messages from the content script.
  * If the message type is "QUERY", a message is sent to the agent to query the OpenAI API.
  * If the message type is "SET_API_KEY, the API key is set in the agent and stored in local storage.
+ * If the message type is "CHECK_API_KEY", the API key is checked for validity.
  * If the message type is "SET_MODEL", the model is set in the agent and stored in local storage.
  * If the message type is "RELOAD", the content scripts are reloaded.
  */
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === "QUERY") {
-    (async () => {
-        if (agent) {
-            try {
-                // Generate the prompt using QueryGenerator
-                const prompt = QueryGenerator.generatePrompt(request.data);
-                console.log(prompt);
-                const response = await agent.query(agent.model, prompt);
-                // const response = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.";
-                sendResponse(response);
-            } catch (error) {
-                sendResponse({ error: error.message });
+        (async () => {
+            if (agent) {
+                try {
+                    // Generate the prompt using QueryGenerator
+                    const prompt = QueryGenerator.generatePrompt(request.data);
+                    console.log(prompt);
+                    const response = await agent.query(agent.model, prompt);
+                    // const response = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.";
+                    sendResponse(response);
+                } catch (error) {
+                    sendResponse({ error: error.message });
+                }
+            } else {
+                sendResponse({ error: "Agent not initialized yet." });
             }
-        } else {
-            sendResponse({ error: "Agent not initialized yet." });
-        }
-    })();
+        })();
     }
 
     // Set the API key
     if (request.type === "SET_API_KEY") {
         const apiKey = request.apiKey;
         (async () => {
-            agent.setApiKey(apiKey);
-            await chrome.storage.sync.set({ API_KEY: apiKey });
-            sendResponse({ message: "API Key set" });
+            if (agent) {
+                agent.setApiKey(apiKey);
+                await chrome.storage.sync.set({ API_KEY: apiKey });
+                sendResponse({ message: "API Key set" });
+
+                chrome.storage.sync.get(["SETTINGS"], result => {
+                    const settings = result.SETTINGS || {};
+                    settings["extension-enabled"] = true;
+                    chrome.storage.sync.set({ SETTINGS: settings }, () => {
+                        chrome.runtime.sendMessage({ type: "RELOAD" });
+                    });
+                    
+                });
+            } else {
+                sendResponse({ error: "Agent not initialized yet." });
+            }
+        })();
+    }
+
+    // Validate the API Key
+    if (request.type === "CHECK_API_KEY") {
+        const apiKey = request.apiKey;
+        (async () => {
+            if (agent) {
+                const result = await agent.validateApiKey(apiKey);
+                sendResponse(result);
+            } else {
+                sendResponse({
+                    valid: false,
+                    message: "Something went wrong. Please try again."
+                });
+            }
         })();
     }
 
