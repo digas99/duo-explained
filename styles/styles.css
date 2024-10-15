@@ -47,6 +47,28 @@
 	color: var(--d-cgpt-accent-color) !important;
 }
 
+.d-cgpt-beta {
+	background-color: var(--d-cgpt-accent-color);
+    border: 2px solid var(--d-cgpt-accent-color) !important;
+    width: fit-content;
+    padding: 0px 10px;
+    color: var(--d-cgpt-secondary-color);
+    font-weight: bold;
+    font-size: 11px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -17px;
+    z-index: 10;
+    margin: auto;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    rotate: 90deg;
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
+}
+
 .d-cgpt-prompt {
 	position: fixed;
 	bottom: 0;

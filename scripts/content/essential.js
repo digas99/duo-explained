@@ -131,6 +131,11 @@
 		const tabLink = tab.querySelector("a");
 		delete tabLink.dataset.test;
 		tabLink.href = "javascript: void(0)";
+		const BETADiv = document.createElement("div");
+		BETADiv.className = "d-cgpt-beta";
+		BETADiv.innerText = "BETA";
+		const tabSpanWrapper = tab.querySelector("span");
+		tabSpanWrapper.appendChild(BETADiv);
 		const tabText = tab.querySelector("span span");
 		tabText.innerText = "Duo Explained";
 		const tabIcon = tab.querySelector("img");

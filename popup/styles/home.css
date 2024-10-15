@@ -143,6 +143,19 @@ a {
 	padding-bottom: 5px;
     font-size: 15px;
 	font-weight: bold;
+	display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.element > .title > a {
+    display: flex;
+    align-items: center;
+}
+
+.element > .title > a img {
+    width: 13px;
+    opacity: 0.8;
 }
 
 .element input {
@@ -152,6 +165,12 @@ a {
     padding: 7px 2px;
 	color: rgb(var(--color-wolf));
 	background-color: rgb(var(--color-snow));
+}
+
+.element .link {
+	display: inline-block;
+    margin-top: 5px;
+    opacity: 0.9;
 }
 
 .element .buttons {

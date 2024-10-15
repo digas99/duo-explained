@@ -2,7 +2,7 @@
 	window.settings = new Settings(Settings.defaults, document.querySelector("#settings"), 'SETTINGS');
 	window.settings.build();
 
-	chrome.storage.sync.get(["SETTINGS", "API_KEY", "THEME", "UI_LANGUAGE"], data => {
+	chrome.storage.sync.get(["SETTINGS", "API_KEY", "UI_LANGUAGE"], data => {
 		const settings = data.SETTINGS || {};
 		window.settings.update(settings);
 
@@ -26,12 +26,6 @@
 		}
 		else {
 			document.querySelector("#d-cgpt-model").value = Settings.defaults.find(setting => setting.key === "model").default;
-		}
-
-		theme = data.THEME;
-		if (theme) {
-			document.documentElement.dataset.duoTheme = theme;
-			localStorage.setItem("theme", theme);
 		}
 
 		uiLanguage = data.UI_LANGUAGE;
@@ -63,11 +57,6 @@
 	let model = localStorage.getItem("model");
 	if (model)
 		modelSelect.value = model;
-
-	// theme select
-	let theme = localStorage.getItem("theme");
-	if (theme)
-		document.documentElement.dataset.duoTheme = theme;
 
 	// version
 	let version = localStorage.getItem("version");
@@ -159,12 +148,6 @@
 		});
 	});
 
-	chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-		if (request.type === "UPDATE_THEME") {
-			document.documentElement.dataset.duoTheme = request.theme;
-			localStorage.setItem("theme", request.theme);
-		}
-	});
 })();
 
 const removeApiKey = callback => {

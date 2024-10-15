@@ -1,0 +1,64 @@
+:root {
+	scroll-behavior: smooth;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+}
+
+p {
+	text-align: justify;
+}
+
+h3 {
+	font-size: 15px;
+}
+
+ol > li {
+	font-weight: bold;
+}
+
+ol > li > b {
+	color: var(--d-cgpt-accent-color);
+}
+
+ol img {
+	width: 114%;
+    margin: 10px 0;
+    margin-left: -40px;
+    border-radius: 5px;
+}
+
+.top-title {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.top-title > a {
+	display: flex;
+	padding: 5px;
+}
+
+.top-title > a:hover {
+	opacity: 0.8;
+}
+
+.top-title img {
+	width: 20px;
+	rotate: -180deg;
+}
+
+.top-title > h2 {
+
+}
+
+.table-of-contents {
+
+}
+
+.table-of-contents li {
+	font-size: 15px;
+}

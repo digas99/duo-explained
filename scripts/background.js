@@ -76,7 +76,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === "RELOAD") {
         // inject the content scripts again
         chrome.scripting.executeScript({
-            target: { tabId: sender.tab.id },
+            target: { tabId: sender.tab?.id },
             files: [
                 "/scripts/content/lesson/answer.js",
                 "/scripts/content/lesson/challenge.js",
