@@ -85,14 +85,14 @@ class OpenAIAgent {
             },
             body: JSON.stringify({
                 model: "gpt-4o-mini",
-                messages: [{ role: "user", content: "Hello, World!" }],
-                temperature: 0.2,
-                max_completion_tokens: 1,
+                messages: [{ role: "user", content: "" }],
+                max_tokens: 1,
             }),
         });
 
         if (response.ok) {
             const result = await response.json();
+            console.log(result);
             return {
                 valid: true,
                 message: "API Key is valid",

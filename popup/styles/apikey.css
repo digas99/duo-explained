@@ -10,9 +10,15 @@
 
 p {
 	text-align: justify;
+	margin: 3px 0;
+	font-size: 13px;
 }
 
-h3 {
+h1 {
+	font-size: 1.5em;
+}
+
+h2 {
 	font-size: 15px;
 }
 
@@ -20,7 +26,7 @@ ol > li {
 	font-weight: bold;
 }
 
-ol > li > b {
+ol > li b, ol > li strong {
 	color: var(--d-cgpt-accent-color);
 }
 
@@ -52,7 +58,7 @@ ol img {
 }
 
 .top-title > h2 {
-
+	font-size: 17px;
 }
 
 .table-of-contents {
