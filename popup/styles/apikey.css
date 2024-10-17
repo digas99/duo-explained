@@ -8,8 +8,12 @@
 	padding: 10px;
 }
 
+hr {
+	width: 100%;
+    border-color: rgb(var(--color-swan));
+}
+
 p {
-	text-align: justify;
 	margin: 3px 0;
 	font-size: 13px;
 }
@@ -22,6 +26,18 @@ h2 {
 	font-size: 15px;
 }
 
+code {
+	background-color: rgb(var(--color-swan));
+    padding: 6px 10px;
+    border-radius: 8px;
+    white-space: normal;
+    margin-left: 5px;
+}
+
+ol {
+    padding-inline-start: 20px;
+}
+
 ol > li {
 	font-weight: bold;
 }
@@ -31,10 +47,10 @@ ol > li b, ol > li strong {
 }
 
 ol img {
-	width: 114%;
+	width: 110%;
     margin: 10px 0;
-    margin-left: -40px;
     border-radius: 5px;
+	margin-left: -25px;
 }
 
 .top-title {
@@ -59,6 +75,11 @@ ol img {
 
 .top-title > h2 {
 	font-size: 17px;
+}
+
+.top-title .external img {
+	rotate: unset;
+    width: 14px;
 }
 
 .table-of-contents {

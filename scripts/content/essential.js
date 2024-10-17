@@ -119,7 +119,7 @@
 					let error = result.message;
 					
 					if (result.status === 429) {
-						error += " Please check your <a style='color: rgb(var(--color-macaw));' target='_blank' href='https://platform.openai.com/settings/organization/billing/overview'>API Tier</a>.";
+						error += " Please check <a style='color: rgb(var(--color-macaw));' target='_blank' href='https://github.com/digas99/duo-explained/blob/main/docs/help/API_KEY.md'>here</a> how to solve this issue.";
 					}
 
 					const promptMessage = document.querySelector(".d-cgpt-prompt-message");
