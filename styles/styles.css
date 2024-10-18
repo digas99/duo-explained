@@ -196,7 +196,8 @@
 }
 
 .d-cgpt-explain-area {
-	width: 30%;
+	max-width: 45%;
+	min-width: 500px;
 	border: 1px solid rgb(var(--color-swan));
 	background-color: rgb(var(--color-snow));
 	border-radius: 16px;
@@ -204,10 +205,11 @@
 	padding-bottom: 40px;
 	min-height: 400px;
 	position: relative;
+	z-index: 1000;
 }
 
 .d-cgpt-explain-area-closed {
-	right: -380px !important;
+	right: -390px !important;
 }
 
 .d-cgpt-explain-area > div {
@@ -263,6 +265,8 @@
 	text-align: left;
 	white-space: pre-wrap;
 	cursor: text;
+    max-height: 350px;
+    overflow: auto;
 }
 
 .cursor {
@@ -359,29 +363,124 @@
     right: 58px;
 }
 
+.d-cgpt-swipe-icon {
+	position: absolute;
+	z-index: 100;
+    right: 35px;
+    top: 100px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+	cursor: pointer;
+	display: none;
+}
 
-/* screen until 920px */
+.d-cgpt-swipe-icon > img {
+    width: 30px;
+}
 
-@media screen and (max-width: 1050px) {
+.d-cgpt-swipe-icon > span {
+	font-size: 13px;
+	color: var(--d-cgpt-accent-color);
+}
+
+@media screen and (max-width: 1150px) {
 	.d-cgpt-explain-area {
 		position: absolute;
 		background-color: rgb(var(--color-snow));
 		height: 85%;
 		right: 0;
-		width: 400px;
+		width: 450px;
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 		padding: 20px 0px;
 		transition: 0.3s;
+		max-width: unset important;
+		min-width: unset !important;
 	}
 
 	.d-cgpt-explain-close {
 		display: flex;
 	}
+
+	.d-cgpt-explain-content {
+		max-height: 84%;
+		font-size: 17px;
+	}
 }
 
-@media screen and (min-width: 1050px) {
+@media screen and (min-width: 1150px) {
 	.d-cgpt-explain-area {
 		right: unset !important;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.d-cgpt-explain-area {
+		max-width: unset;
+		min-width: unset;
+		width: 100%;
+		border-radius: 16px;
+		padding-top: 30px;
+		bottom: 100px;
+		z-index: 10;
+	}
+
+	.d-cgpt-explain-area-closed {
+		right: 0 !important;
+		bottom: -700px !important;
+	}
+
+	.d-cgpt-explain-bottom {
+		/* bottom: unset;
+    	top: -28px; */
+		/* display: none; */
+	}
+
+	.d-cgpt-explain-close {
+		/* left: 0;
+		right: 0;
+		top: -25px;
+		bottom: unset; */
+		display: none;
+	}
+
+	.d-cgpt-explain-close-border {
+		height: 1px;
+		width: 95%;
+		left: 0;
+		top: 24px;
+	}
+
+	.d-cgpt-explain-close > img {
+	    margin: auto;
+    	transform: rotate(90deg);
+	}
+
+	.d-cgpt-explain-area-closed .d-cgpt-explain-close > img {
+		transform: rotate(-90deg) !important;
+	}
+	
+	.d-cgpt-speech-bubble {
+		display: none;
+	}
+
+	.d-cgpt-swipe-icon {
+		display: flex;
+	}
+}
+
+@media screen and (max-width: 550px) {
+	.d-cgpt-explain-content {
+		font-size: 16px;
+	}
+
+	.d-cgpt-explain-header > h3 {
+		font-size: 20px;
+	}
+
+	.d-cgpt-explain-header {
+		text-align: left;
 	}
 }

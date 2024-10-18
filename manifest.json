@@ -24,6 +24,8 @@
                 "scripts/content/theme.js", 
                 "scripts/content/essential.js",
 
+                "lib/swiped-events.min.js",
+
                 "scripts/content/lesson/parser.js",
                 "scripts/content/lesson/answer.js",
                 "scripts/content/lesson/challenge.js",

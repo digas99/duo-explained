@@ -17,110 +17,76 @@
 	if (typeof extensionActive == "function" && !(await extensionActive())) return; 
 
 	let answerData, challengeData;
-
-	// listen for the answer event
-	document.addEventListener("answer", async event => {
-		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
-
-		console.log("Answer event detected");
-		answerData = event.detail;
-
-		const footer = document.getElementById("session/PlayerFooter");
-		footer.classList.add("d-cgpt-footer");
-
-		addExplainButton(answerData.challenge.content === undefined);
-		toggleExtraInput(false);
-	});
-
-	// listen for the challenge event
-	document.addEventListener("challenge", async event => {
-		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
-
-		console.log("Challenge event detected");
-		challengeData = event.detail;
-
-		const footer = document.getElementById("session/PlayerFooter");
-		footer.classList.add("d-cgpt-footer");
-
-		// clear from previous challenge
-		clearAll();
-
-		addExplainButton(challengeData.content === undefined);
-		toggleExtraInput(false);
-	});
-
-
-	document.addEventListener("mouseover", async event => {
-		const target = event.target;
-		
-		// toggle extra input
-		if (target.closest(".d-cgpt-footer") && document.querySelector(".d-cgpt-explain-button-enabled")) {
-			toggleExtraInput(true);
-		}
-		else {
-			if (!target.closest(".d-cgpt-speech-bubble")) {
-				toggleExtraInput(false);
-			}
-		}
-	});
-
-	document.addEventListener("click", async event => {
-		const target = event.target;
-		
-		if (window.innerWidth <= 1050) {
-			if (!target.closest(".d-cgpt-explain-area") && document.querySelector(".d-cgpt-explain-area")?.dataset.mouseDown !== "true" && !target.closest(".d-cgpt-explain-button")) {
-				const explainArea = document.querySelector(".d-cgpt-explain-area");
-				if (explainArea) {
-					explainArea.style.removeProperty("right");
-					explainArea.classList.add("d-cgpt-explain-area-closed");
-
-					const closeButton = document.querySelector(".d-cgpt-explain-close");
-					closeButton.classList.remove("d-cgpt-explain-close-accent")
-				}
-			}
-		}
-	});
-
 	let mouseDownTime = 0;
 
-	document.addEventListener("mousedown", async event => {
-		const target = event.target;
-		
-		mouseDownTime = new Date().getTime();
+	const hideExplainArea = () => {
+		const explainArea = document.querySelector(".d-cgpt-explain-area");
+		if (explainArea) {
+			explainArea.style.removeProperty("right");
+			explainArea.classList.add("d-cgpt-explain-area-closed");
 
-		if (target.closest(".d-cgpt-explain-close")) {
-			const explainArea = document.querySelector(".d-cgpt-explain-area");
-			if (explainArea && !explainArea.classList.contains("d-cgpt-explain-area-closed")) {
-				explainArea.classList.add("d-cgpt-explain-area-closed");
-				explainArea.dataset.mouseDown = true;
+			const closeButton = document.querySelector(".d-cgpt-explain-close");
+			closeButton.classList.remove("d-cgpt-explain-close-accent");
 
-				const closeButton = document.querySelector(".d-cgpt-explain-close");
-				closeButton.classList.add("d-cgpt-explain-close-accent");
+			if (window.innerWidth <= 700) {
+				explainArea.previousElementSibling.style.removeProperty("display");
+				
+				switchSwipeIcon("up");
 			}
 		}
-	});
+	}
 
-	document.addEventListener("mouseup", async event => {
+	const showExplainArea = () => {
+		const explainArea = document.querySelector(".d-cgpt-explain-area");
+		if (explainArea) {
+			explainArea.classList.remove("d-cgpt-explain-area-closed");
+			const closeButton = document.querySelector(".d-cgpt-explain-close");
+			setTimeout(() => closeButton.classList.add("d-cgpt-explain-close-accent"), 400);
+
+			if (window.innerWidth <= 700) {
+				explainArea.previousElementSibling.style.setProperty("display", "none", "important");
+				
+				switchSwipeIcon("down");
+			}
+		}
+	}
+
+	const handleDownEvent = event => {
+		mouseDownTime = new Date().getTime();
+
+		console.log("Mouse down event detected");
+
+		const target = event.target;
+		if (target.closest(".d-cgpt-explain-close")) {
+			hideExplainArea();	
+			const explainArea = document.querySelector(".d-cgpt-explain-area");
+			if (explainArea) {
+				explainArea.dataset.mouseDown = "true";
+			}
+		}
+	}
+
+	const handleUpEvent = () => {
 		const mouseUpTime = new Date().getTime();
 		const timeDiff = mouseUpTime - mouseDownTime;
 		
-		const explainArea = document.querySelector(".d-cgpt-explain-area");
-		if (timeDiff > 500 && explainArea && explainArea.dataset.mouseDown == "true" && explainArea.classList.contains("d-cgpt-explain-area-closed")) {
-			explainArea.classList.remove("d-cgpt-explain-area-closed");
-			
-			const closeButton = document.querySelector(".d-cgpt-explain-close");
-			setTimeout(() => closeButton.classList.remove("d-cgpt-explain-close-accent"), 400);
+		console.log("Mouse up event detected");
 
-			setTimeout(() => explainArea.dataset.mouseDown = false);
+		console.log("Time difference: " + timeDiff);
+		
+		const explainArea = document.querySelector(".d-cgpt-explain-area");
+		console.log(timeDiff > 500, explainArea, explainArea.dataset.mouseDown == "true", explainArea.classList.contains("d-cgpt-explain-area-closed"));
+		if (timeDiff > 500 && explainArea && explainArea.dataset.mouseDown == "true" && explainArea.classList.contains("d-cgpt-explain-area-closed")) {
+			showExplainArea();
+			setTimeout(() => explainArea.dataset.mouseDown = "false");
 		}
 
 		if (timeDiff <= 500 && explainArea)
-			explainArea.dataset.mouseDown = false;
+			explainArea.dataset.mouseDown = "false";
 
 		mouseDownTime = 0;
-	});
+	}
 
-	/* Functions */
 
 	const handleExplanation = callback => {
 		const lesson = {
@@ -139,6 +105,11 @@
 		if (challengeWrapper) {
 			challengeWrapper.classList.add("d-cgpt-explain-area-wrapper");
 			challengeWrapper.insertAdjacentHTML("beforeend", explanationPrompt("Loading explanation..."));
+
+			if (window.innerWidth <= 700) {
+				const explainArea = document.querySelector(".d-cgpt-explain-area");
+				explainArea.previousElementSibling.style.setProperty("display", "none", "important");
+			}
 
 			chrome.runtime.sendMessage({ type: "QUERY", data: lesson }, response => {
 				const explainArea = document.querySelector(".d-cgpt-explain-area");
@@ -161,29 +132,35 @@
 					}
 				});
 				explanationClose.addEventListener("mouseover", () => {
+					if (window.innerWidth <= 700) return;
+
 					const explainArea = document.querySelector(".d-cgpt-explain-area");
 					if (explainArea && explainArea.classList.contains("d-cgpt-explain-area-closed")) {
-						explainArea.style.setProperty("right", "-360px", "important");
+						explainArea.style.setProperty("right", "-380px", "important");
 					}
 				});
 				explanationClose.addEventListener("mouseout", () => {
+					if (window.innerWidth <= 700) return;
+
 					const explainArea = document.querySelector(".d-cgpt-explain-area");
 					if (explainArea) {
 						explainArea.style.removeProperty("right");
 					}
 				});
 
-				// model
-				const explainModel = document.querySelector(".d-cgpt-explain-model span");
-				if (explainModel && response.model) {
-					explainModel.textContent = response.model;
-					explainModel.parentElement.style.removeProperty("display");
-				}
-
-				// tokens
-				const explainTokens = document.querySelector(".d-cgpt-explain-tokens span");
-				if (explainTokens && response.usage) {
-					explainTokens.textContent = response.usage.total_tokens;
+				if (response) {
+					// model
+					const explainModel = document.querySelector(".d-cgpt-explain-model span");
+					if (explainModel && response.model) {
+						explainModel.textContent = response.model;
+						explainModel.parentElement.style.removeProperty("display");
+					}
+	
+					// tokens
+					const explainTokens = document.querySelector(".d-cgpt-explain-tokens span");
+					if (explainTokens && response.usage) {
+						explainTokens.textContent = response.usage.total_tokens;
+					}
 				}
 
 				// answer content
@@ -230,6 +207,11 @@
 			if (challengeWrapper) {
 				challengeWrapper.classList.remove("d-cgpt-explain-area-wrapper");
 			}
+		}
+
+		const swipeIcon = document.querySelector(".d-cgpt-swipe-icon");
+		if (swipeIcon) {
+			swipeIcon.remove();
 		}
 
 		answerData = null;
@@ -304,6 +286,22 @@
 
 		if (!button.dataset.hasclick || button.dataset.hasclick === "false") {
 			button.addEventListener("click", () => {
+				// swipe button
+				document.body.insertAdjacentHTML("beforeend", createSwipeIcon("down"));
+
+				const swipeIcon = document.querySelector(".d-cgpt-swipe-icon");
+				swipeIcon.addEventListener("click", () => {
+					const explainArea = document.querySelector(".d-cgpt-explain-area");
+					if (explainArea) {
+						if (explainArea.classList.contains("d-cgpt-explain-area-closed")) {
+							showExplainArea();
+						}
+						else {
+							hideExplainArea();
+						}
+					}
+				});
+
 				handleExplanation(() => {
 					disableButton(button);
 				});
@@ -311,6 +309,28 @@
 		}
 		
 		button.dataset.hasclick = true;
+	}
+
+	const createSwipeIcon = orientation => {
+		removeAllElements(".d-cgpt-swipe-icon");
+
+		return /*html*/`
+			<div class="d-cgpt-swipe-icon">
+				<img class="d-cgpt-icon-accent" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/swipe-${orientation}.png">
+				<span>${orientation === "down" ? "Hide" : "Show"}</span>
+			</div>
+		`;
+	}
+
+	const switchSwipeIcon = orientation => {
+		const swipeIcon = document.querySelector(".d-cgpt-swipe-icon img");
+		if (swipeIcon) {
+			swipeIcon.src = `https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/swipe-${orientation}.png`;
+		}
+		const swipeText = document.querySelector(".d-cgpt-swipe-icon span");
+		if (swipeText) {
+			swipeText.textContent = orientation === "down" ? "Hide" : "Show";
+		}
 	}
 
 	const extraInputPrompt = () => {
@@ -355,4 +375,99 @@
 		if (elements)
 			elements.forEach(element => element.remove());
 	}
+
+	/* ACTIONS WITH THE PAGE */
+
+	// listen for the answer event
+	document.addEventListener("answer", async event => {
+		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
+
+		console.log("Answer event detected");
+		answerData = event.detail;
+
+		const footer = document.getElementById("session/PlayerFooter");
+		footer.classList.add("d-cgpt-footer");
+
+		addExplainButton(answerData.challenge.content === undefined);
+		toggleExtraInput(false);
+	});
+
+	// listen for the challenge event
+	document.addEventListener("challenge", async event => {
+		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
+
+		console.log("Challenge event detected");
+		challengeData = event.detail;
+
+		const footer = document.getElementById("session/PlayerFooter");
+		footer.classList.add("d-cgpt-footer");
+
+		// clear from previous challenge
+		clearAll();
+
+		addExplainButton(challengeData.content === undefined);
+		toggleExtraInput(false);
+	});
+
+	document.addEventListener("click", async event => {
+		const target = event.target;
+		
+		if (window.innerWidth <= 1050) {
+			if (!target.closest(".d-cgpt-explain-area") && document.querySelector(".d-cgpt-explain-area")?.dataset.mouseDown !== "true" && !target.closest(".d-cgpt-explain-button") && !target.closest(".d-cgpt-swipe-icon")) {
+				hideExplainArea();
+			}
+		}
+	});
+
+	document.addEventListener("mouseover", async event => {
+		const target = event.target;
+		
+		// toggle extra input
+		if (target.closest(".d-cgpt-footer") && document.querySelector(".d-cgpt-explain-button-enabled")) {
+			toggleExtraInput(true);
+		}
+		else {
+			if (!target.closest(".d-cgpt-speech-bubble")) {
+				toggleExtraInput(false);
+			}
+		}
+	});
+
+	document.addEventListener("mousedown", handleDownEvent);
+	document.addEventListener("touchstart", handleDownEvent);
+
+	document.addEventListener("mouseup", handleUpEvent);
+	document.addEventListener("touchend", handleUpEvent);
+
+	document.addEventListener("swiped-up", e => {
+		if (window.innerWidth <= 700) {
+			const explainArea = document.querySelector(".d-cgpt-explain-area");
+			if (explainArea && explainArea.classList.contains("d-cgpt-explain-area-closed")) {
+				showExplainArea();
+			}
+		}
+	});
+
+	document.addEventListener("swiped-down", e => {
+		if (window.innerWidth <= 700) {
+			const explainArea = document.querySelector(".d-cgpt-explain-area");
+			if (explainArea && !explainArea.classList.contains("d-cgpt-explain-area-closed")) {
+				hideExplainArea();
+			}
+		}
+	});
+
+	window.addEventListener("resize", () => {
+		const explainArea = document.querySelector(".d-cgpt-explain-area");
+		const exercise = explainArea?.previousElementSibling;
+		if (explainArea && exercise) {
+			if (window.innerWidth <= 700) {
+				if (!explainArea.classList.contains("d-cgpt-explain-area-closed"))
+					exercise.style.display = "none";
+			}
+			else {
+				exercise.style.removeProperty("display");
+			}
+		}
+	});
 })();
