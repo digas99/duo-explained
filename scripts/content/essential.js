@@ -19,24 +19,30 @@
 	observer.observe(document.body, { childList: true, subtree: true });
 
 	// catch open in app popup
-	const overlays = document.querySelector("#overlays");
-	if (overlays) {
-		observer = new MutationObserver(mutations => {
-			mutations.forEach(mutation => {
-				const addedNode = mutation.addedNodes[0];
-				const continueInBrowser = addedNode?.querySelector("button");
-				if (continueInBrowser?.innerText === "CONTINUE IN BROWSER") {
-					continueInBrowser.closest("div[data-focus-lock-disabled='false']").style.display = "none";
-					const backdrop = document.querySelector("div[data-test='drawer-backdrop']");
-					if (backdrop) backdrop.style.display = "none";
-
-					// continue in browser
-					continueInBrowser.click();
-				}
-			});
-		});
-		observer.observe(overlays, { childList: true, subtree: true });
-	}
+	chrome.storage.sync.get("SETTINGS", data => {
+		const settings = data.SETTINGS;
+		const removeContinueInApp = settings?.["remove-continue-app"];
+		if (removeContinueInApp) {
+			const overlays = document.querySelector("#overlays");
+			if (overlays) {
+				observer = new MutationObserver(mutations => {
+					mutations.forEach(mutation => {
+						const addedNode = mutation.addedNodes[0];
+						const continueInBrowser = addedNode?.querySelector("button");
+						if (continueInBrowser?.innerText === "CONTINUE IN BROWSER") {
+							continueInBrowser.closest("div[data-focus-lock-disabled='false']").style.display = "none";
+							const backdrop = document.querySelector("div[data-test='drawer-backdrop']");
+							if (backdrop) backdrop.style.display = "none";
+		
+							// continue in browser
+							continueInBrowser.click();
+						}
+					});
+				});
+				observer.observe(overlays, { childList: true, subtree: true });
+			}
+		}
+	});
 
 	// watch for theme change
 	document.addEventListener("duotheme", event => {

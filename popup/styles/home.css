@@ -99,7 +99,7 @@ a {
 .footer {
     text-align: center;
     margin-bottom: 15px;
-	margin-top: 5px;
+	margin-top: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -177,6 +177,7 @@ a {
 	display: flex;
 	justify-content: space-between;
 	margin: 15px 65px;
+	margin-bottom: unset;
 }
 
 .element .buttons button {

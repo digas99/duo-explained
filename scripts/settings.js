@@ -1,6 +1,15 @@
 class Settings {
 	constructor(settings, wrapper, storeKey) {
-		this.settings = settings;
+		// group settings by 'group' key
+		this.settings = settings.reduce((acc, setting) => {
+			const group = setting.group || "general";
+			if (!acc[group]) {
+				acc[group] = [];
+			}
+			acc[group].push(setting);
+			return acc;
+		}, {});
+
 		this.wrapper = wrapper;
 		this.storeKey = storeKey;
 
@@ -17,6 +26,7 @@ class Settings {
 	static defaults = [
 		{
 			type: "checkbox",
+			group: "",
 			label: "Extension enabled",
 			description: "Enable or disable the possibility to query ChatGPT for explanations.",
 			default: true,
@@ -24,6 +34,7 @@ class Settings {
 		},
 		{
 			type: "checkbox",
+			group: "lessons",
 			label: "Explanation typing animation",
 			description: "Typing animation with the response from ChatGPT.",
 			default: true,
@@ -31,6 +42,7 @@ class Settings {
 		},
 		{
 			type: "select",
+			group: "lessons",
 			label: "GPT model",
 			description: "The model to use with ChatGPT.",
 			default: "gpt-4o-mini",
@@ -46,6 +58,7 @@ class Settings {
 		},
 		{
 			type: "select",
+			group: "lessons",
 			label: "Explanation language",
 			description: "The language that ChatGPT will use to explain the exercise.",
 			default: "Auto",
@@ -79,22 +92,43 @@ class Settings {
 				"日本語"
 			],
 			key: "language"
+		},
+		{
+			type: "checkbox",
+			group: "mobile",
+			label: "Remove Continue in App",
+			description: "Remove constant prompt asking to continue in the app.",
+			default: true,
+			key: "remove-continue-app"
 		}
 	];
 
 	build() {
 		let html = "";
-		this.settings.forEach(setting => {
-			switch (setting.type) {
-				case "checkbox":
-					html += Settings.buildCheckbox(setting);
-					break;
-				case "select":
-					html += Settings.buildSelect(setting);
-					break;
-			}
+		Object.entries(this.settings).forEach(([group, settings]) => {
+			let groupHtml = "";
+			settings.forEach(setting => {
+				switch (setting.type) {
+					case "checkbox":
+						groupHtml += Settings.buildCheckbox(setting);
+						break;
+					case "select":
+						groupHtml += Settings.buildSelect(setting);
+						break;
+				}
+			});
+			html += /* html */ `
+				<div class="d-cgpt-settings-group" data-type="${group}">
+					${group === "general" ? "" : `<h3>${group[0].toUpperCase() + group.slice(1)}</h3>`}
+					${groupHtml}
+				</div>
+			`;
 		});
 		this.wrapper.insertAdjacentHTML("beforeend", html);
+
+		// put general on top
+		const general = this.wrapper.querySelector(".d-cgpt-settings-group[data-type='general']");
+		this.wrapper.parentElement.insertBefore(general, this.wrapper.parentElement.querySelector(".element").previousElementSibling);
 	
 		// add event listeners
 		document.addEventListener("click", e => {
@@ -148,7 +182,7 @@ class Settings {
 
 	update(settings) {
 		Object.keys(settings).forEach(key => {
-			const setting = this.wrapper.querySelector(`#d-cgpt-${key}`);
+			const setting = document.body.querySelector(`#d-cgpt-${key}`);
 			if (setting) {
 				switch (setting.dataset.type) {
 					case "checkbox":

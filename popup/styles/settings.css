@@ -18,6 +18,18 @@
     cursor: pointer;
 }
 
+.d-cgpt-settings-group {
+
+}
+
+.d-cgpt-settings-group > h3 {
+    margin: 3px 10px;
+    font-size: 17px;
+    border-left: 4px solid var(--d-cgpt-accent-color);
+    padding-left: 10px;
+    margin-top: 15px;
+}
+
 .d-cgpt-settings > label {
 	font-size: 15px;
 	font-weight: bold;
