@@ -38,3 +38,9 @@ const removeCursor = element => {
 		element.innerText += text;
 	}
 }
+
+const removeAllElements = (selector) => {
+	const elements = document.querySelectorAll(selector);
+	if (elements)
+		elements.forEach(element => element.remove());
+}

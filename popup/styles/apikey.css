@@ -47,10 +47,11 @@ ol > li b, ol > li strong {
 }
 
 ol img {
-	width: 110%;
+	width: 109%;
     margin: 10px 0;
     border-radius: 5px;
 	margin-left: -25px;
+    border: 2px solid white;
 }
 
 .top-title {

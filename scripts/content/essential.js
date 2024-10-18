@@ -3,6 +3,8 @@
  */
 
 (async () => {
+	let active = false;
+
 	// kick starter
 	const observer = new MutationObserver(mutations => {
 		mutations.forEach(mutation => {
@@ -38,17 +40,11 @@
 		const theme = localStorage.getItem("duo.theme");
 		if (theme) updateTheme(theme);
 
-		// Duo ChatGPT tab
-		const moreNav = document.querySelector("a[data-test='home-nav']")?.parentElement;
-		const navbar = moreNav?.parentElement;
-		let newTab;
-		if (navbar) {
-			newTab = makeTab(moreNav);
-			navbar.insertBefore(newTab, navbar.firstElementChild);
-		}
+		setupTab();	
 
 		// API Key prompt
 		chrome.storage.sync.get(["API_KEY", "API_KEY_PROMPT_CLOSED", "SETTINGS"], data => {
+			const newTab = document.querySelector(".d-cgpt-tab");
 			const apiKey = data.API_KEY;
 			const promptClosed = data.API_KEY_PROMPT_CLOSED;
 			const settings = data.SETTINGS || {};
@@ -59,32 +55,10 @@
 			
 			if (apiKey && extensionActive) {
 				if (newTab) {
-					newTab.querySelector("a").classList.add("active");
+					const link = newTab.querySelector("a") || newTab;
+					link.classList.add("d-cgpt-active");
+					active = true;
 				}
-			}
-
-			// clicked on navbar tab
-			if (newTab) {
-				newTab.addEventListener("click", () => {
-					chrome.storage.sync.get("API_KEY", data => {
-						const apiKey = data.API_KEY;
-						if (!apiKey) {
-							setupPrompt(newTab, 100);
-						} else {
-							if (newTab.querySelector("a").classList.contains("active")) {
-								// disable extension
-								newTab.querySelector("a").classList.remove("active");
-							}
-							else {
-								// enable extension
-								newTab.querySelector("a").classList.add("active");
-							}
-
-							settings["extension-enabled"] = newTab.querySelector("a").classList.contains("active");
-							chrome.storage.sync.set({"SETTINGS": settings}, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
-						}
-					});
-				});
 			}
 		});
 
@@ -109,7 +83,9 @@
 						if (response) {
 							document.querySelector(".d-cgpt-prompt").remove();
 							if (newTab) {
-								newTab.querySelector("a").classList.add("active");
+								const link = newTab.querySelector("a") || newTab;
+								link.classList.add("d-cgpt-active");
+								active = true;
 							}
 						}
 					});
@@ -145,12 +121,28 @@
 		});
 	}
 
-	const makeTab = (template) => {
+	const setupTab = (active=false) => {
+		const query = window.innerWidth > 700 ? "a[data-test='home-nav']" : "a[aria-label='Learn'] > div";
+
+		// Duo ChatGPT tab
+		const templateTab = document.querySelector(query)?.parentElement;
+		const navbar = templateTab?.parentElement;
+		let newTab;
+		if (navbar) {
+			newTab = window.innerWidth > 700 ? makeTab(templateTab, active) : makeTabMobile(templateTab, active);
+			navbar.insertBefore(newTab, navbar.firstElementChild);
+		}
+	}
+
+	const makeTab = (template, active) => {
+		removeAllElements(".d-cgpt-tab");		
+
 		const tab = template.cloneNode(true);
 		tab.className = "d-cgpt-tab";
 		const tabLink = tab.querySelector("a");
 		delete tabLink.dataset.test;
 		tabLink.href = "javascript: void(0)";
+		if (active) tabLink.classList.add("d-cgpt-active");
 		const BETADiv = document.createElement("div");
 		BETADiv.className = "d-cgpt-beta";
 		BETADiv.innerText = "BETA";
@@ -158,6 +150,24 @@
 		tabSpanWrapper.appendChild(BETADiv);
 		const tabText = tab.querySelector("span span");
 		tabText.innerText = "Duo Explained";
+		const tabIcon = tab.querySelector("img");
+		tabIcon.src = "https://andreclerigo.github.io/duolingo-chatgpt-assets/logo.png";
+		return tab;
+	}
+
+	const makeTabMobile = template => {
+		removeAllElements(".d-cgpt-tab");
+	
+		const tab = template.cloneNode(true);
+		tab.classList.remove("_2-WjO");
+		tab.classList.add("d-cgpt-tab", "d-cgpt-tab-mobile");
+		if (active) tab.classList.add("d-cgpt-active");
+		tab.ariaLabel = "Duo Explained";
+		tab.href = "javascript: void(0)";
+		const BETADiv = document.createElement("div");
+		BETADiv.className = "d-cgpt-beta";
+		BETADiv.innerText = "BETA";
+		tab.appendChild(BETADiv);
 		const tabIcon = tab.querySelector("img");
 		tabIcon.src = "https://andreclerigo.github.io/duolingo-chatgpt-assets/logo.png";
 		return tab;
@@ -180,13 +190,16 @@
 	const toggleExtension = value => {
 		const extensionTab = document.querySelector(".d-cgpt-tab");
 		if (extensionTab) {
-			if (value && !extensionTab.querySelector("a").classList.contains("active")) {
+			const link = extensionTab.querySelector("a") || extensionTab;
+			if (value && !link.classList.contains("d-cgpt-active")) {
 				console.log("Enabling extension");
-				extensionTab.querySelector("a").classList.add("active");
+				link.classList.add("d-cgpt-active");
+				active = true;
 			}
-			else if (!value && extensionTab.querySelector("a").classList.contains("active")) {
+			else if (!value && link.classList.contains("d-cgpt-active")) {
 				console.log("Disabling extension");
-				extensionTab.querySelector("a").classList.remove("active");
+				link.classList.remove("d-cgpt-active");
+				active = false;
 			}
 		}
 	}
@@ -234,9 +247,42 @@
 		}
 	});
 
+	document.addEventListener("click", event => {
+		// clicked on navbar tab
+		if (event.target.closest(".d-cgpt-tab")) {
+			const newTab = document.querySelector(".d-cgpt-tab");
+			chrome.storage.sync.get(["API_KEY", "SETTINGS"], data => {
+				const settings = data.SETTINGS || {};
+				const apiKey = data.API_KEY;
+				if (!apiKey) {
+					setupPrompt(newTab, 100);
+				} else {
+					const link = newTab.querySelector("a") || newTab;
+					if (link.classList.contains("d-cgpt-active")) {
+						// disable extension
+						link.classList.remove("d-cgpt-active");
+						active = false;
+					}
+					else {
+						// enable extension
+						link.classList.add("d-cgpt-active");
+						active = true;
+					}
+
+					settings["extension-enabled"] = link.classList.contains("d-cgpt-active");
+					chrome.storage.sync.set({"SETTINGS": settings}, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
+				}
+			});
+		}
+	});
+
 	window.addEventListener("message", event => {
 		if (event.data.type === "DUO") {
 			chrome.storage.sync.set({ "UI_LANGUAGE": event.data.language});
 		}
+	});
+
+	window.addEventListener("resize", () => {
+		setupTab(active);
 	});
 })();

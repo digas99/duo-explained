@@ -54,8 +54,6 @@
 	const handleDownEvent = event => {
 		mouseDownTime = new Date().getTime();
 
-		console.log("Mouse down event detected");
-
 		const target = event.target;
 		if (target.closest(".d-cgpt-explain-close")) {
 			hideExplainArea();	
@@ -70,12 +68,7 @@
 		const mouseUpTime = new Date().getTime();
 		const timeDiff = mouseUpTime - mouseDownTime;
 		
-		console.log("Mouse up event detected");
-
-		console.log("Time difference: " + timeDiff);
-		
 		const explainArea = document.querySelector(".d-cgpt-explain-area");
-		console.log(timeDiff > 500, explainArea, explainArea.dataset.mouseDown == "true", explainArea.classList.contains("d-cgpt-explain-area-closed"));
 		if (timeDiff > 500 && explainArea && explainArea.dataset.mouseDown == "true" && explainArea.classList.contains("d-cgpt-explain-area-closed")) {
 			showExplainArea();
 			setTimeout(() => explainArea.dataset.mouseDown = "false");
@@ -370,12 +363,6 @@
 		}
 	}
 
-	const removeAllElements = (selector) => {
-		const elements = document.querySelectorAll(selector);
-		if (elements)
-			elements.forEach(element => element.remove());
-	}
-
 	/* ACTIONS WITH THE PAGE */
 
 	// listen for the answer event
@@ -458,6 +445,7 @@
 	});
 
 	window.addEventListener("resize", () => {
+		// show/hide explain area on resize
 		const explainArea = document.querySelector(".d-cgpt-explain-area");
 		const exercise = explainArea?.previousElementSibling;
 		if (explainArea && exercise) {

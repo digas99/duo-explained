@@ -25,7 +25,7 @@
 }
 
 .d-cgpt-tab {
-	
+	position: relative;
 }
 
 .d-cgpt-tab > a > span {
@@ -34,7 +34,7 @@
 	border-radius: 12px !important;
 }
 
-.d-cgpt-tab > a.active > span {
+.d-cgpt-tab > .d-cgpt-active > span {
 	border: 2px solid var(--d-cgpt-accent-color) !important;
     background-color: var(--d-cgpt-secondary-color) !important;
 }
@@ -43,8 +43,22 @@
 	background-color: rgb(var(--color-polar)) !important; 
 }
 
-.d-cgpt-tab > a.active > span span {
+.d-cgpt-tab > .d-cgpt-active > span span {
 	color: var(--d-cgpt-accent-color) !important;
+}
+
+.d-cgpt-tab-mobile .d-cgpt-beta {
+	rotate: unset;
+    bottom: -3px;
+    top: unset;
+    left: 0px;
+    right: 0px;
+    border-radius: unset;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    width: 100%;
+	padding: unset;
+    justify-content: center;
 }
 
 .d-cgpt-beta {
@@ -468,6 +482,13 @@
 
 	.d-cgpt-swipe-icon {
 		display: flex;
+	}
+
+
+	a.d-cgpt-active {
+		border: 2px solid var(--d-cgpt-accent-color) !important;
+		background-color: var(--d-cgpt-secondary-color) !important;
+		border-radius: 8px;
 	}
 }
 
