@@ -1,14 +1,16 @@
 class Settings {
 	constructor(settings, wrapper, storeKey) {
 		// group settings by 'group' key
-		this.settings = settings.reduce((acc, setting) => {
-			const group = setting.group || "general";
-			if (!acc[group]) {
-				acc[group] = [];
-			}
-			acc[group].push(setting);
-			return acc;
-		}, {});
+		if (typeof settings.reduce === "function") {
+			this.settings = settings.reduce((acc, setting) => {
+				const group = setting.group || "general";
+				if (!acc[group]) {
+					acc[group] = [];
+				}
+				acc[group].push(setting);
+				return acc;
+			}, {});
+		}
 
 		this.wrapper = wrapper;
 		this.storeKey = storeKey;
@@ -100,6 +102,14 @@ class Settings {
 			description: "Remove constant prompt asking to continue in the app.",
 			default: true,
 			key: "remove-continue-app"
+		},
+		{
+			type: "checkbox",
+			group: "mobile",
+			label: "Extension Icon",
+			description: "Show the extension icon in the toolbar (this might cause overflow).",
+			default: true,
+			key: "mobile-extension-icon"
 		}
 	];
 

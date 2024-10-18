@@ -3,7 +3,7 @@
  */
 
 (async () => {
-	let active = false;
+	let active = false, showIconMobile = true;
 
 	// kick starter
 	let observer = new MutationObserver(mutations => {
@@ -68,12 +68,20 @@
 
 		setupTab();	
 
-		// API Key prompt
 		chrome.storage.sync.get(["API_KEY", "API_KEY_PROMPT_CLOSED", "SETTINGS"], data => {
+			const settings = data.SETTINGS || {};
+			showIconMobile = settings?.["mobile-extension-icon"] !== false;
+
+			// hide extension icon on mobile
+			if (window.innerWidth <= 700 && !showIconMobile) {
+				const extensionTab = document.querySelector(".d-cgpt-tab");
+				if (extensionTab) extensionTab.style.display = "none";
+			}
+
+			// API Key prompt
 			const newTab = document.querySelector(".d-cgpt-tab");
 			const apiKey = data.API_KEY;
 			const promptClosed = data.API_KEY_PROMPT_CLOSED;
-			const settings = data.SETTINGS || {};
 			const extensionActive = settings?.["extension-enabled"];
 			if (!apiKey && !promptClosed) {
 				setupPrompt(newTab);
@@ -186,6 +194,7 @@
 		template.parentElement.style.overflowX = "auto";
 	
 		const tab = template.cloneNode(true);
+		if (!showIconMobile) tab.style.display = "none";
 		tab.classList.remove("_2-WjO");
 		tab.classList.add("d-cgpt-tab", "d-cgpt-tab-mobile");
 		if (active) tab.classList.add("d-cgpt-active");
