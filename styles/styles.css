@@ -123,11 +123,11 @@
 
 .d-cgpt-prompt > div > button {
 	height: 40px;
-	border: 1px solid rgb(var(--color-macaw));
 	border-radius: 5px;
 	padding: 0 10px;
-	background-color: rgb(var(--color-macaw));
-	color: white;
+	background-color: var(--d-cgpt-accent-color);
+    border: 1px solid var(--d-cgpt-accent-color);
+    color: var(--d-cgpt-secondary-color);
 	cursor: pointer;
 }
 
