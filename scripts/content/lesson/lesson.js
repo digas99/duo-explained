@@ -396,6 +396,14 @@
 		toggleExtraInput(false);
 	});
 
+	// listen for the session complete event
+	document.addEventListener("lessonend", async event => {
+		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
+
+		console.log("Session end event detected");
+		console.log(event.detail);
+	});
+
 	document.addEventListener("click", async event => {
 		const target = event.target;
 		

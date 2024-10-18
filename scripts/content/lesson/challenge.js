@@ -125,6 +125,23 @@ if (typeof window !== 'undefined') {
 		if (challengeWrapper) {
 			nextChallenge(mutationsList);
 		}
+
+		// detect session complete
+		mutationsList.forEach(mutation => {
+			mutation.addedNodes.forEach(node => {
+				if (node.closest) {
+					const sessionCompleteAnimation = node.tagName === "svg" && node.closest("div[data-test='session-complete-slide']");
+					if (sessionCompleteAnimation) {
+						const statsWrapper = sessionCompleteAnimation.parentElement.lastElementChild;
+
+						const event = new CustomEvent("lessonend", { detail: {
+							statsWrapper: statsWrapper
+						}});
+						document.dispatchEvent(event);
+					}
+				}
+			});
+		});
 	});
 
 	observer.observe(document.body, { childList: true, subtree: true });
