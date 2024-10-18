@@ -1,5 +1,7 @@
 # duo-explained
 
+<img src="images/logo/logo-stroke.png" width="50px"/>
+
 Browser extension that integrates OpenAI's interface to ChatGPT with Duolingo's exercises.
 
 ## Documentation

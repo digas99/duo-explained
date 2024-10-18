@@ -386,22 +386,22 @@ body {
 .d-cgpt-swipe-icon {
 	position: absolute;
 	z-index: 100;
-    right: 35px;
-    top: 100px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 8px;
+	gap: 4px;
+    top: 90px;
+    right: 30px;
 	cursor: pointer;
 	display: none;
 }
 
 .d-cgpt-swipe-icon > img {
-    width: 30px;
+    width: 25px;
 }
 
 .d-cgpt-swipe-icon > span {
-	font-size: 13px;
+	font-size: 11px;
 	color: var(--d-cgpt-accent-color);
 }
 
