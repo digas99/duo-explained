@@ -157,6 +157,7 @@
 
 	const makeTabMobile = template => {
 		removeAllElements(".d-cgpt-tab");
+		template.parentElement.style.overflowX = "auto";
 	
 		const tab = template.cloneNode(true);
 		tab.classList.remove("_2-WjO");

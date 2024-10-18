@@ -24,6 +24,12 @@
 	--d-cgpt-accent-icon-contrast: 117%;
 }
 
+/* disable pull-down-to-refresh */
+html,
+body {
+    overscroll-behavior-y: contain;
+}
+
 .d-cgpt-tab {
 	position: relative;
 }
