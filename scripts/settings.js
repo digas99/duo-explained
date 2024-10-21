@@ -110,6 +110,14 @@ class Settings {
 			description: "Show the extension icon in the toolbar (this might cause overflow).",
 			default: true,
 			key: "mobile-extension-icon"
+		},
+		{
+			type: "checkbox",
+			group: "lessons",
+			label: "Show used Tokens in Lesson Stats",
+			description: "Show the number of tokens used throughout a lesson in the stats at the end.",
+			default: true,
+			key: "show-used-tokens"
 		}
 	];
 

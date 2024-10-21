@@ -174,10 +174,11 @@ a {
 }
 
 .element .buttons {
-	display: flex;
-	justify-content: space-between;
-	margin: 15px 65px;
-	margin-bottom: unset;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px auto;
+    margin-bottom: unset;
+    width: 200px;
 }
 
 .element .buttons button {

@@ -36,6 +36,7 @@
 	opacity: 0.6;
 	transition: 0.3s;
     cursor: pointer;
+    width: 100%;
 }
 
 .d-cgpt-settings > label > div {
