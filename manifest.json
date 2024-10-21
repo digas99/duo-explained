@@ -20,9 +20,12 @@
                 "https://preview.duolingo.com/*"
             ],
 			"js": [
+                "scripts/settings.js",
+
                 "scripts/content/utils.js",
                 "scripts/content/theme.js", 
                 "scripts/content/essential.js",
+                "scripts/content/settings.js",
 
                 "lib/swiped-events.min.js",
 
@@ -31,7 +34,10 @@
                 "scripts/content/lesson/challenge.js",
                 "scripts/content/lesson/lesson.js"
             ],
-			"css": ["styles/styles.css"]
+			"css": [
+                "styles/styles.css",
+                "styles/settings.css"
+            ]
 		}
 	],
     "web_accessible_resources": [

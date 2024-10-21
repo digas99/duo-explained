@@ -10,10 +10,6 @@ importScripts(
 
 let agent = new OpenAIAgent();
 
-// agent.validateApiKey("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");
-// agent.validateApiKey("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");
-// agent.validateApiKey("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");
-
 /**
  * Load local storage values from user settings for API key and model chosen for ChatGPT.
  * This is useful for persisting the API key and model across browser sessions.

@@ -405,6 +405,48 @@ body {
 	color: var(--d-cgpt-accent-color);
 }
 
+.d-cgpt-settings-container {
+	display: flex;
+	flex-direction: column;
+	padding: unset;
+}
+
+.d-cgpt-settings-container .d-cgpt-settings {
+	padding: 8px 0;
+	gap: 48px;
+}
+
+.d-cgpt-settings-container .d-cgpt-settings > label {
+    -webkit-font-smoothing: antialiased;
+    font: var(--text-heading-weight-small) var(--text-heading-size-small) / var(--text-heading-line-height-small) din-round, sans-serif;
+    letter-spacing: var(--text-heading-letter-spacing-small);
+    text-transform: var(--text-heading-casing-small);
+}
+
+.d-cgpt-settings-container .d-cgpt-settings > label > div {
+	-moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    color: rgb(var(--color-wolf));
+    font: var(--text-caption-weight) var(--text-caption-size) / var(--text-caption-line-height) din-round, sans-serif;
+    letter-spacing: var(--text-caption-letter-spacing);
+    margin-top: 2px;
+    text-transform: var(--text-caption-casing);
+}
+
+.d-cgpt-settings-container .d-cgpt-settings-group > h3 {
+	margin: 15px 0 3px;
+}
+
+.d-cgpt-settings-container .d-cgpt-custom-checkbox-ball {
+    height: 29px;
+    width: 28px;
+    margin-top: -1px;
+}
+
+.d-cgpt-settings-container .d-cgpt-custom-checkbox-back {
+	width: 50px;
+}
+
 @media screen and (max-width: 1150px) {
 	.d-cgpt-explain-area {
 		position: absolute;
