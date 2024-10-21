@@ -47,7 +47,8 @@
         "scripting",
         "tabs",
         "webNavigation",
-        "storage"
+        "storage",
+        "clipboardRead"
     ],
     "host_permissions": [
         "https://duolingo.com/*",
