@@ -6,8 +6,8 @@
 	<title>Home</title>
 	
 	<link rel="stylesheet" href="/styles/styles.css">
+	<link rel="stylesheet" href="/styles/settings.css">
 
-	<link rel="stylesheet" href="styles/settings.css">
 	<link rel="stylesheet" href="styles/home.css">
 
 	<script src="/scripts/settings.js"></script>
@@ -29,11 +29,13 @@
 		<div class="title">ChatGPT API Key <a href="apikey.html" title="How do I get a ChatGPT API Key?"><img class="icon" src="/images/icons/about.png" alt="help"></a></div>
 		<div class="input-wrapper">
 			<input type="text" id="api-key" placeholder="API Key">
-			<img id="copy-api-key" class="icon" src="/images/icons/copy.png" alt="copy">
+			<img id="copy-api-key" class="icon" title="Copy API Key" src="/images/icons/copy.png" alt="copy">
+			<img id="paste-api-key" class="icon" title="Paste API Key" style="width: 25px;" src="/images/icons/paste.png" alt="paste">
 		</div>
 		<a class="link" href="apikey.html">How do I get a ChatGPT API Key?</a>
 		<div class="buttons">
 			<button class="button-disabled" id="save-api-key">Save</button>
+			<button class="button-disabled" id="cancel-action-api-key">Reset</button>
 			<button id="remove-api-key">Remove</button>
 		</div>
 	</div>

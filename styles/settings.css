@@ -36,6 +36,7 @@
 	opacity: 0.6;
 	transition: 0.3s;
     cursor: pointer;
+    width: 100%;
 }
 
 .d-cgpt-settings > label > div {
@@ -63,6 +64,7 @@
     height: 22px;
     border-radius: 10px;
     background-color: rgb(var(--color-swan));
+    pointer-events: none;
 }
 
 .d-cgpt-custom-checkbox-ball {
@@ -75,6 +77,7 @@
     top: -2px;
     transition: 0.4s;
     background-color: rgb(var(--color-snow));
+    pointer-events: none;
 }
 
 .d-cgpt-settings-enabled label {

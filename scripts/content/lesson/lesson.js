@@ -153,6 +153,9 @@
 					const explainTokens = document.querySelector(".d-cgpt-explain-tokens span");
 					if (explainTokens && response.usage) {
 						explainTokens.textContent = response.usage.total_tokens;
+
+						const lessonTokens = parseInt(localStorage.getItem("d-cgpt-tokens")) || 0;
+						localStorage.setItem("d-cgpt-tokens", lessonTokens + response.usage.total_tokens);
 					}
 				}
 
@@ -363,6 +366,30 @@
 		}
 	}
 
+	const makeStatEntry = (template, data) => {
+		const entry = template.cloneNode(true);
+		entry.classList.add("d-cgpt-stat-entry");
+		const header = entry.firstElementChild;
+		if (!header) return null;
+		header.style.backgroundColor = "var(--d-cgpt-accent-color)";
+		const headerText = header.nextElementSibling;
+		if (!headerText) return null;
+		headerText.textContent = data.title;
+		const valueWrapper = entry.lastElementChild;
+		if (!valueWrapper) return null;
+		valueWrapper.style.borderColor = "var(--d-cgpt-accent-color)";
+		valueWrapper.style.color = "var(--d-cgpt-accent-color)";
+		const icon = valueWrapper.querySelector("img");
+		if (!icon) return null;
+		icon.src = data.icon;
+		icon.style.width = "23px";
+		icon.classList.add("d-cgpt-icon-accent");
+		const value = icon.nextElementSibling;
+		if (!value) return null;
+		value.textContent = data.value;
+		return entry;
+	}
+
 	/* ACTIONS WITH THE PAGE */
 
 	// listen for the answer event
@@ -398,8 +425,36 @@
 	document.addEventListener("lessonend", async event => {
 		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
 
-		console.log("Session end event detected");
-		console.log(event.detail);
+		chrome.storage.sync.get("SETTINGS", data => {
+			const showUsedTokens = data.SETTINGS?.["show-used-tokens"];
+			
+			if (showUsedTokens) {
+				// add the stats of the number of tokens used
+				const statsWrapper = event.detail.statsWrapper;
+				const observer = new MutationObserver((mutationsList, observer) => {
+					if (!statsWrapper.querySelector(".d-cgpt-stat-entry")) {
+						if (statsWrapper.children.length > 1) {
+							const tokens = parseInt(localStorage.getItem("d-cgpt-tokens")) || 0;
+							const lastStat = statsWrapper.lastElementChild;
+							const statEntry = makeStatEntry(lastStat, {
+								"title": "Tokens used",
+								"icon": "https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/token.png",
+								"value": tokens
+							});
+							if (statEntry) {
+								statsWrapper.appendChild(statEntry);
+		
+								// clear tokens
+								localStorage.removeItem("d-cgpt-tokens");
+								
+								observer.disconnect();
+							}
+						}		
+					}
+				});
+				observer.observe(statsWrapper, { childList: true, subtree: true });
+			}
+		});
 	});
 
 	document.addEventListener("click", async event => {
@@ -463,5 +518,10 @@
 				exercise.style.removeProperty("display");
 			}
 		}
+	});
+
+	// clear localstorage tokens before page leave
+	window.addEventListener("beforeunload", e => {
+		localStorage.removeItem("d-cgpt-tokens");
 	});
 })();

@@ -110,6 +110,14 @@ class Settings {
 			description: "Show the extension icon in the toolbar (this might cause overflow).",
 			default: true,
 			key: "mobile-extension-icon"
+		},
+		{
+			type: "checkbox",
+			group: "lessons",
+			label: "Show used Tokens in Stats",
+			description: "Show the number of tokens used throughout a lesson in the stats at the end.",
+			default: true,
+			key: "show-used-tokens"
 		}
 	];
 
@@ -136,12 +144,17 @@ class Settings {
 		});
 		this.wrapper.insertAdjacentHTML("beforeend", html);
 
+		let clickTarget = this.wrapper;
+
 		// put general on top
-		const general = this.wrapper.querySelector(".d-cgpt-settings-group[data-type='general']");
-		this.wrapper.parentElement.insertBefore(general, this.wrapper.parentElement.querySelector(".element").previousElementSibling);
+		if (this.wrapper.parentElement.querySelector(".element")) {
+			const general = this.wrapper.querySelector(".d-cgpt-settings-group[data-type='general']");
+			this.wrapper.parentElement.insertBefore(general, this.wrapper.parentElement.querySelector(".element").previousElementSibling);
+			clickTarget = document;
+		}
 	
 		// add event listeners
-		document.addEventListener("click", e => {
+		clickTarget.addEventListener("click", e => {
 			const target = e.target;
 	
 			if (target.closest(".d-cgpt-custom-checkbox")) {
@@ -150,9 +163,15 @@ class Settings {
 
 				switch (checkbox.id) {
 					case "d-cgpt-extension-enabled":
-						chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
-							chrome.tabs.sendMessage(tabs[0].id, {type: "TOGGLE_EXTENSION", value: checkbox.checked}, () => window.chrome.runtime.lastError);
-						});
+						if (chrome.tabs) {
+							chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
+								chrome.tabs.sendMessage(tabs[0].id, {type: "TOGGLE_EXTENSION", value: checkbox.checked}, () => window.chrome.runtime.lastError);
+							});
+						} else {
+							chrome.storage.sync.get("API_KEY", data =>
+								window.toggleExtension(data.API_KEY && checkbox.checked)
+							);
+						}
 						break;
 				}
 			}

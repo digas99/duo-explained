@@ -38,6 +38,7 @@
 
 	const apiKeyInput = document.querySelector("#api-key");
 	const apiKeyRemove = document.querySelector("#remove-api-key");
+	const apiKeyCancel = document.querySelector("#cancel-action-api-key");
 	const apiKeySave = document.querySelector("#save-api-key");
 	const languageSelect = document.querySelector("#d-cgpt-language");
 
@@ -91,7 +92,17 @@
 		}
 	});
 
-	// api key buttons
+	// api key paste button
+	const pasteApiKey = document.querySelector("#paste-api-key");
+	pasteApiKey.addEventListener("click", async () => {
+		if (window.navigator.clipboard) {
+			const text = await window.navigator.clipboard.readText();
+			document.querySelector("#api-key").value = text;
+			apiKeyInput.dispatchEvent(new Event("input"));
+		}
+	});
+
+	// api key remove
 	apiKeyRemove.addEventListener("click", () => {
 		confirm("Are you sure you want to remove the API key?") && removeApiKey(() => {
 			chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
@@ -104,14 +115,25 @@
 		});
 	});
 
+
+	// api key cancel button
+	apiKeyCancel.addEventListener("click", () => {
+		document.querySelector("#api-key").value = localStorage.getItem("apiKey");
+		document.querySelector("#api-key").dispatchEvent(new Event("input"));
+	});
+
 	// api key input
 	apiKeyInput.addEventListener("input", () => {
 		if (apiKeyInput.value) {
 			apiKeyRemove.classList.remove("button-disabled");
-			if (apiKeyInput.value !== apiKeyInput.dataset.original)
+			if (apiKeyInput.value.trim() !== apiKeyInput.dataset.original.trim()) {
 				apiKeySave.classList.remove("button-disabled");
-			else
+				apiKeyCancel.classList.remove("button-disabled");
+			}
+			else {
 				apiKeySave.classList.add("button-disabled");
+				apiKeyCancel.classList.add("button-disabled");
+			}
 		}
 		else {
 			apiKeyRemove.classList.add("button-disabled");

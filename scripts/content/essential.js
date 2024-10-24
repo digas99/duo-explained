@@ -223,7 +223,7 @@
 		`;
 	};
 
-	const toggleExtension = value => {
+	window.toggleExtension = value => {
 		const extensionTab = document.querySelector(".d-cgpt-tab");
 		if (extensionTab) {
 			const link = extensionTab.querySelector("a") || extensionTab;
@@ -250,6 +250,8 @@
 	});
 
 	chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+		console.log(request);
+
 		if (request.type === "TOGGLE_EXTENSION") {
 			chrome.storage.sync.get("API_KEY", data =>
 				toggleExtension(data.API_KEY && request.value)

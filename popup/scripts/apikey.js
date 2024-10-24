@@ -3,7 +3,6 @@
 	
 	const converter = new showdown.Converter();
 	let html = converter.makeHtml(content);
-	console.log(html);
 
 	// get title (h1)
 	const title = html.match(/<h1(.*?)<\/h1>/)[0];
@@ -17,7 +16,6 @@
 	toc.nextElementSibling.classList.add('table-of-contents');
 	const tocLinks = toc.nextElementSibling.querySelectorAll('a');
 	tocLinks.forEach(link => {
-		console.log(link);
 		link.href = `${link.getAttribute("href").split('-').join("")}`;
 	});
 
