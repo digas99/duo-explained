@@ -369,7 +369,6 @@
 	document.addEventListener("answer", async event => {
 		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
 
-		console.log("Answer event detected");
 		answerData = event.detail;
 
 		const footer = document.getElementById("session/PlayerFooter");
@@ -383,7 +382,6 @@
 	document.addEventListener("challenge", async event => {
 		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
 
-		console.log("Challenge event detected");
 		challengeData = event.detail;
 
 		const footer = document.getElementById("session/PlayerFooter");
