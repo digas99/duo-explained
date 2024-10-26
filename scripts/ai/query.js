@@ -371,7 +371,7 @@
 | Exercise Type              |  Before Responding | After Responding ✅ | After Responding ❌ |
 |----------------------------|--------------------|---------------------|---------------------|
 | syllableTap                |         🤷         |          🤷         |          🤷         |
-| translate                  |         ✅         |          ✅         |          ✅         |
+| translate                  |         ✅         |   ✅ (no wordbank)  |          ✅         |
 | characterMatch             |         🤷         |          🤷         |          🤷         |
 | match                      |         🤷         |          🤷         |          🤷         |
 | tapComplete                |         ✅         |          ✅         |          ✅         |
@@ -384,7 +384,7 @@
 | reverseAssist              |         🤷         |          🤷         |          🤷         |
 | assist                     |❌ (info errada)    |    ❌ (disabled)    |          ❌         |
 | characterSelect            |         🤷         |          🤷         |          🤷         |
-| select                     |         🤷         |          🤷         |          🤷         |
+| select                     |         ✅         |          ✅         |          ✅         |
 | transliterate              |         🤷         |          🤷         |          🤷         |
 | partialReverseTranslate    |         🤷         |          🤷         |          🤷         |
 */
@@ -461,7 +461,6 @@ Be short and concise.
         } else {
             // The user has answered the question
             const state = lessonData.answer.details.state;
-            console.log(lessonData.answer.challenge.content.answer);
             const userAnswer = lessonData.answer.challenge.content.answer;
             const solution = lessonData.answer.solution;
 
@@ -823,7 +822,7 @@ Be short and concise.
         }
 
         if (userAnswer) {
-            prompt += `User's choice: Option ${userAnswer}\n`;
+            prompt += `User's choice: Option ${userAnswer.option} - ${userAnswer.text}\n`;
         }
 
         if (solution) {
