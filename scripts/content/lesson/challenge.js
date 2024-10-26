@@ -67,7 +67,9 @@ class ChallengeData {
 		if (!this.content)
 			return;
 
-		if (!this.content.sentence)
+		if (!this.content.sentence &&
+			!this.type === "select"
+		)
 			throw new Error("ChallengeData content.sentence is required.");
 
 		if (this.content.prompt && typeof this.content.prompt !== "string")
@@ -75,7 +77,7 @@ class ChallengeData {
 
 		if (
 			this.content.answer &&
-			typeof this.content.answer !== "string" &&
+			typeof this.content.answer.text !== "string" &&
 			!Array.isArray(this.content.answer)
 		)
 			throw new Error("ChallengeData content.answer must be a string or an array.");

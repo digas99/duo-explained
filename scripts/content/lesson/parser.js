@@ -428,7 +428,11 @@ class ChallengeParser {
 	 */
 	static parseSelect(wrapper) {
 		const choicesWrapper = wrapper.querySelector("div[aria-label='choice']");
-		return choiceParser(choicesWrapper, true);
+		const {choices, answer} = choiceParser(choicesWrapper, true);
+
+		if (Object.keys(answer).length === 0)
+			return {choices};
+		return {choices, answer};
 	}
 
 	/**
