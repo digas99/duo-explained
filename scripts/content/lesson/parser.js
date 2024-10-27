@@ -32,6 +32,7 @@ class ChallengeParser {
 				content = this.parseCompleteReverseTranslation(wrapper);
 				break;
 			case "readComprehension":
+			case "dialogue":
 				content = this.parseReadComprehension(wrapper);
 				break;
 			case "speak":
@@ -362,6 +363,9 @@ class ChallengeParser {
 		const prompt = sections[1].innerText;
 		const choicesWrapper = wrapper.querySelector("div[aria-label='choice']");
 		const {choices, answer} = choiceParser(choicesWrapper);
+		
+		if (Object.keys(answer).length === 0)
+			return { sentence, prompt, choices };
 	
 		return { sentence, prompt, choices, answer };
 	}

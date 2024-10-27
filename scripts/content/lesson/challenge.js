@@ -77,8 +77,15 @@ class ChallengeData {
 
 		if (
 			this.content.answer &&
-			typeof this.content.answer.text !== "string" &&
-			!Array.isArray(this.content.answer)
+			!(typeof this.content.answer.text === "string" || Array.isArray(this.content.answer)) &&
+			this.type === "select"
+		)
+			throw new Error("ChallengeData content.answer must be a string or an array.");
+
+		if (
+			this.content.answer &&
+			!(typeof this.content.answer === "string" || Array.isArray(this.content.answer) || typeof this.content.answer === "object") &&
+			this.type !== "select"
 		)
 			throw new Error("ChallengeData content.answer must be a string or an array.");
 

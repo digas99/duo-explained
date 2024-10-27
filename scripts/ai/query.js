@@ -379,6 +379,7 @@
 |                            |(not using options) | (answer not passed) | (answer not passed) |
 | completeReverseTranslation |         ✅         |(missing user answer)|          🤷         |
 | readComprehension          |(button disabled)   |          ❌         |          ❌         |
+| dialogue                   |         ✅         |          ✅         |          ✅         |
 | speak                      |         🤷         |          🤷         |          🤷         |
 | transliterationAssist      |         🤷         |          🤷         |          🤷         |
 | reverseAssist              |         🤷         |          🤷         |          🤷         |
@@ -401,7 +402,6 @@ class QueryGenerator {
      */
     static generatePrompt(lessonData) {
         console.log("LessonData", lessonData);
-
         // Extract challenge data
         const { type, exercise, content, language } = lessonData.challenge;
         const question = content.sentence;
@@ -442,6 +442,7 @@ Be short and concise.
                     prompt += this.handleGapFillExerciseExplanation(content);
                     break;
                 case "readComprehension":
+                case "dialogue":
                     prompt += this.handleReadComprehensionExerciseExplanation(content);
                     break;
                 case "select":
@@ -476,8 +477,12 @@ Be short and concise.
             prompt += `Description: ${exercise}\n`;
             // prompt += `Language: ${language}\n`;
             if (question) prompt += `Question: '${question}'\n`;
-            // If user's answer is an array, convert it to a string
-            if (userAnswer) prompt += `User's answer: '${Array.isArray(userAnswer) ? userAnswer.join(' ') : userAnswer}'\n`;
+            if (userAnswer) {
+                if (typeof userAnswer === "object") 
+                    prompt += `User's answer: '${userAnswer.text}'\n`;
+                else 
+                    prompt += `User's answer: '${Array.isArray(userAnswer) ? userAnswer.join(' ') : userAnswer}'\n`;
+            }
             if (solution) prompt += `Correct answer: '${solution}'\n`;
 
             // Build prompt based on exercise type
@@ -498,6 +503,7 @@ Be short and concise.
                     prompt += this.handleGapFillAnswerExplanation(content, userAnswer, solution, state);
                     break;
                 case "readComprehension":
+                case "dialogue":
                     prompt += this.handleReadComprehensionAnswerExplanation(content, userAnswer, solution, state);
                     break;
                 case "select":
@@ -532,7 +538,7 @@ Be short and concise.
         let prompt = "";
 
         if (sentence) prompt += `Sentence to translate: '${sentence}'\n`;
-
+        console.log("wordbank", wordBank);
         if (wordBank && wordBank.length > 0) {
             prompt += `Available words: ${wordBank.join(', ')}\n`;
         }
@@ -554,12 +560,14 @@ Be short and concise.
 
         if (sentence) prompt += `Sentence to translate: '${sentence}'\n`;
 
+        console.log("wordbank", wordBank);
+        console.log("userAnswer", userAnswer);
+
         if (wordBank && wordBank.length > 0) {
             prompt += `Available words: ${wordBank.join(', ')}\n`;
         }
 
-        // The user's answer and the correct answer have already been included in the main prompt
-        // Additional information can be added here if needed
+        if (solution) prompt += `Correct translation: '${solution}'\n`;
 
         return prompt;
     }
@@ -733,9 +741,10 @@ Be short and concise.
      * @returns {string} The generated prompt.
      */
     static handleReadComprehensionExerciseExplanation(content) {
-        const { passage, question, choices } = content;
+        const { passage, question, choices, sentence } = content;
         let prompt = "";
 
+        if (sentence) prompt += `Sentence to read: '${sentence}'\n`;
         if (passage) prompt += `Passage to read: '${passage}'\n`;
         if (question) prompt += `Question: '${question}'\n`;
 
@@ -758,9 +767,10 @@ Be short and concise.
      * @returns {string} The generated prompt.
      */
     static handleReadComprehensionAnswerExplanation(content, userAnswer, solution, state) {
-        const { passage, question, choices } = content;
+        const { passage, question, choices, sentence } = content;
         let prompt = "";
 
+        if (sentence) prompt += `Sentence to read: '${sentence}'\n`;
         if (passage) prompt += `Passage to read: '${passage}'\n`;
         if (question) prompt += `Question: '${question}'\n`;
 
@@ -772,7 +782,7 @@ Be short and concise.
         }
 
         if (userAnswer) {
-            prompt += `User's choice: Option ${userAnswer}\n`;
+            prompt += `User's choice: Option ${userAnswer.option} - ${userAnswer.text}\n`;
         }
 
         if (solution) {
