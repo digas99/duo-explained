@@ -447,6 +447,16 @@ body {
 	width: 50px;
 }
 
+.d-cgpt-bug-report {
+	background-image: url(https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/bug.png) !important;
+    filter: invert(1);
+    opacity: 0.3;
+}
+
+.d-cgpt-bug-report:hover {
+    filter: invert(1) brightness(1.1) !important;
+}
+
 @media screen and (max-width: 1150px) {
 	.d-cgpt-explain-area {
 		position: absolute;

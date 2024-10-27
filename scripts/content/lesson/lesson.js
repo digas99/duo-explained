@@ -390,6 +390,15 @@
 		return entry;
 	}
 
+	const makeReportButton = template => {
+		const button = document.createElement("a");
+		button.className = template.className;
+		button.classList.add("d-cgpt-bug-report");
+		button.target = "_blank";
+		button.href = "https://github.com/digas99/duo-explained/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml";
+		return button;
+	}
+
 	/* ACTIONS WITH THE PAGE */
 
 	// listen for the answer event
@@ -419,6 +428,30 @@
 
 		addExplainButton(challengeData.content === undefined);
 		toggleExtraInput(false);
+
+		// add report button if not present
+		const reportButton = document.querySelector(".d-cgpt-bug-report");
+		if (!reportButton) {
+			const quitButton = document.querySelector("button[data-test='quit-button']");
+			const wrapper = quitButton?.parentElement;
+			if (wrapper) {
+				const settingsButton = quitButton.nextElementSibling;
+				if (settingsButton) {
+					const exerciseType = document.querySelector("div[data-test^='challenge']")?.dataset.test.replace("challenge challenge-", "") || "unknown";
+					const reportButton = makeReportButton(settingsButton);
+					reportButton.title = "Duo Explained - Report a bug\nExercise Type: " + exerciseType;
+					reportButton.href += `&title=[Exercise Type: ${exerciseType} - use this info to complete the fields below] (UPDATE THIS FIELD WITH YOUR TITLE AFTERWARDS)`;
+					wrapper.insertBefore(reportButton, settingsButton.nextElementSibling);
+					wrapper.style.gridTemplateColumns = "min-content min-content min-content 1fr min-content";
+				}
+			}
+		}
+		else {
+			// update report button title
+			const exerciseType = document.querySelector("div[data-test^='challenge']")?.dataset.test.replace("challenge challenge-", "") || "unknown";
+			reportButton.title = "Duo Explained - Report a bug\nExercise Type: " + exerciseType;
+			reportButton.href = reportButton.href.replace(/&title=.*$/, `&title=[Exercise Type: ${exerciseType} - use this info to complete the fields below] (UPDATE THIS FIELD WITH YOUR TITLE AFTERWARDS)`);
+		}
 	});
 
 	// listen for the session complete event
