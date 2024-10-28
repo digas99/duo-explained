@@ -371,14 +371,14 @@
 | Exercise Type              |  Before Responding | After Responding ✅ | After Responding ❌ |
 |----------------------------|--------------------|---------------------|---------------------|
 | syllableTap                |         🤷         |          🤷         |          🤷         |
-| translate                  |         ✅         |   ✅ (no wordbank)  |          ✅         |
+| translate                  |         ✅         |          ✅         |          ✅         |
 | characterMatch             |         🤷         |          🤷         |          🤷         |
 | match                      |         🤷         |          🤷         |          🤷         |
 | tapComplete                |         ✅         |          ✅         |          ✅         |
 | gapFill                    |         ❌         |          ❌         |          ❌         |
 |                            |(not using options) | (answer not passed) | (answer not passed) |
-| completeReverseTranslation |         ✅         |(missing user answer)|          🤷         |
-| readComprehension          |(button disabled)   |          ❌         |          ❌         |
+| completeReverseTranslation |         ❌         |(missing user answer)|          🤷         |
+| readComprehension          |         ✅         |          ✅         |          ✅         |
 | dialogue                   |         ✅         |          ✅         |          ✅         |
 | speak                      |         🤷         |          🤷         |          🤷         |
 | transliterationAssist      |         🤷         |          🤷         |          🤷         |
@@ -387,7 +387,7 @@
 | characterSelect            |         🤷         |          🤷         |          🤷         |
 | select                     |         ✅         |          ✅         |          ✅         |
 | transliterate              |         🤷         |          🤷         |          🤷         |
-| partialReverseTranslate    |         🤷         |          🤷         |          🤷         |
+| partialReverseTranslate    |         ✅         |          ✅         |          ✅         |
 */
 
 
@@ -478,9 +478,9 @@ Be short and concise.
             // prompt += `Language: ${language}\n`;
             if (question) prompt += `Question: '${question}'\n`;
             if (userAnswer) {
-                if (typeof userAnswer === "object") 
+                if (userAnswer.text)
                     prompt += `User's answer: '${userAnswer.text}'\n`;
-                else 
+                else
                     prompt += `User's answer: '${Array.isArray(userAnswer) ? userAnswer.join(' ') : userAnswer}'\n`;
             }
             if (solution) prompt += `Correct answer: '${solution}'\n`;
@@ -534,16 +534,18 @@ Be short and concise.
      * @returns {string} The generated prompt.
      */
     static handleTranslateExerciseExplanation(content) {
-        const { sentence, wordBank } = content;
-        let prompt = "";
+        const { sentence, wordBank, prompt, answer } = content;
+        let queryPrompt = "";
 
-        if (sentence) prompt += `Sentence to translate: '${sentence}'\n`;
-        console.log("wordbank", wordBank);
+        if (sentence) queryPrompt += `Sentence to translate: '${sentence}'\n`;
+        if (prompt) queryPrompt += `Prompt: '${prompt}'\n`;
+        if (answer) queryPrompt += `Prompt: '${answer}'\n`;
+
         if (wordBank && wordBank.length > 0) {
-            prompt += `Available words: ${wordBank.join(', ')}\n`;
+            queryPrompt += `Available words: ${wordBank.join(', ')}\n`;
         }
 
-        return prompt;
+        return queryPrompt;
     }
 
     /**
@@ -560,14 +562,9 @@ Be short and concise.
 
         if (sentence) prompt += `Sentence to translate: '${sentence}'\n`;
 
-        console.log("wordbank", wordBank);
-        console.log("userAnswer", userAnswer);
-
         if (wordBank && wordBank.length > 0) {
             prompt += `Available words: ${wordBank.join(', ')}\n`;
         }
-
-        if (solution) prompt += `Correct translation: '${solution}'\n`;
 
         return prompt;
     }
@@ -741,21 +738,22 @@ Be short and concise.
      * @returns {string} The generated prompt.
      */
     static handleReadComprehensionExerciseExplanation(content) {
-        const { passage, question, choices, sentence } = content;
-        let prompt = "";
+        const { passage, question, choices, prompt, sentence } = content;
+        let queryPrompt = "";
 
-        if (sentence) prompt += `Sentence to read: '${sentence}'\n`;
-        if (passage) prompt += `Passage to read: '${passage}'\n`;
-        if (question) prompt += `Question: '${question}'\n`;
+        if (sentence) queryPrompt += `Sentence to read: '${sentence}'\n`;
+        if (prompt) queryPrompt += `Prompt: '${prompt}'\n`;
+        if (passage) queryPrompt += `Passage to read: '${passage}'\n`;
+        if (question) queryPrompt += `Question: '${question}'\n`;
 
         if (choices && choices.length > 0) {
-            prompt += `Choices:\n`;
+            queryPrompt += `Choices:\n`;
             choices.forEach(choice => {
-                prompt += ` - Option ${choice.option}: ${choice.text}\n`;
+                queryPrompt += ` - Option ${choice.option}: ${choice.text}\n`;
             });
         }
 
-        return prompt;
+        return queryPrompt;
     }
 
     /**
@@ -767,29 +765,30 @@ Be short and concise.
      * @returns {string} The generated prompt.
      */
     static handleReadComprehensionAnswerExplanation(content, userAnswer, solution, state) {
-        const { passage, question, choices, sentence } = content;
-        let prompt = "";
+        const { passage, question, choices, prompt, sentence } = content;
+        let queryPrompt = "";
 
-        if (sentence) prompt += `Sentence to read: '${sentence}'\n`;
-        if (passage) prompt += `Passage to read: '${passage}'\n`;
-        if (question) prompt += `Question: '${question}'\n`;
+        if (sentence) queryPrompt += `Sentence to read: '${sentence}'\n`;
+        if (prompt) queryPrompt += `Prompt: '${prompt}'\n`;
+        if (passage) queryPrompt += `Passage to read: '${passage}'\n`;
+        if (question) queryPrompt += `Question: '${question}'\n`;
 
         if (choices && choices.length > 0) {
-            prompt += `Choices:\n`;
+            queryPrompt += `Choices:\n`;
             choices.forEach(choice => {
-                prompt += ` - Option ${choice.option}: ${choice.text}\n`;
+                queryPrompt += ` - Option ${choice.option}: ${choice.text}\n`;
             });
         }
 
         if (userAnswer) {
-            prompt += `User's choice: Option ${userAnswer.option} - ${userAnswer.text}\n`;
+            queryPrompt += `User's choice: Option ${userAnswer.option} - ${userAnswer.text}\n`;
         }
 
         if (solution) {
-            prompt += `Correct choice: Option ${solution}\n`;
+            queryPrompt += `Correct choice: Option ${solution}\n`;
         }
 
-        return prompt;
+        return queryPrompt;
     }
 
     /**

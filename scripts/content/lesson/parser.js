@@ -64,13 +64,17 @@ class ChallengeParser {
 			language = content.language;
 			delete content.language;
 			
-			language.ui = {
-				document: document?.documentElement.lang,
-				client: {
-					main: window?.navigator?.language,
-					options: window?.navigator?.languages
-				}
-			};
+			try {
+				language.ui = {
+					document: document?.documentElement.lang,
+					client: {
+						main: window?.navigator?.language,
+						options: window?.navigator?.languages
+					}
+				};
+			} catch (error) {
+				console.error(error);
+			}
 		}
 
 
