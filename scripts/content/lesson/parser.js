@@ -268,6 +268,13 @@ class ChallengeParser {
 			options = Array.from(optionsWrapper.children).map(child => {
 				const option = parseInt(child.children[0].textContent);
 				const choices = child.children[1]?.textContent.split(" ... ");
+
+				if (child.ariaChecked === "true") {
+					choices.forEach(choice => {
+						sentence = sentence.replace("<blank>", choice);
+					});
+				}
+
 				return {option, choices};
 			});
 		}
