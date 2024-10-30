@@ -515,8 +515,8 @@
 		else {
 			// update report button title
 			const exerciseType = document.querySelector("div[data-test^='challenge']")?.dataset.test.replace("challenge challenge-", "") || "unknown";
-			reportButton.title = "Duo Explained - Report a bug\nExercise Type: " + exerciseType;
-			reportButton.href = reportButton.href.replace(/&title=.*$/, `&title=[Exercise Type: ${exerciseType} - use this info to complete the fields below] (UPDATE THIS FIELD WITH YOUR TITLE AFTERWARDS)`);
+			reportButton.title = `Duo Explained - Report a bug\nExercise Type: ${exerciseType}\nExtension Version: ${reportButton.dataset.version}`;
+			reportButton.dataset.type = exerciseType;
 		}
 	});
 
