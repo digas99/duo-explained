@@ -156,6 +156,8 @@ Be short and concise.
             }
         }
 
+        if (lessonData.extra.length > 0) prompt += `The user added this note to the query: ${lessonData.extra}`;
+
         prompt += promptEnd;
 
         console.log("Generated Prompt", prompt);
