@@ -5,10 +5,10 @@
 /*
 | Exercise Type              |  Before Responding | After Responding ✅ | After Responding ❌ |
 |----------------------------|--------------------|---------------------|---------------------|
-| syllableTap                |         🤷         |          🤷         |          🤷         |
+| syllableTap                |  ❌ (not handled)  |          ❌         |          ❌         |
 | translate                  |         ✅         |          ✅         |          ✅         |
-| characterMatch             |         🤷         |          🤷         |          🤷         |
-| match                      |         🤷         |          🤷         |          🤷         |
+| characterMatch             |         ✅         |          ✅         |         N/A         |
+| match                      |         ✅         |          ✅         |         N/A         |
 | tapComplete                |         ✅         |          ✅         |          ✅         |
 | gapFill                    |         ✅         |          ✅         |          ✅         |
 | completeReverseTranslation |         ✅         |          ✅         |          ✅         |
@@ -18,9 +18,9 @@
 | transliterationAssist      |  ❌ (not handled)  |          ❌         |          ❌         |
 | reverseAssist              |  ❌ (not handled)  |          ❌         |          ❌         |
 | assist                     |  ❌ (not handled)  |          ❌         |          ❌         |
-| characterSelect            |         🤷         |          🤷         |          🤷         |
+| characterSelect            |         ✅         |          ✅         |          ✅         |
 | select                     |         ✅         |          ✅         |          ✅         |
-| transliterate              |         🤷         |          🤷         |          🤷         |
+| transliterate              | ✅ (add language)  |          ✅         |          ✅         |
 | partialReverseTranslate    |         ✅         |          ✅         |          ✅         |
 */
 
