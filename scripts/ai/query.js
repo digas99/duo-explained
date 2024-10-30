@@ -10,8 +10,7 @@
 | characterMatch             |         🤷         |          🤷         |          🤷         |
 | match                      |         🤷         |          🤷         |          🤷         |
 | tapComplete                |         ✅         |          ✅         |          ✅         |
-| gapFill                    |         ❌         |          ❌         |          ❌         |
-|                            |(not using options) | (answer not passed) | (answer not passed) |
+| gapFill                    |         ✅         |          ✅         |          ✅         |
 | completeReverseTranslation |         ✅         |          ✅         |          ✅         |
 | readComprehension          |         ✅         |          ✅         |          ✅         |
 | dialogue                   |         ✅         |          ✅         |          ✅         |
@@ -314,10 +313,9 @@ Be short and concise.
      * @returns {string} The generated prompt.
      */
     static handleGapFillExerciseExplanation(content) {
-        const { sentence } = content;
-        const options = content.choices;
+        const { sentence, choices: options } = content;
         let prompt = "";
-
+ 
         if (sentence) prompt += `Sentence with gaps: '${sentence}'\n`;
 
         if (options && options.length > 0) {
@@ -339,7 +337,7 @@ Be short and concise.
      * @returns {string} The generated prompt.
      */
     static handleGapFillAnswerExplanation(content, userAnswer, solution, state) {
-        const { sentence, choices } = content;
+        const { sentence, choices: options } = content;
         let prompt = "";
 
         if (sentence) prompt += `Sentence with gaps: '${sentence}'\n`;

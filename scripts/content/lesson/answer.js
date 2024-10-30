@@ -27,8 +27,6 @@ class AnswerData {
 		this.challenge = data.challenge;
 		this.solution = data.solution;
 
-		console.log("AnswerData", this.get());
-
 		this.validate();
 	}
 	
