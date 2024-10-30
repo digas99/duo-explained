@@ -31,14 +31,14 @@ body:
     id: challenge-data
     attributes:
       label: Challenge Data Object
-      description: Provide the contents of the `challengeData` object.
+      description: Provide the contents of the `challengeData` object (optional).
     validations:
       required: false
   - type: textarea
     id: answer-data
     attributes:
       label: Answer Data Object
-      description: Provide the contents of the `answerData` object.
+      description: Provide the contents of the `answerData` object (optional).
     validations:
       required: false
   - type: dropdown
