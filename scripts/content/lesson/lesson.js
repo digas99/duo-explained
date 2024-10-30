@@ -435,14 +435,22 @@
 			const quitButton = document.querySelector("button[data-test='quit-button']");
 			const wrapper = quitButton?.parentElement;
 			if (wrapper) {
-				const settingsButton = quitButton.nextElementSibling;
-				if (settingsButton) {
-					const exerciseType = document.querySelector("div[data-test^='challenge']")?.dataset.test.replace("challenge challenge-", "") || "unknown";
-					const reportButton = makeReportButton(settingsButton);
-					reportButton.title = "Duo Explained - Report a bug\nExercise Type: " + exerciseType;
-					reportButton.href += `&title=[Exercise Type: ${exerciseType} - use this info to complete the fields below] (UPDATE THIS FIELD WITH YOUR TITLE AFTERWARDS)`;
-					wrapper.insertBefore(reportButton, settingsButton.nextElementSibling);
-					wrapper.style.gridTemplateColumns = "min-content min-content min-content 1fr min-content";
+				const exerciseType = document.querySelector("div[data-test^='challenge']")?.dataset.test.replace("challenge challenge-", "") || "unknown";
+				const reportButton = makeReportButton(quitButton);
+				reportButton.title = "Duo Explained - Report a bug\nExercise Type: " + exerciseType;
+				reportButton.href += `&title=[Exercise Type: ${exerciseType} - use this info to complete the fields below] (UPDATE THIS FIELD WITH YOUR TITLE AFTERWARDS)`;
+				const progressBar = document.querySelector("div[role='progressbar']");
+				if (progressBar) {
+					wrapper.insertBefore(reportButton, progressBar);
+					
+					// number of items until the progress bar
+					let items = 0;
+					for (let i = 0; i < wrapper.children.length; i++) {
+						if (wrapper.children[i] === progressBar) break;
+						items++;
+					}
+	
+					wrapper.style.gridTemplateColumns = `${'min-content '.repeat(items)}1fr min-content`;
 				}
 			}
 		}
