@@ -27,6 +27,20 @@ body:
       description: A concise description of what happened.
     validations:
       required: true
+  - type: textarea
+    id: challenge-data
+    attributes:
+      label: Challenge Data Object
+      description: Provide the contents of the `challengeData` object.
+    validations:
+      required: false
+  - type: textarea
+    id: answer-data
+    attributes:
+      label: Answer Data Object
+      description: Provide the contents of the `answerData` object.
+    validations:
+      required: false
   - type: dropdown
     id: browser
     attributes:
