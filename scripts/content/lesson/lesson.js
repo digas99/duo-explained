@@ -391,11 +391,15 @@
 	}
 
 	const makeReportButton = template => {
-		const button = document.createElement("a");
+		const button = document.createElement("button");
 		button.className = template.className;
 		button.classList.add("d-cgpt-bug-report");
 		button.target = "_blank";
 		button.href = "https://github.com/digas99/duo-explained/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml";
+		const img = document.createElement("img");
+		img.src = "https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/bug.png";
+		img.classList.add("d-cgpt-icon-duo-ui");
+		button.appendChild(img);
 		return button;
 	}
 
@@ -435,23 +439,77 @@
 			const quitButton = document.querySelector("button[data-test='quit-button']");
 			const wrapper = quitButton?.parentElement;
 			if (wrapper) {
+				// add exercise type to report button
 				const exerciseType = document.querySelector("div[data-test^='challenge']")?.dataset.test.replace("challenge challenge-", "") || "unknown";
 				const reportButton = makeReportButton(quitButton);
 				reportButton.title = "Duo Explained - Report a bug\nExercise Type: " + exerciseType;
-				reportButton.href += `&title=[Exercise Type: ${exerciseType} - use this info to complete the fields below] (UPDATE THIS FIELD WITH YOUR TITLE AFTERWARDS)`;
+				reportButton.dataset.type = exerciseType;
+				
+				// add extension version to report
+				chrome.runtime.sendMessage({ type: "EXTENSION_VERSION" }, response => {
+					if (response.version) {
+						const version = response.version;
+						reportButton.title += `\nExtension Version: ${version}`;
+						reportButton.dataset.version = version;
+					}
+				});
+
+				// adjust top navigation css grid layout
 				const progressBar = document.querySelector("div[role='progressbar']");
 				if (progressBar) {
 					wrapper.insertBefore(reportButton, progressBar);
 					
 					// number of items until the progress bar
-					let items = 0;
+					let itemsBefore = 0, itemsAfter = 0;
 					for (let i = 0; i < wrapper.children.length; i++) {
-						if (wrapper.children[i] === progressBar) break;
-						items++;
+						if (wrapper.children[i] === progressBar) {
+							itemsAfter = wrapper.children.length - i;
+							break;
+						}
+						itemsBefore++;
 					}
 	
-					wrapper.style.gridTemplateColumns = `${'min-content '.repeat(items)}1fr min-content`;
+					wrapper.style.gridTemplateColumns = `${'min-content '.repeat(itemsBefore)}1fr${' min-content'.repeat(itemsAfter)}`;
 				}
+
+				// show a context menu
+				reportButton.addEventListener("click", event => {
+					const version = reportButton.dataset.version;
+					const type = reportButton.dataset.type;
+					const url = `
+						https://github.com/digas99/duo-explained/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml
+						&title=[
+							Exercise Type: ${type}%3B Extension Version: ${version}
+							- use this info to complete the fields below
+						] 
+						(UPDATE THIS FIELD WITH YOUR TITLE AFTERWARDS)
+					`;
+
+					const contextMenu = /*html*/`
+						<div class="d-cgpt-context-menu">
+							<a href="${url}" target="_blank">
+								<img src="https://andreclerigo.github.io/duolingo-chatgpt-assets/logo.png">
+								<span>Report a Bug</span>
+								<img class="d-cgpt-icon-duo-ui external-link-icon" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/foreign.png">
+							</a>
+							<div><b>Exercise Type:</b> ${type}</div>
+							<div><b>Extension Version:</b> ${version}</div>
+							<div class="d-cgpt-context-menu-button ${!challengeData ? 'd-cgpt-button-inactive' : ''}" data-type="challenge">
+								<img class="d-cgpt-icon-duo-ui" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/copy.png">
+								<span>Challenge Data Object</span>
+							</div>
+							<div class="d-cgpt-context-menu-button ${!answerData ? 'd-cgpt-button-inactive' : ''}" data-type="answer">
+								<img class="d-cgpt-icon-duo-ui" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/copy.png">
+								<span>Answer Data Object</span>
+							</div>
+						</div>
+					`;
+
+					if (document.querySelector(".d-cgpt-context-menu"))
+						document.querySelector(".d-cgpt-context-menu").remove();
+					else
+						reportButton.insertAdjacentHTML("afterend", contextMenu);
+				});
 			}
 		}
 		else {
@@ -504,6 +562,34 @@
 		if (window.innerWidth <= 1050) {
 			if (!target.closest(".d-cgpt-explain-area") && document.querySelector(".d-cgpt-explain-area")?.dataset.mouseDown !== "true" && !target.closest(".d-cgpt-explain-button") && !target.closest(".d-cgpt-swipe-icon")) {
 				hideExplainArea();
+			}
+		}
+
+		// close context menu
+		if (!(target.closest(".d-cgpt-context-menu") || target.closest(".d-cgpt-bug-report"))) {
+			const contextMenu = document.querySelector(".d-cgpt-context-menu");
+			if (contextMenu) {
+				contextMenu.remove();
+			}
+		}
+
+		// clicked on data object copy button
+		if (target.closest(".d-cgpt-context-menu-button")) {
+			const button = target.closest(".d-cgpt-context-menu-button");
+			const type = button.dataset.type;
+			let data;
+			if (type === "challenge") {
+				data = challengeData;
+			}
+			else if (type === "answer") {
+				data = answerData;
+			}
+			
+			if (data) {
+				button.classList.add("d-cgpt-button-active");
+				setTimeout(() => button.classList.remove("d-cgpt-button-active"), 1000);
+				
+				navigator.clipboard.writeText(JSON.stringify(data, null, 2));
 			}
 		}
 	});

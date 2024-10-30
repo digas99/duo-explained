@@ -448,17 +448,77 @@ body {
 }
 
 .d-cgpt-bug-report {
-	background-image: url(https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/bug.png) !important;
-    filter: invert(1);
-    opacity: 0.3;
-    width: 24px !important;
-    height: 24px !important;
-	background-size: contain !important;
-    background-repeat: no-repeat !important;
+	width: fit-content !important;
+	height: fit-content !important;
 }
 
-.d-cgpt-bug-report:hover {
-    filter: invert(1) brightness(1.1) !important;
+.d-cgpt-bug-report img {
+    width: 26px;
+	height: 26px;
+	background-color: unset !important;
+}
+
+.d-cgpt-context-menu {
+    position: absolute;
+    top: 100px;
+    background-color: rgb(var(--color-snow));
+	border: 2px solid rgb(var(--color-swan));
+	border-radius: var(--web-ui_card-border-radius, 12px);
+	border-bottom-width: 4px;
+	overflow: hidden;
+}
+
+.d-cgpt-context-menu > a {
+	color: var(--d-cgpt-accent-color);
+}
+
+.d-cgpt-context-menu > a, .d-cgpt-context-menu > div {
+	display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.d-cgpt-context-menu > a img, .d-cgpt-context-menu > div img {
+	width: 20px;
+}
+
+.d-cgpt-context-menu > a .external-link-icon {
+    width: 14px;
+    opacity: 0.7;
+    position: absolute;
+    right: 10px;
+}
+
+.d-cgpt-context-menu-button img {
+	width: 16px !important;
+}
+
+.d-cgpt-context-menu > a:hover, .d-cgpt-context-menu-button:hover {
+	background-color: var(--web-ui_card-color-hover, rgb(var(--color-polar)));
+	cursor: pointer;
+}
+
+.d-cgpt-context-menu > div, .d-cgpt-context-menu > a {
+	padding: 10px;
+}
+
+.d-cgpt-context-menu > div:not(:last-child), .d-cgpt-context-menu > a {
+    border-bottom: 2px solid rgb(var(--color-swan));
+}
+
+.d-cgpt-button-inactive {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.d-cgpt-button-active {
+	color: var(--web-ui_card-color-checked, rgb(var(--color-whale))) !important;
+	border-color: var(--web-ui_card-border-color-checked, rgb(var(--color-blue-jay))) !important;
+	background-color: var(--web-ui_card-background-color-checked, rgb(var(--color-iguana))) !important;
+}
+
+.d-cgpt-button-active img {
+	filter: invert(59%) sepia(83%) saturate(1850%) hue-rotate(168deg) brightness(95%) contrast(104%);
 }
 
 @media screen and (max-width: 1150px) {
@@ -551,6 +611,10 @@ body {
 		border: 2px solid var(--d-cgpt-accent-color) !important;
 		background-color: var(--d-cgpt-secondary-color) !important;
 		border-radius: 8px;
+	}
+
+	.d-cgpt-context-menu {
+		top: 70px;
 	}
 }
 

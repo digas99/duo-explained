@@ -33,6 +33,8 @@ chrome.storage.sync.get(["API_KEY", "MODEL"], (result) => {
  * If the message type is "CHECK_API_KEY", the API key is checked for validity.
  * If the message type is "SET_MODEL", the model is set in the agent and stored in local storage.
  * If the message type is "RELOAD", the content scripts are reloaded.
+ * If the message type is "UPDATE_THEME", this same message is sent to the popup.
+ * If the message type is "EXTENSION_VERSION", the extension version is sent as a response.
  */
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === "QUERY") {
@@ -117,6 +119,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     // Drive update theme to the popup
     if (request.type === "UPDATE_THEME") chrome.runtime.sendMessage(request);
+
+    // Extension version
+    if (request.type === "EXTENSION_VERSION") {
+        const version = chrome.runtime.getManifest().version;
+        sendResponse({ version });
+    }
 
     return true;
 });

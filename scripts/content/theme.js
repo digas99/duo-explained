@@ -30,6 +30,10 @@ const INTERFACE_COLORS = {
 				.d-cgpt-icon-accent {
 					filter: invert(83%) sepia(29%) saturate(5497%) hue-rotate(102deg) brightness(90%) contrast(101%);
 				}
+
+				.d-cgpt-icon-duo-ui {
+					filter: invert(62%) sepia(13%) saturate(0%) hue-rotate(212deg) brightness(109%) contrast(97%);
+				}
 			`
 		]
 	},
@@ -51,6 +55,10 @@ const INTERFACE_COLORS = {
 
 				.d-cgpt-icon-accent {
 					filter: invert(99%) sepia(74%) saturate(4779%) hue-rotate(76deg) brightness(97%) contrast(117%);
+				}
+
+				.d-cgpt-icon-duo-ui {
+					filter: invert(38%) sepia(37%) saturate(210%) hue-rotate(152deg) brightness(91%) contrast(91%);
 				}
 			`
 		]
