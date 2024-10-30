@@ -216,13 +216,13 @@ Be short and concise.
         prompt += `Please explain how to correctly match the following items.\n\n`;
 
         prompt += `Source items:\n`;
-        source.forEach(item => {
-            prompt += ` - ${item}\n`;
+        source.choices.forEach(choice => {
+            prompt += ` - Option ${choice.option}: ${choice.text}\n`;
         });
 
         prompt += `Target items:\n`;
-        target.forEach(item => {
-            prompt += ` - ${item}\n`;
+        target.choices.forEach(choice => {
+            prompt += ` - Option ${choice.option}: ${choice.text}\n`;
         });
 
         return prompt;
@@ -241,13 +241,13 @@ Be short and concise.
         let prompt = "";
 
         prompt += `Source items:\n`;
-        source.forEach(item => {
-            prompt += ` - ${item}\n`;
+        source.choices.forEach(choice => {
+            prompt += ` - Option ${choice.option}: ${choice.text}\n`;
         });
 
         prompt += `Target items:\n`;
-        target.forEach(item => {
-            prompt += ` - ${item}\n`;
+        target.choices.forEach(choice => {
+            prompt += ` - Option ${choice.option}: ${choice.text}\n`;
         });
 
         if (userAnswer) {
