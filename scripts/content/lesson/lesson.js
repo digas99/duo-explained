@@ -651,4 +651,37 @@
 	window.addEventListener("beforeunload", e => {
 		localStorage.removeItem("d-cgpt-tokens");
 	});
+
+	// handle situations where keydown is not triggered (duolingo feature)
+	document.addEventListener("keyup", e => {
+		if (document.querySelector("div[data-test^='word-bank']")) {
+			const inputPrompt = document.querySelector(".d-cgpt-speech-bubble textarea");
+			if (inputPrompt && inputPrompt.closest(".d-cgpt-speech-bubble").style.display !== "none") {
+				inputPrompt.focus();
+	
+				const key = e.key;
+	
+				if (key === "Backspace") {
+					// clear entire word
+					if (e.ctrlKey) {
+						const lastSpace = inputPrompt.value.lastIndexOf(" ");
+						if (lastSpace !== -1) {
+							inputPrompt.value = inputPrompt.value.slice(0, lastSpace+2);
+						}
+						else {
+							inputPrompt.value = "";
+						}
+					}
+	
+					inputPrompt.value = inputPrompt.value.slice(0, -1);
+					return;
+				}
+				
+				// if keys are unicode letters or numbers
+				if (key.length === 1) {
+					inputPrompt.value += key;
+				}
+			}
+		}
+	});
 })();
