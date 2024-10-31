@@ -208,13 +208,6 @@ body {
 	pointer-events: none !important;
 }
 
-.d-cgpt-explain-area-wrapper {
-	display: flex !important;
-    align-items: center;
-    column-gap: 50px;
-
-}
-
 .d-cgpt-explain-area {
 	max-width: 45%;
 	min-width: 500px;
@@ -615,6 +608,14 @@ body {
 
 	.d-cgpt-context-menu {
 		top: 70px;
+	}
+}
+
+@media screen and (min-width: 700px) {
+	.d-cgpt-explain-area-wrapper {
+		display: flex !important;
+		align-items: center;
+		column-gap: 50px;
 	}
 }
 
