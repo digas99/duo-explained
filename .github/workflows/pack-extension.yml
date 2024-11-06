@@ -14,8 +14,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Create build directory
+      run: mkdir -p build
+
+    - name: Verify directory contents
+      run: ls -la
+
     - name: Build Extension
       uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
       with:
         extensionDir: '.'
         zipFilePath: 'build/extension.zip'
+
+    - name: List build directory contents
+      run: ls -la build
