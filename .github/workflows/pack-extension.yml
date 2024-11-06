@@ -1,8 +1,8 @@
-name: Pack Extension after CodeQL
+name: Pack Extension
 
 on:
   workflow_run:
-    workflows: ["CodeQL Advanced"]
+    workflows: ["CodeQL"]
     types:
       - completed
 
