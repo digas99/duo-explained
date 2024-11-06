@@ -2,6 +2,7 @@ name: "Fetch Google Access Token"
 on:
   schedule:
     - cron:  '0 3 2 * *' # At 03:00 on day-of-month 2
+  workflow_dispatch:
 
 jobs:
   fetchToken:
