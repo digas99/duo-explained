@@ -21,7 +21,7 @@ jobs:
         zipFilePath: 'build/extension.zip'
 
     - name: Upload Extension Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: extension-zip
         path: build/extension.zip
