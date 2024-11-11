@@ -17,15 +17,17 @@ if [ -f "$FILENAME" ]; then
 	tag=\"version\"
 	if [ "$key" == "$tag" ]; then
 		# delete old zip files
-		rm wk_*
+		if [ -f build/de_*.zip ]; then
+			rm build/de_*
+		fi
 
 		# format version string from '"0.0.1",' to '001'
 		formated=$(echo "$value" | sed 's/[\.\,\ "]//g') 
 		# create zip
-		ZIPNAME="wk_$formated.zip"
+		ZIPNAME="build/de_$formated.zip"
 
 		# pick files and folders to zip
-		zip -r "$ZIPNAME" manifest.json images scripts styles popup
+		zip -r "$ZIPNAME" manifest.json images scripts styles popup docs lib
 
 		break
 	fi
