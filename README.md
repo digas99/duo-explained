@@ -1,3 +1,10 @@
+[![CodeQL](https://github.com/digas99/duo-explained/actions/workflows/codeql.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/codeql.yml)
+[![Pack Extension](https://github.com/digas99/duo-explained/actions/workflows/pack-extension.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/pack-extension.yml)
+[![Access Token](https://github.com/digas99/duo-explained/actions/workflows/fetch-g-access-token.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/fetch-g-access-token.yml)
+[![Upload Extension](https://github.com/digas99/duo-explained/actions/workflows/upload-extension.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/upload-extension.yml)
+[![Publish Extension](https://github.com/digas99/duo-explained/actions/workflows/publish-extension.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/publish-extension.yml)
+<br>
+
 # duo-explained
 
 <img src="images/logo/logo-stroke.png" width="50px"/>

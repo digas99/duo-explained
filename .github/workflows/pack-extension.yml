@@ -1,8 +1,8 @@
-name: Pack Extension after CodeQL
+name: Pack Extension
 
 on:
   workflow_run:
-    workflows: ["CodeQL Advanced"]
+    workflows: ["CodeQL"]
     types:
       - completed
 
@@ -12,10 +12,16 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Build Extension
       uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
       with:
         extensionDir: '.'
         zipFilePath: 'build/extension.zip'
+
+    - name: Upload Extension Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: extension-zip
+        path: build/extension.zip
