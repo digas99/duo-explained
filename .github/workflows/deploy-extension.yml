@@ -23,6 +23,9 @@ jobs:
           extensionDir: '.'
           zipFilePath: 'build/extension.zip'
 
+      - name: Print zip path for debug
+        run: echo "Packed zip path: ${{ steps.pack.outputs.zipFilePath }}"
+
   # Step 2: Fetch Google Access Token
   fetchToken:
     runs-on: ubuntu-latest
@@ -56,6 +59,9 @@ jobs:
         with:
           name: google-access-token
 
+      - name: Print received zip path for debug
+        run: echo "Received zip path: ${{ needs.packExtension.outputs.zip_path }}"
+
       - name: Read access token
         id: read-token
         run: echo "ACCESS_TOKEN=$(cat access_token.txt)" >> $GITHUB_ENV
@@ -63,7 +69,7 @@ jobs:
       - name: Upload to Chrome Web Store
         uses: cardinalby/webext-buildtools-chrome-webstore-action@v1
         with:
-          zipFilePath: ${{ needs.packExtension.outputs.zip_path }}
+          zipFilePath: 'build/extension.zip'
           extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
           apiAccessToken: ${{ env.ACCESS_TOKEN }}
 
