@@ -70,7 +70,7 @@ jobs:
       - name: Upload to Chrome Web Store
         uses: cardinalby/webext-buildtools-chrome-webstore-action@v1
         with:
-          zipFilePath: 'build/extension.zip'
+          zipFilePath: '../build/extension.zip'
           extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
           apiAccessToken: ${{ env.ACCESS_TOKEN }}
 
