@@ -20,7 +20,7 @@ jobs:
         id: pack
         uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
         with:
-          extensionDir: '.'
+          extensionDir: '..'
           zipFilePath: 'build/extension.zip'
 
       - name: Print zip path for debug
@@ -72,7 +72,7 @@ jobs:
       - name: Upload to Chrome Web Store
         uses: cardinalby/webext-buildtools-chrome-webstore-action@v1
         with:
-          zipFilePath: 'build/extension.zip'
+          zipFilePath: '../build/extension.zip'
           extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
           apiAccessToken: ${{ env.ACCESS_TOKEN }}
 
