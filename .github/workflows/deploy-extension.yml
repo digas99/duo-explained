@@ -24,7 +24,8 @@ jobs:
           zipFilePath: 'build/extension.zip'
 
       - name: Print zip path for debug
-        run: echo "Packed zip path: ${{ steps.pack.outputs.zipFilePath }}"
+        run: |
+          echo "Packed zip path: ${{ steps.pack.outputs.zipFilePath }}"
 
   # Step 2: Fetch Google Access Token
   fetchToken:
@@ -41,7 +42,8 @@ jobs:
           refreshToken: ${{ secrets.G_REFRESH_TOKEN }}
 
       - name: Save access token
-        run: echo "${{ steps.fetchToken.outputs.accessToken }}" > access_token.txt
+        run: |
+          echo "${{ steps.fetchToken.outputs.accessToken }}" > access_token.txt
     
       - name: Upload token as artifact
         uses: actions/upload-artifact@v4
@@ -60,7 +62,8 @@ jobs:
           name: google-access-token
 
       - name: Print received zip path for debug
-        run: echo "Received zip path: ${{ needs.packExtension.outputs.zip_path }}"
+        run: |
+          echo "Received zip path: ${{ needs.packExtension.outputs.zip_path }}"
 
       - name: Read access token
         id: read-token
