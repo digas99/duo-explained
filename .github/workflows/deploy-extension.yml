@@ -20,12 +20,8 @@ jobs:
         id: pack
         uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
         with:
-          extensionDir: '..'
+          extensionDir: '.'
           zipFilePath: 'build/extension.zip'
-
-      - name: Print zip path for debug
-        run: |
-          echo "Packed zip path: ${{ steps.pack.outputs.zipFilePath }}"
 
   # Step 2: Fetch Google Access Token
   fetchToken:
