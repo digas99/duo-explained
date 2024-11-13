@@ -17,7 +17,11 @@ Here is a step-by-step guide on how to use Duo Explained on your mobile device:
 
 2. Open Kiwi Browser, go to the Chrome Web Store and install [Duo Explained](#).
 
-	[Need image here]   
+	<div style="gap: 10px; display: flex;">
+		<img src="images/screenshots/mobile-setup/WhatsApp Image 2024-11-13 at 9.49.39 AM (1).jpeg" width=200>
+		<img src="images/screenshots/mobile-setup/WhatsApp Image 2024-11-13 at 9.49.39 AM.jpeg" width=200>
+	</div>
+
 
 3. Open the Duo Explained extension from the Browser Menu and setup your OpenAI API key (as you would on a desktop browser - [see here](docs/help/API_KEY.md)).
 
