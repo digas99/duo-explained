@@ -1,8 +1,5 @@
 [![CodeQL](https://github.com/digas99/duo-explained/actions/workflows/codeql.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/codeql.yml)
-[![Pack Extension](https://github.com/digas99/duo-explained/actions/workflows/pack-extension.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/pack-extension.yml)
-[![Access Token](https://github.com/digas99/duo-explained/actions/workflows/fetch-g-access-token.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/fetch-g-access-token.yml)
-[![Upload Extension](https://github.com/digas99/duo-explained/actions/workflows/upload-extension.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/upload-extension.yml)
-[![Publish Extension](https://github.com/digas99/duo-explained/actions/workflows/publish-extension.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/publish-extension.yml)
+[![Deploy Chrome Extension](https://github.com/digas99/duo-explained/actions/workflows/deploy-extension.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/deploy-extension.yml)
 <br>
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ibnifmdhbaknbkgldmbnebeidephchno.svg?color=orange)](https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/users/ibnifmdhbaknbkgldmbnebeidephchno.svg?color=orange)](https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno)

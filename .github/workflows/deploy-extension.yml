@@ -28,11 +28,6 @@ jobs:
         with:
           name: extension
           path: build/extension.zip
-      
-      - name: print directory
-        run: pwd
-      - name: print directory build
-        run: ls -la build/
 
   # Step 2: Fetch Google Access Token
   fetchToken:
@@ -72,11 +67,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: extension
-
-      - name: print directory
-        run: ls -la .
-      - name: print directory build
-        run: pwd
 
       - name: Read access token
         id: read-token
