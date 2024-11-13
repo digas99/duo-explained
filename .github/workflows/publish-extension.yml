@@ -1,0 +1,17 @@
+name: Publish Extension
+
+on:
+  workflow_run:
+    workflows: ["Upload Extension"]
+    types:
+      - completed
+
+jobs:
+  publishExtension:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Publish to Chrome Web Store
+        uses: ardinalby/webext-buildtools-chrome-webstore-publish-action@v1
+        with:
+          extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
