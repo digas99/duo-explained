@@ -2,7 +2,7 @@ name: Publish Extension
 
 on:
   workflow_run:
-    workflows: ["Publish Extension"]
+    workflows: ["Upload Extension"]
     types:
       - completed
   workflow_dispatch:
