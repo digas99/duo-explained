@@ -11,7 +11,7 @@ jobs:
   packExtension:
     runs-on: ubuntu-latest
     outputs:
-      zip_path: ${{ steps.pack.outputs.zipPath }}
+      zip_path: ${{ steps.pack.outputs.zipFilePath }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
