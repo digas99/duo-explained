@@ -2,7 +2,7 @@ name: Publish Extension
 
 on:
   workflow_run:
-    workflows: ["Upload Extension"]
+    workflows: ["Publish Extension"]
     types:
       - completed
   workflow_dispatch:
@@ -12,8 +12,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Download token artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: google-access-token
+
+      - name: Read access token
+        id: read-token
+        run: echo "ACCESS_TOKEN=$(cat access_token.txt)" >> $GITHUB_ENV
+
       - name: Publish to Chrome Web Store
         uses: ardinalby/webext-buildtools-chrome-webstore-publish-action@v1
         with:
           extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
-          apiAccessToken: ${{ github.event.workflow_run.outputs.googleAccessToken }}
+          apiAccessToken: ${{ env.ACCESS_TOKEN }}

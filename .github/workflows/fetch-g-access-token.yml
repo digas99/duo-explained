@@ -10,11 +10,19 @@ on:
 jobs:
   fetchToken:
     runs-on: ubuntu-latest
-    outputs:
-      googleAccessToken: ${{ steps.fetchToken.outputs.accessToken }}
     steps:
-      - uses: cardinalby/google-api-fetch-token-action@v1
+      - id: fetchToken
+        uses: cardinalby/google-api-fetch-token-action@v1
         with:
           clientId: ${{ secrets.G_CLIENT_ID }}
           clientSecret: ${{ secrets.G_CLIENT_SECRET }}
           refreshToken: ${{ secrets.G_REFRESH_TOKEN }}
+
+      - name: Save access token
+        run: echo "${{ steps.fetchToken.outputs.accessToken }}" > access_token.txt
+
+      - name: Upload token as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: google-access-token
+          path: access_token.txt
