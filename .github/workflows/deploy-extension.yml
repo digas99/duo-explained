@@ -104,7 +104,7 @@ jobs:
         run: echo "ACCESS_TOKEN=$(cat access_token.txt)" >> $GITHUB_ENV
 
       - name: Publish to Chrome Web Store
-        uses: ardinalby/webext-buildtools-chrome-webstore-publish-action@v1
+        uses: cardinalby/webext-buildtools-chrome-webstore-publish-action@v1
         with:
           extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
           apiAccessToken: ${{ env.ACCESS_TOKEN }}
