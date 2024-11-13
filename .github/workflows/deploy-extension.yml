@@ -23,7 +23,7 @@ jobs:
           extensionDir: '.'
           zipFilePath: 'build/extension.zip'
 
-       - name: Upload Packed Extension
+      - name: Upload Packed Extension
         uses: actions/upload-artifact@v4
         with:
           name: extension
