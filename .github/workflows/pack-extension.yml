@@ -1,10 +1,9 @@
 name: Pack Extension
 
 on:
-  workflow_run:
-    workflows: ["CodeQL"]
+  release:
     types:
-      - completed
+      - published
 
 jobs:
   build:

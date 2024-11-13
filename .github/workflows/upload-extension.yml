@@ -5,6 +5,7 @@ on:
     workflows: ["Fetch Google Access Token"]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   uploadExtension:

@@ -5,6 +5,7 @@ on:
     workflows: ["Upload Extension"]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   publishExtension:
