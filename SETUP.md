@@ -15,7 +15,7 @@ Here is a step-by-step guide on how to use Duo Explained on your mobile device:
 
 	<img src="images/screenshots/mobile-setup/Screenshot_20241111_111213_Google Play Store.jpg" width=200>
 
-2. Open Kiwi Browser, go to the Chrome Web Store and install [Duo Explained](#).
+2. Open Kiwi Browser, go to the Chrome Web Store and install [Duo Explained](https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno).
 
 	<div style="gap: 10px; display: flex;">
 		<img src="images/screenshots/mobile-setup/WhatsApp Image 2024-11-13 at 9.49.39 AM (1).jpeg" width=200>
