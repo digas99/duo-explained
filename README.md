@@ -4,6 +4,7 @@
 [![Upload Extension](https://github.com/digas99/duo-explained/actions/workflows/upload-extension.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/upload-extension.yml)
 [![Publish Extension](https://github.com/digas99/duo-explained/actions/workflows/publish-extension.yml/badge.svg)](https://github.com/digas99/duo-explained/actions/workflows/publish-extension.yml)
 <br>
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ibnifmdhbaknbkgldmbnebeidephchno.svg?style=flat-square&color=orange)](https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno)
 
 # duo-explained
 
