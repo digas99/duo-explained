@@ -15,3 +15,4 @@ jobs:
         uses: ardinalby/webext-buildtools-chrome-webstore-publish-action@v1
         with:
           extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
+          apiAccessToken: ${{ github.event.workflow_run.outputs.googleAccessToken }}

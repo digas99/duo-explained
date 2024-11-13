@@ -10,6 +10,8 @@ on:
 jobs:
   fetchToken:
     runs-on: ubuntu-latest
+    outputs:
+      googleAccessToken: ${{ steps.fetchToken.outputs.accessToken }}
     steps:
       - uses: cardinalby/google-api-fetch-token-action@v1
         with:

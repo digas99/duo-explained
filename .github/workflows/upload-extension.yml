@@ -16,3 +16,4 @@ jobs:
         with:
           zipFilePath: 'build/extension.zip'
           extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
+          apiAccessToken: ${{ github.event.workflow_run.outputs.googleAccessToken }}
