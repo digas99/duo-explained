@@ -39,13 +39,25 @@ jobs:
 
       - name: Save access token
         run: echo "${{ steps.fetchToken.outputs.accessToken }}" > access_token.txt
+    
+      - name: Upload token as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-access-token
+          path: access_token.txt
 
   # Step 3: Upload Extension
   uploadExtension:
     runs-on: ubuntu-latest
     needs: [packExtension, fetchToken]
     steps:
-      - name: Set Access Token Environment Variable
+      - name: Download token artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: google-access-token
+
+      - name: Read access token
+        id: read-token
         run: echo "ACCESS_TOKEN=$(cat access_token.txt)" >> $GITHUB_ENV
 
       - name: Upload to Chrome Web Store
@@ -60,7 +72,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: uploadExtension
     steps:
-      - name: Set Access Token Environment Variable
+      - name: Download token artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: google-access-token
+
+      - name: Read access token
+        id: read-token
         run: echo "ACCESS_TOKEN=$(cat access_token.txt)" >> $GITHUB_ENV
 
       - name: Publish to Chrome Web Store
