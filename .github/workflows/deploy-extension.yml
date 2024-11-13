@@ -11,22 +11,17 @@ jobs:
   packExtension:
     runs-on: ubuntu-latest
     outputs:
-      zip_path: build/extension.zip
+      zip_path: ${{ steps.pack.outputs.zipPath }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Build Extension
+        id: pack
         uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
         with:
           extensionDir: '.'
           zipFilePath: 'build/extension.zip'
-
-      - name: Upload Extension Artifact
-        uses: actions/upload-artifact@v4  # Updated to v4
-        with:
-          name: extension-zip
-          path: build/extension.zip
 
   # Step 2: Fetch Google Access Token
   fetchToken:
@@ -45,35 +40,18 @@ jobs:
       - name: Save access token
         run: echo "${{ steps.fetchToken.outputs.accessToken }}" > access_token.txt
 
-      - name: Upload token as artifact
-        uses: actions/upload-artifact@v4  # Updated to v4
-        with:
-          name: google-access-token
-          path: access_token.txt
-
   # Step 3: Upload Extension
   uploadExtension:
     runs-on: ubuntu-latest
-    needs: fetchToken
+    needs: [packExtension, fetchToken]
     steps:
-      - name: Download token artifact
-        uses: actions/download-artifact@v4  # Updated to v4
-        with:
-          name: google-access-token
-
-      - name: Download extension artifact
-        uses: actions/download-artifact@v4  # Updated to v4
-        with:
-          name: extension-zip
-
-      - name: Read access token
-        id: read-token
+      - name: Set Access Token Environment Variable
         run: echo "ACCESS_TOKEN=$(cat access_token.txt)" >> $GITHUB_ENV
 
       - name: Upload to Chrome Web Store
         uses: cardinalby/webext-buildtools-chrome-webstore-action@v1
         with:
-          zipFilePath: 'build/extension.zip'
+          zipFilePath: ${{ needs.packExtension.outputs.zip_path }}
           extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
           apiAccessToken: ${{ env.ACCESS_TOKEN }}
 
@@ -82,13 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: uploadExtension
     steps:
-      - name: Download token artifact
-        uses: actions/download-artifact@v4  # Updated to v4
-        with:
-          name: google-access-token
-
-      - name: Read access token
-        id: read-token
+      - name: Set Access Token Environment Variable
         run: echo "ACCESS_TOKEN=$(cat access_token.txt)" >> $GITHUB_ENV
 
       - name: Publish to Chrome Web Store
