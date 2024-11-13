@@ -76,7 +76,7 @@ jobs:
       - name: print directory
         run: ls -la .
       - name: print directory build
-        run: ls -la build/
+        run: pwd
 
       - name: Read access token
         id: read-token
