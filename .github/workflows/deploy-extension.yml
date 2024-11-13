@@ -1,4 +1,4 @@
-name: Full Extension Workflow
+name: Deploy Chrome Extension
 
 on:
   release:
