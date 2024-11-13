@@ -30,7 +30,7 @@ jobs:
           path: build/extension.zip
       
       - name: print directory
-        run: ls -la .
+        run: pwd
       - name: print directory build
         run: ls -la build/
 
@@ -67,6 +67,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: google-access-token
+
+      - name: Download extension artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: extension
 
       - name: print directory
         run: ls -la .
