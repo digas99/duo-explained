@@ -20,7 +20,7 @@
 ---
 
 <p align="center">
-  <a href="https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno"><img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Get Duo Explained for Chrome"></a><br>
+  <a href="https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno"><img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Get Duo Explained for Chrome" width="200"></a><br>
 </p>
 
 ---
