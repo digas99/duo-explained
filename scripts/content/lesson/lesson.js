@@ -298,9 +298,8 @@
 					}
 				});
 
-				handleExplanation(() => {
-					disableButton(button);
-				});
+				handleExplanation();
+				disableButton(button);
 			});
 		}
 		
@@ -652,36 +651,54 @@
 		localStorage.removeItem("d-cgpt-tokens");
 	});
 
-	// handle situations where keydown is not triggered (duolingo feature)
-	document.addEventListener("keyup", e => {
-		if (document.querySelector("div[data-test^='word-bank']")) {
+	document.addEventListener("keydown", e => {
+		const speechBubble = document.querySelector(".d-cgpt-speech-bubble");
+		if (speechBubble && speechBubble.style.display !== "none") {
 			const inputPrompt = document.querySelector(".d-cgpt-speech-bubble textarea");
-			if (inputPrompt && inputPrompt.closest(".d-cgpt-speech-bubble").style.display !== "none") {
-				inputPrompt.focus();
-	
-				const key = e.key;
-	
-				if (key === "Backspace") {
-					// clear entire word
-					if (e.ctrlKey) {
-						const lastSpace = inputPrompt.value.lastIndexOf(" ");
-						if (lastSpace !== -1) {
-							inputPrompt.value = inputPrompt.value.slice(0, lastSpace+2);
-						}
-						else {
-							inputPrompt.value = "";
-						}
+			const key = e.key;
+
+			e.preventDefault();
+			e.stopImmediatePropagation();
+
+			if (key === "Backspace") {
+				// clear entire word
+				if (e.ctrlKey) {
+					const lastSpace = inputPrompt.value.lastIndexOf(" ");
+					if (lastSpace !== -1) {
+						inputPrompt.value = inputPrompt.value.slice(0, lastSpace+2);
 					}
-	
-					inputPrompt.value = inputPrompt.value.slice(0, -1);
-					return;
+					else {
+						inputPrompt.value = "";
+					}
 				}
-				
-				// if keys are unicode letters or numbers
-				if (key.length === 1) {
-					inputPrompt.value += key;
+
+				inputPrompt.value = inputPrompt.value.slice(0, -1);
+				return;
+			}
+			
+			// if keys are unicode letters or numbers
+			if (key.length === 1) {
+				inputPrompt.value += key;
+			}
+
+			if (key === "Escape") {
+				toggleExtraInput(false);
+			}
+
+			if (key === "Enter") {
+				// if speech bubble has focus
+				if (inputPrompt === document.activeElement) {
+					e.preventDefault();
+
+					// click explain button
+					const explainButton = document.getElementById("d-cgpt-explain-button");
+					if (explainButton && !explainButton.disabled) {
+						explainButton.click();
+					}
+					
+					return false;
 				}
 			}
 		}
-	});
+	}, true);
 })();
