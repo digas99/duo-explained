@@ -435,7 +435,7 @@ Use bold text.
 
         if (choices && choices.length > 0) {
             choices.forEach(choice => {
-                prompt += ` - Option ${choice.option}: ${choice.text}\n`;
+                prompt += `- ${choice.option ? "Option " + choice.option + ": " : "" }${choice.text}\n`;
             });
         }
 

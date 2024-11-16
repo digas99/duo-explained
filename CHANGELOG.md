@@ -4,6 +4,7 @@
 - Pressing ENTER when writing on User Extra Query triggeres explanation instead of answer check [#22](https://github.com/digas99/duo-explained/issues/22)
 - Fixed stats at the end of the lesson formating on mobile [#14](https://github.com/digas99/duo-explained/issues/14)
 - Improved the formating of the text in the explanation window
+- Fixed choice numbers from select exercises being null when the exercise doesn't number them [#12](https://github.com/digas99/duo-explained/issues/12)
 
 # [Changelog v0.0.1 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.0.1)
 Released on 11/06/2024
