@@ -17,6 +17,16 @@ function type(element, htmlContent, delay = 10) {
     // Array to hold text nodes and their text content
     const textNodes = [];
 
+    // Flags to detect user-initiated scrolling
+    let userScrolled = false;
+
+    // Event listener to detect user scrolling up
+    element.addEventListener('scroll', () => {
+        if (element.scrollTop < element.scrollHeight - element.clientHeight) {
+            userScrolled = true
+        }
+    });
+
     // Recursive function to clone nodes and collect text nodes
     function cloneNodeWithEmptyText(node) {
         let clone = null;
@@ -105,7 +115,6 @@ function type(element, htmlContent, delay = 10) {
                 if (listParent.tagName.toLowerCase() === "li") {
                     const listTop = list.getBoundingClientRect().top;
                     const listParentTop = listParent.getBoundingClientRect().top;
-                    console.log(listParentTop - listTop);
                     if (listTop - listParentTop >= 40)
                         list.style.marginTop = "-20px";
                 }
@@ -132,9 +141,9 @@ function type(element, htmlContent, delay = 10) {
         currentText += char;
         nodeTextMap.set(node, currentText);
         node.textContent = currentText;
-
-        // Only scroll if the content overflows the container
-        if (element.scrollHeight > element.clientHeight) {
+        
+        // Only scroll if the content overflows the container and user hasn't scrolled manually
+        if (!userScrolled && element.scrollHeight > element.clientHeight) {
             element.scrollTop = element.scrollHeight;
         }
 
