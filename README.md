@@ -37,7 +37,7 @@
 - [Documentation](#documentation)
 - [Contributors](#contributors)
 - [License](#license)
-- 
+
 ---
 
 ## Introduction
