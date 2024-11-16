@@ -183,13 +183,6 @@
 							const typeAnimation = data.SETTINGS?.["typing-animation"];
 							if (typeAnimation) {
 								type(explainContent, sanitizedHtmlContent);
-								
-								// remove extra margin from lists but prevent initial bug on typing
-								setTimeout(() => {
-									explainContent.querySelectorAll("ul, ol").forEach(list => {
-										list.style.marginTop = "-20px";
-									});
-								}, 500);
 							}
 							else {
 								explainContent.innerHTML = sanitizedHtmlContent;
@@ -623,7 +616,9 @@
 			toggleExtraInput(true);
 		}
 		else {
-			if (!target.closest(".d-cgpt-speech-bubble")) {
+			if (!target.closest(".d-cgpt-speech-bubble") &&
+				document.querySelector(".d-cgpt-speech-bubble textarea")?.value === "" &&
+				document.activeElement !== document.querySelector(".d-cgpt-speech-bubble textarea")) {
 				toggleExtraInput(false);
 			}
 		}
@@ -677,6 +672,8 @@
 		const speechBubble = document.querySelector(".d-cgpt-speech-bubble");
 		if (speechBubble && speechBubble.style.display !== "none") {
 			const inputPrompt = document.querySelector(".d-cgpt-speech-bubble textarea");
+			inputPrompt.focus();
+
 			const key = e.key;
 
 			e.preventDefault();
@@ -708,17 +705,12 @@
 			}
 
 			if (key === "Enter") {
-				// if speech bubble has focus
-				if (inputPrompt === document.activeElement) {
-					e.preventDefault();
+				e.preventDefault();
 
-					// click explain button
-					const explainButton = document.getElementById("d-cgpt-explain-button");
-					if (explainButton && !explainButton.disabled) {
-						explainButton.click();
-					}
-					
-					return false;
+				// click explain button
+				const explainButton = document.getElementById("d-cgpt-explain-button");
+				if (explainButton && !explainButton.disabled) {
+					explainButton.click();
 				}
 			}
 		}
