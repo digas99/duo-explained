@@ -46,6 +46,7 @@ class QueryGenerator {
 Please provide an explanation to help the user understand.
 Do not refer to the user as the user, address the user as the person who made this prompt.
 Be short and concise.
+Use bold text.
 `;
 
         // Check if the user has answered the question

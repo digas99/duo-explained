@@ -9,35 +9,82 @@ const parseJapaneseFurigana = textWrapper => {
 	return nonFuriganaSpans.map(span => span.innerText).join("")
 }
 
-const type = (element, text, delay = 10) => {
-	let trimmed = false;
-	const interval = setInterval(() => {
-		if (text?.length > 0) {
-			removeCursor(element);
+const type = (element, htmlContent, delay = 10) => {
+    // Parse the HTML content into a DOM tree
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, "text/html");
 
-			element.innerHTML += `<span class="cursor">${text[0]}</span>`;
-			text = text.slice(1);
-		}
-		else {
-			clearInterval(interval);
-			setTimeout(() => removeCursor(element), 1200);
-		}
+    // Array to hold text nodes and their text content
+    const textNodes = [];
 
-		if (!trimmed) {
-			element.innerText = element.innerText.trim();
-			trimmed = true;
-		}
-	}, delay);
-}
+    // Recursive function to clone nodes and collect text nodes
+    function cloneNodeWithEmptyText(node) {
+        let clone = null;
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            clone = document.createElement(node.tagName);
+            // Copy attributes
+            for (let attr of node.attributes) {
+            clone.setAttribute(attr.name, attr.value);
+            }
+            // Recursively clone and append child nodes
+            for (let child of node.childNodes) {
+            let childClone = cloneNodeWithEmptyText(child);
+            clone.appendChild(childClone);
+            }
+        } else if (node.nodeType === Node.TEXT_NODE) {
+            clone = document.createTextNode("");
+            textNodes.push({ node: clone, text: node.textContent });
+        }
+        return clone;
+    }
 
-const removeCursor = element => {
-	const cursor = element.querySelector(".cursor");
-	if (cursor) {
-		const text = cursor.textContent;
-		cursor.remove();
-		element.innerText += text;
-	}
-}
+    // Clone the body content
+    let contentClone = cloneNodeWithEmptyText(doc.body);
+
+    // Clear the element and append the cloned content
+    element.innerHTML = "";
+    while (contentClone.firstChild) {
+        element.appendChild(contentClone.firstChild);
+    }
+
+    // Create the character array
+    let charArray = [];
+    for (let nodeInfo of textNodes) {
+        let text = nodeInfo.text;
+        let node = nodeInfo.node;
+        for (let i = 0; i < text.length; i++) {
+            charArray.push({ char: text[i], node: node });
+        }
+    }
+
+    // Map to keep track of current text content for each node
+    let nodeTextMap = new Map();
+
+    let index = 0;
+
+    function typeNextChar() {
+        if (index >= charArray.length) {
+            // Typing complete
+            clearInterval(typingInterval);
+            return;
+        }
+        let charInfo = charArray[index];
+        let node = charInfo.node;
+        let char = charInfo.char;
+
+        let currentText = nodeTextMap.get(node) || "";
+        currentText += char;
+        nodeTextMap.set(node, currentText);
+        node.textContent = currentText;
+
+        // Scroll the container to the bottom
+        element.scrollTop = element.scrollHeight;
+
+        index++;
+    }
+
+    let typingInterval = setInterval(typeNextChar, delay);
+};
 
 const removeAllElements = (selector) => {
 	const elements = document.querySelectorAll(selector);

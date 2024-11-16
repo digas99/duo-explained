@@ -80,6 +80,17 @@
 		mouseDownTime = 0;
 	}
 
+	function markdownToHtml(text) {
+		// **bold**
+		text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+		// __bold__
+		text = text.replace(/__(.*?)__/g, "<strong>$1</strong>");
+		// *italic*
+		text = text.replace(/\*(.*?)\*/g, "<em>$1</em>");
+		// _italic_
+		text = text.replace(/_(.*?)_/g, "<em>$1</em>");
+		return text;
+	}
 
 	const handleExplanation = callback => {
 		const lesson = {
@@ -159,25 +170,27 @@
 					}
 				}
 
-				// answer content
-				const explainContent = document.querySelector(".d-cgpt-explain-content");
-				if (explainContent) {
-					explainContent.innerHTML = "";
-					if (response && response.content) {
-						const text = response.content.split(". ").join(".\n");
-						chrome.storage.sync.get("SETTINGS", data => {
-							const typeAnimation = data.SETTINGS?.["typing-animation"];
-							if (typeAnimation) {
-								type(explainContent, text);
-							}
-							else {
-								explainContent.textContent = text;
-							}
-						});
+					// answer content
+					const explainContent = document.querySelector(".d-cgpt-explain-content");
+					if (explainContent) {
+						explainContent.innerHTML = "";
+						if (response && response.content) {
+							const text = response.content.split(". ").join(".\n");
+							const htmlContent = markdownToHtml(text);
+							const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
+							chrome.storage.sync.get("SETTINGS", data => {
+								const typeAnimation = data.SETTINGS?.["typing-animation"];
+								if (typeAnimation) {
+									type(explainContent, sanitizedHtmlContent);
+								}
+								else {
+									explainContent.textContent = sanitizedHtmlContent;
+								}
+							});
+						}
+						else
+							explainContent.innerHTML = "Something went wrong. Could not get an explanation.\nWe appologize for the inconvenience.";
 					}
-					else
-						explainContent.innerHTML = "Something went wrong. Could not get an explanation.\nWe appologize for the inconvenience.";
-				}
 				if (callback)
 					callback();
 			});
