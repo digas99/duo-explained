@@ -514,6 +514,12 @@ body {
 	filter: invert(59%) sepia(83%) saturate(1850%) hue-rotate(168deg) brightness(95%) contrast(104%);
 }
 
+.d-cgpt-stat-entries {
+	display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+    width: 500px;
+}
+
 @media screen and (max-width: 1150px) {
 	.d-cgpt-explain-area {
 		position: absolute;
@@ -630,5 +636,14 @@ body {
 
 	.d-cgpt-explain-header {
 		text-align: left;
+	}
+
+	.d-cgpt-stat-entries {
+		width: 90%;
+	}
+
+	.d-cgpt-stat-entries > div {
+		margin: auto !important;
+		width: 100% !important;
 	}
 }

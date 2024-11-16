@@ -553,6 +553,7 @@
 								"value": tokens
 							});
 							if (statEntry) {
+								statsWrapper.classList.add("d-cgpt-stat-entries");
 								statsWrapper.appendChild(statEntry);
 		
 								// clear tokens
