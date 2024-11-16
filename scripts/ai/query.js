@@ -46,7 +46,7 @@ class QueryGenerator {
 Please provide an explanation to help the user understand.
 Do not refer to the user as the user, address the user as the person who made this prompt.
 Be short and concise.
-Use bold text.
+Embolden some of the text to highlight.
 `;
 
         // Check if the user has answered the question
@@ -179,7 +179,7 @@ Use bold text.
         if (answer) queryPrompt += `Prompt: '${answer}'\n`;
 
         if (wordBank && wordBank.length > 0) {
-            queryPrompt += `Available words: ${wordBank.join(', ')}\n`;
+            queryPrompt += `Available words: ${wordBank.join(', ')}. The correct answer must only use these words.\n`;
         }
 
         return queryPrompt;
@@ -200,7 +200,7 @@ Use bold text.
         if (sentence) prompt += `Sentence to translate: '${sentence}'\n`;
 
         if (wordBank && wordBank.length > 0) {
-            prompt += `Available words: ${wordBank.join(', ')}\n`;
+            prompt += `Available words: ${wordBank.join(', ')}. The correct answer must only use these words.\n`;
         }
 
         return prompt;
@@ -281,7 +281,7 @@ Use bold text.
         if (sentence) prompt += `Sentence to complete: '${sentence}'\n`;
 
         if (wordBank && wordBank.length > 0) {
-            prompt += `Available words: ${wordBank.join(', ')}\n`;
+            prompt += `Available words: ${wordBank.join(', ')}. The correct answer must only use these words.\n`;
         }
 
         return prompt;
@@ -301,7 +301,7 @@ Use bold text.
 
         if (sentence) prompt += `Sentence to complete: '${sentence}'\n`;
 
-        if (wordBank && wordBank.length > 0) prompt += `Available words: ${wordBank.join(', ')}\n`;
+        if (wordBank && wordBank.length > 0) prompt += `Available words: ${wordBank.join(', ')}. The correct answer must only use these words.\n`;
   
         if (userAnswer) prompt += `User's answer: ${userAnswer}\n`;
 

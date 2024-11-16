@@ -170,28 +170,28 @@
 					}
 				}
 
-					// answer content
-					const explainContent = document.querySelector(".d-cgpt-explain-content");
-					if (explainContent) {
-						explainContent.innerHTML = "";
-						if (response && response.content) {
-							// const text = response.content.split(". ").join(".\n");
-							const text = response.content;
-							const htmlContent = markdownToHtml(text);
-							const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
-							chrome.storage.sync.get("SETTINGS", data => {
-								const typeAnimation = data.SETTINGS?.["typing-animation"];
-								if (typeAnimation) {
-									type(explainContent, sanitizedHtmlContent);
-								}
-								else {
-									explainContent.innerHTML = sanitizedHtmlContent;
-								}
-							});
-						}
-						else
-							explainContent.innerHTML = "Something went wrong. Could not get an explanation.\nWe appologize for the inconvenience.";
+				// answer content
+				const explainContent = document.querySelector(".d-cgpt-explain-content");
+				if (explainContent) {
+					explainContent.innerHTML = "";
+					if (response && response.content) {
+						// const text = response.content.split(". ").join(".\n");
+						const text = response.content;
+						const htmlContent = markdownToHtml(text);
+						const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
+						chrome.storage.sync.get("SETTINGS", data => {
+							const typeAnimation = data.SETTINGS?.["typing-animation"];
+							if (typeAnimation) {
+								type(explainContent, sanitizedHtmlContent);
+							}
+							else {
+								explainContent.innerHTML = sanitizedHtmlContent;
+							}
+						});
 					}
+					else
+						explainContent.innerHTML = "Something went wrong. Could not get an explanation.\nWe appologize for the inconvenience.";
+				}
 				if (callback)
 					callback();
 			});

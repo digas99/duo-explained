@@ -9,7 +9,7 @@ const parseJapaneseFurigana = textWrapper => {
 	return nonFuriganaSpans.map(span => span.innerText).join("")
 }
 
-const type = (element, htmlContent, delay = 10) => {
+function type(element, htmlContent, delay = 10) {
     // Parse the HTML content into a DOM tree
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlContent, "text/html");
@@ -24,12 +24,16 @@ const type = (element, htmlContent, delay = 10) => {
             clone = document.createElement(node.tagName);
             // Copy attributes
             for (let attr of node.attributes) {
-            clone.setAttribute(attr.name, attr.value);
+                clone.setAttribute(attr.name, attr.value);
+            }
+            // For <li> elements, set visibility: hidden to hide bullets or numbers
+            if (node.tagName.toLowerCase() === "li") {
+                clone.style.visibility = "hidden";
             }
             // Recursively clone and append child nodes
             for (let child of node.childNodes) {
-            let childClone = cloneNodeWithEmptyText(child);
-            clone.appendChild(childClone);
+                let childClone = cloneNodeWithEmptyText(child);
+                clone.appendChild(childClone);
             }
         } else if (node.nodeType === Node.TEXT_NODE) {
             clone = document.createTextNode("");
@@ -63,28 +67,54 @@ const type = (element, htmlContent, delay = 10) => {
     let index = 0;
 
     function typeNextChar() {
-        if (index >= charArray.length) {
-            // Typing complete
-            clearInterval(typingInterval);
-            return;
+    if (index >= charArray.length) {
+        // Typing complete
+        clearInterval(typingInterval);
+        return;
+    }
+    let charInfo = charArray[index];
+    let node = charInfo.node;
+    let char = charInfo.char;
+
+    // If the node's parent is a <li> element that is currently hidden, set it to visible
+    let liAncestor = node.parentNode;
+    while (
+        liAncestor &&
+        liAncestor !== element &&
+        liAncestor.tagName &&
+        liAncestor.tagName.toLowerCase() !== "li"
+    ) {
+        liAncestor = liAncestor.parentNode;
+    }
+    if (
+        liAncestor &&
+        liAncestor.tagName &&
+        liAncestor.tagName.toLowerCase() === "li"
+    ) {
+        if (liAncestor.style.visibility === "hidden") {
+            liAncestor.style.visibility = "visible";
+            // Adjust scroll position if necessary
+            if (element.scrollHeight > element.clientHeight) {
+                element.scrollTop += liAncestor.offsetHeight;
+            }
         }
-        let charInfo = charArray[index];
-        let node = charInfo.node;
-        let char = charInfo.char;
+    }
 
-        let currentText = nodeTextMap.get(node) || "";
-        currentText += char;
-        nodeTextMap.set(node, currentText);
-        node.textContent = currentText;
+    let currentText = nodeTextMap.get(node) || "";
+    currentText += char;
+    nodeTextMap.set(node, currentText);
+    node.textContent = currentText;
 
-        // Scroll the container to the bottom
+    // Only scroll if the content overflows the container
+    if (element.scrollHeight > element.clientHeight) {
         element.scrollTop = element.scrollHeight;
+    }
 
         index++;
     }
 
     let typingInterval = setInterval(typeNextChar, delay);
-};
+}
 
 const removeAllElements = (selector) => {
 	const elements = document.querySelectorAll(selector);

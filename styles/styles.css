@@ -275,11 +275,13 @@ body {
 }
 
 .d-cgpt-explain-content {
-	text-align: left;
-	white-space: pre-wrap;
-	cursor: text;
+    text-align: left;
+    white-space: pre-wrap; /* Preserves whitespace and wraps text */
+    cursor: text;
     max-height: 350px;
     overflow: auto;
+    word-wrap: break-word; /* Ensures long words are broken and wrapped */
+    overflow-wrap: break-word; /* Prevents text overflow */
 }
 
 .d-cgpt-explain-content p, .d-cgpt-explain-content h1, .d-cgpt-explain-content h2, .d-cgpt-explain-content h3 {
@@ -289,8 +291,6 @@ body {
 .d-cgpt-explain-content ul, .d-cgpt-explain-content ol {
     margin: 0;
     padding: 0 30px;
-    margin-top: -25px;
-    margin-bottom: -10px;
 }
 
 .d-cgpt-explain-content li {
