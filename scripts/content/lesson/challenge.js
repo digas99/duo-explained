@@ -120,66 +120,114 @@ if (typeof window !== 'undefined') {
     module.exports = ChallengeData;
 }
 
-
 (async () => {
-	if (typeof extensionActive == "function" && !(await extensionActive())) return; 
+    let observer;
 
-	if (typeof MutationObserver === "undefined") return;
+    // Expose init to global scope if necessary
+    window.init = init;
 
-	// observe mutations to the content of div[data-test^="challenge"]
-	const observer = new MutationObserver(async (mutationsList, observer) => {
-		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
+    document.addEventListener("REFETCH_DATA", async function (event) {
+        console.log("REFETCH_DATA challenge");
+        await init();
+    });
 
-		const challengeWrapper = document.querySelector("div[data-test^='challenge']");
-		if (challengeWrapper) {
-			nextChallenge(mutationsList);
-		}
+    init();
 
-		// detect session complete
-		mutationsList.forEach(mutation => {
-			mutation.addedNodes.forEach(node => {
-				if (node.closest) {
-					const sessionCompleteAnimation = node.tagName === "svg" && node.closest("div[data-test='session-complete-slide']");
-					if (sessionCompleteAnimation) {
-						const statsWrapper = sessionCompleteAnimation.parentElement.lastElementChild;
+    async function init() {
+        console.log("Init function called in challenge.js");
 
-						const event = new CustomEvent("lessonend", { detail: {
-							statsWrapper: statsWrapper
-						}});
-						document.dispatchEvent(event);
-					}
+        try {
+            if (typeof extensionActive === "function") {
+                console.log("Checking extensionActive status...");
+				if (!(await extensionActive())) {
+					console.log("Extension is disabled, aborting.");
+					return;
 				}
-			});
-		});
-	});
+            } else {
+                console.log("extensionActive is not a function or is undefined.");
+            }
 
-	observer.observe(document.body, { childList: true, subtree: true });
+            if (typeof MutationObserver === "undefined") {
+                console.log("MutationObserver is not supported in this environment.");
+                return;
+            }
 
-	const nextChallenge = (mutations) => {
-		const challengeWrapper = document.querySelector("div[data-test^='challenge']");
-		
-		const validMutation = mutation =>
-			mutation.type === "childList" &&
-			mutation.addedNodes.length > 0;
+            console.log("Setting up the MutationObserver...");
 
-		const challengeMutation = mutation => {
-			const nodes = Array.from(mutation.addedNodes);
-			const challengeMutation = nodes.find(node => node && node instanceof HTMLElement && node.querySelector("div[data-test^='challenge']") === challengeWrapper);
-			return challengeMutation?.querySelector("div[data-test^='challenge']");
-		}
+            // Disconnect existing observer if it exists
+            if (observer) {
+                observer.disconnect();
+                console.log("Existing observer disconnected");
+            }
 
-		const validMutations = mutations.filter(validMutation);
-		if (validMutations.length > 0) {
-			const selectedMutation = validMutations.find(challengeMutation);
-			if (selectedMutation) {
-				const challengeContent = challengeMutation(selectedMutation);
-				const type = challengeContent?.dataset.test.replace("challenge challenge-", "");
-				if (type) {
-					const data = new ChallengeData(ChallengeParser.parse(type, challengeContent));
-					const event = new CustomEvent("challenge", { detail: data });
-					document.dispatchEvent(event);
-				}
-			}
-		}
-	}
+            // Create a new MutationObserver
+            observer = new MutationObserver(async (mutationsList) => {
+                console.log("MutationObserver callback fired");
+
+                if (mutationsList.length > 0) {
+                    nextChallenge(mutationsList);
+                }
+            });
+
+            observer.observe(document.body, { childList: true, subtree: true });
+            console.log("Observer has been set up.");
+
+            // Process current content if already present
+            const challengeWrapper = document.querySelector("div[data-test^='challenge']");
+            if (challengeWrapper) {
+                console.log("Processing existing challenge content");
+                nextChallenge([]); // Pass an empty array to indicate initial processing
+            }
+
+        } catch (error) {
+            console.error("Error in init():", error);
+        }
+    }
+
+    function nextChallenge(mutations) {
+        console.log("nextChallenge called");
+
+        const challengeWrapper = document.querySelector("div[data-test^='challenge']");
+        if (!challengeWrapper) {
+            console.log("No challenge wrapper found.");
+            return;
+        }
+
+        const challengeContent = mutations.length === 0 ? challengeWrapper : findChallengeInMutations(mutations);
+
+        if (challengeContent) {
+            console.log("Challenge content found, dispatching event");
+            const type = challengeContent.dataset.test.replace("challenge challenge-", "");
+            if (type) {
+                const data = new ChallengeData(ChallengeParser.parse(type, challengeContent));
+                const event = new CustomEvent("challenge", { detail: data });
+                document.dispatchEvent(event);
+            }
+        } else {
+            console.log("No valid challenge mutation found.");
+        }
+    }
+
+    function findChallengeInMutations(mutations) {
+        for (const mutation of mutations) {
+            for (const node of mutation.addedNodes) {
+                if (node instanceof HTMLElement) {
+                    const challengeContent = node.querySelector("div[data-test^='challenge']");
+                    if (challengeContent) {
+                        return challengeContent;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+	async function extensionActive() {
+        return new Promise((resolve) => {
+            chrome.storage.sync.get("SETTINGS", (data) => {
+				console.log("SETTINGS", data.SETTINGS);
+            	resolve(data.SETTINGS?.["extension-enabled"]);
+            });
+        });
+    }
 })();

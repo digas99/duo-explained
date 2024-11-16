@@ -228,12 +228,10 @@
 		if (extensionTab) {
 			const link = extensionTab.querySelector("a") || extensionTab;
 			if (value && !link.classList.contains("d-cgpt-active")) {
-				console.log("Enabling extension");
 				link.classList.add("d-cgpt-active");
 				active = true;
 			}
 			else if (!value && link.classList.contains("d-cgpt-active")) {
-				console.log("Disabling extension");
 				link.classList.remove("d-cgpt-active");
 				active = false;
 			}
@@ -251,9 +249,10 @@
 
 	chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 		if (request.type === "TOGGLE_EXTENSION") {
-			chrome.storage.sync.get("API_KEY", data =>
-				toggleExtension(data.API_KEY && request.value)
-			);
+			chrome.storage.sync.get("API_KEY", data => {
+				toggleExtension(data.API_KEY && request.value);
+				// document.dispatchEvent(new Event("REFETCH_DATA"));
+			});
 		}
 
 		if (request.type === "RESET") {
