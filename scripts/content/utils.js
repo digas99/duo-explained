@@ -99,6 +99,32 @@ function type(element, htmlContent, delay = 10) {
                 if (element.scrollHeight > element.clientHeight) {
                     element.scrollTop += liAncestor.offsetHeight;
                 }
+
+                const list = liAncestor.parentElement;
+                const listParent = liAncestor.parentElement.parentElement;
+                if (listParent.tagName.toLowerCiase() === "li") {
+                    const listTop = list.getBoundingClientRect().top;
+                    const listParentTop = listParent.getBoundingClientRect().top;
+                    console.log(listParentTop - listTop);
+                    if (listTop - listParentTop >= 40)
+                        list.style.marginTop = "-20px";
+                }
+                else if (list.previousSibling.tagName || list.previousElementSibling.tagNamei) {
+                    const listTop = list.getBoundingClientRect().top;
+                    const previousElement = list.previousElementSibling;
+                    if (previousElement) {
+                        const previousElementTop = previousElement.getBoundingClientRect().top;
+                        if (listTop - previousElementTop >= 40)
+                            list.style.marginTop = "-20px";
+                    }
+
+                    const nextElementSibling = list.nextElementSibling;
+                    if (nextElementSibling) {
+                        const nextElementSiblingTop = nextElementSibling.getBoundingClientRect().top;
+                        if (nextElementSiblingTop - listTop >= 40)
+                            list.style.marginBottom = "-20px";
+                    }
+                }
             }
         }
 
