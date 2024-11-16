@@ -102,7 +102,7 @@ function type(element, htmlContent, delay = 10) {
 
                 const list = liAncestor.parentElement;
                 const listParent = liAncestor.parentElement.parentElement;
-                if (listParent.tagName.toLowerCiase() === "li") {
+                if (listParent.tagName.toLowerCase() === "li") {
                     const listTop = list.getBoundingClientRect().top;
                     const listParentTop = listParent.getBoundingClientRect().top;
                     console.log(listParentTop - listTop);

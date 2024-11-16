@@ -186,6 +186,7 @@
 							}
 							else {
 								explainContent.innerHTML = sanitizedHtmlContent;
+								explainContent.scrollTo({ top: explainContent.scrollHeight, behavior: "smooth" });
 							}
 						});
 					}
