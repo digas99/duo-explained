@@ -250,8 +250,6 @@
 	});
 
 	chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-		console.log(request);
-
 		if (request.type === "TOGGLE_EXTENSION") {
 			chrome.storage.sync.get("API_KEY", data =>
 				toggleExtension(data.API_KEY && request.value)

@@ -9,6 +9,16 @@ const parseJapaneseFurigana = textWrapper => {
 	return nonFuriganaSpans.map(span => span.innerText).join("")
 }
 
+function markdownToHtml(text) {
+    const options = {
+        disableForced4SpacesIndentedSublists: true,
+    };
+
+    const converter = new showdown.Converter(options);
+    let html = converter.makeHtml(text);
+    return html;
+  }
+
 function type(element, htmlContent, delay = 10) {
     // Parse the HTML content into a DOM tree
     const parser = new DOMParser();

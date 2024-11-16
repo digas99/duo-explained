@@ -80,18 +80,6 @@
 		mouseDownTime = 0;
 	}
 
-	function markdownToHtml(text) {
-		console.log(text);
-		const options = {
-			disableForced4SpacesIndentedSublists: true,
-		}
-
-		const converter = new showdown.Converter(options);
-		let html = converter.makeHtml(text);
-		console.log(html);
-		return html;
-	}
-
 	const handleExplanation = callback => {
 		const lesson = {
 			"answer": answerData,
