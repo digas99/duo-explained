@@ -25,9 +25,54 @@
 
 ---
 
+## Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+    - [Explain an Exercise Before Answering](#explain-an-exercise-before-answering)
+    - [Explain Why Your Answer Was Wrong/Right](#explain-why-your-answer-was-wrongright)
+    - [Add a Custom Question When Asking for an Explanation](#add-a-custom-question-when-asking-for-an-explanation)
+    - [See How Many Tokens Were Spent](#see-how-many-tokens-were-spent)
+    - [Report a Bug](#report-a-bug)
+- [Mobile Setup](#mobile-setup)
+- [Documentation](#documentation)
+- [Contributors](#contributors)
+- [License](#license)
+- 
+---
+
 ## Introduction
 
 Duo Explained is a browser extension designed to integrate OpenAI's ChatGPT capabilities directly with Duolingo exercises, helping users understand language learning better through AI-assisted explanations.
+
+---
+
+## Features
+
+#### Explain an Exercise Before Answering
+* Easily request an explanation of a Duolingo exercise before submitting your answer.
+  
+  <img src="images/demo/explain-before-answering.gif" width="500" />
+
+#### Explain Why Your Answer Was Wrong/Right
+* Understand why your answer was correct or incorrect with detailed explanations from ChatGPT.
+  
+  <img src="images/demo/explain-wrong-right.gif" width="500" />
+
+#### Add a Custom Question When Asking for an Explanation
+* Customize your query when requesting explanations to get more specific feedback.
+  
+  <img src="images/demo/custom-quesion-explanation.gif" width="500" />
+
+#### See How Many Tokens Were Spent
+* Keep track of the tokens used during at the end of a lesson to manage your usage effectively.
+  
+  <img src="images/demo/token-tracking.png" width="500" />
+
+
+#### Report a Bug
+* Report a bug directly from the extension to help us improve the user experience.
+
+  <img src="images/demo/report-a-bug.png" width="500" />
 
 ---
 
@@ -50,5 +95,11 @@ Comprehensive documentation for developers and contributors can be found in [doc
 
 - [André Clerigo](https://github.com/andreclerigo)
 - [Diogo Correia](https://github.com/digas99)
+
+---
+
+## License
+
+Duo Explained is licensed under the [MIT License](LICENSE).
 
 ---
