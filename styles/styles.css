@@ -306,13 +306,6 @@ body {
 	
 }
 
-.d-cgpt-explain-content ul ul,
-.d-cgpt-explain-content ol ul,
-.d-cgpt-explain-content ul ol,
-.d-cgpt-explain-content ul ul {
-	margin: -10px 0 -10px !important;
-}
-
 .cursor {
 	display: inline-block;
 	width: 8px;

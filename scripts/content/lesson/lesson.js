@@ -85,7 +85,7 @@
 		const options = {
 			disableForced4SpacesIndentedSublists: true,
 		}
-		
+
 		const converter = new showdown.Converter(options);
 		let html = converter.makeHtml(text);
 		console.log(html);
@@ -183,6 +183,13 @@
 							const typeAnimation = data.SETTINGS?.["typing-animation"];
 							if (typeAnimation) {
 								type(explainContent, sanitizedHtmlContent);
+								
+								// remove extra margin from lists but prevent initial bug on typing
+								setTimeout(() => {
+									explainContent.querySelectorAll("ul, ol").forEach(list => {
+										list.style.marginTop = "-20px";
+									});
+								}, 500);
 							}
 							else {
 								explainContent.innerHTML = sanitizedHtmlContent;

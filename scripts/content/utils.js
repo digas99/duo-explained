@@ -30,6 +30,7 @@ function type(element, htmlContent, delay = 10) {
             if (node.tagName.toLowerCase() === "li") {
                 clone.style.visibility = "hidden";
             }
+
             // Recursively clone and append child nodes
             for (let child of node.childNodes) {
                 let childClone = cloneNodeWithEmptyText(child);
@@ -67,48 +68,49 @@ function type(element, htmlContent, delay = 10) {
     let index = 0;
 
     function typeNextChar() {
-    if (index >= charArray.length) {
-        // Typing complete
-        clearInterval(typingInterval);
-        return;
-    }
-    let charInfo = charArray[index];
-    let node = charInfo.node;
-    let char = charInfo.char;
+        if (index >= charArray.length) {
+            // Typing complete
+            clearInterval(typingInterval);
+            return;
+        }
+        let charInfo = charArray[index];
+        let node = charInfo.node;
+        let char = charInfo.char;
 
-    // If the node's parent is a <li> element that is currently hidden, set it to visible
-    let liAncestor = node.parentNode;
-    while (
-        liAncestor &&
-        liAncestor !== element &&
-        liAncestor.tagName &&
-        liAncestor.tagName.toLowerCase() !== "li"
-    ) {
-        liAncestor = liAncestor.parentNode;
-    }
-    if (
-        liAncestor &&
-        liAncestor.tagName &&
-        liAncestor.tagName.toLowerCase() === "li"
-    ) {
-        if (liAncestor.style.visibility === "hidden") {
-            liAncestor.style.visibility = "visible";
-            // Adjust scroll position if necessary
-            if (element.scrollHeight > element.clientHeight) {
-                element.scrollTop += liAncestor.offsetHeight;
+        // If the node's parent is a <li> element that is currently hidden, set it to visible
+        let liAncestor = node.parentNode;
+        while (
+            liAncestor &&
+            liAncestor !== element &&
+            liAncestor.tagName &&
+            liAncestor.tagName.toLowerCase() !== "li"
+        ) {
+            liAncestor = liAncestor.parentNode;
+        }
+        
+        if (
+            liAncestor &&
+            liAncestor.tagName &&
+            liAncestor.tagName.toLowerCase() === "li"
+        ) {
+            if (liAncestor.style.visibility === "hidden") {
+                liAncestor.style.visibility = "visible";
+                // Adjust scroll position if necessary
+                if (element.scrollHeight > element.clientHeight) {
+                    element.scrollTop += liAncestor.offsetHeight;
+                }
             }
         }
-    }
 
-    let currentText = nodeTextMap.get(node) || "";
-    currentText += char;
-    nodeTextMap.set(node, currentText);
-    node.textContent = currentText;
+        let currentText = nodeTextMap.get(node) || "";
+        currentText += char;
+        nodeTextMap.set(node, currentText);
+        node.textContent = currentText;
 
-    // Only scroll if the content overflows the container
-    if (element.scrollHeight > element.clientHeight) {
-        element.scrollTop = element.scrollHeight;
-    }
+        // Only scroll if the content overflows the container
+        if (element.scrollHeight > element.clientHeight) {
+            element.scrollTop = element.scrollHeight;
+        }
 
         index++;
     }
