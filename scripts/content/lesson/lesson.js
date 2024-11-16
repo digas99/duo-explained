@@ -81,15 +81,15 @@
 	}
 
 	function markdownToHtml(text) {
-		// **bold**
-		text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-		// __bold__
-		text = text.replace(/__(.*?)__/g, "<strong>$1</strong>");
-		// *italic*
-		text = text.replace(/\*(.*?)\*/g, "<em>$1</em>");
-		// _italic_
-		text = text.replace(/_(.*?)_/g, "<em>$1</em>");
-		return text;
+		console.log(text);
+		const options = {
+			disableForced4SpacesIndentedSublists: true,
+		}
+		
+		const converter = new showdown.Converter(options);
+		let html = converter.makeHtml(text);
+		console.log(html);
+		return html;
 	}
 
 	const handleExplanation = callback => {
@@ -175,7 +175,8 @@
 					if (explainContent) {
 						explainContent.innerHTML = "";
 						if (response && response.content) {
-							const text = response.content.split(". ").join(".\n");
+							// const text = response.content.split(". ").join(".\n");
+							const text = response.content;
 							const htmlContent = markdownToHtml(text);
 							const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
 							chrome.storage.sync.get("SETTINGS", data => {
@@ -184,7 +185,7 @@
 									type(explainContent, sanitizedHtmlContent);
 								}
 								else {
-									explainContent.textContent = sanitizedHtmlContent;
+									explainContent.innerHTML = sanitizedHtmlContent;
 								}
 							});
 						}

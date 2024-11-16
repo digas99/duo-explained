@@ -282,6 +282,37 @@ body {
     overflow: auto;
 }
 
+.d-cgpt-explain-content p, .d-cgpt-explain-content h1, .d-cgpt-explain-content h2, .d-cgpt-explain-content h3 {
+	margin: unset;
+}
+
+.d-cgpt-explain-content ul, .d-cgpt-explain-content ol {
+    margin: 0;
+    padding: 0 30px;
+    margin-top: -25px;
+    margin-bottom: -10px;
+}
+
+.d-cgpt-explain-content li {
+	margin: -5px 0;
+}
+
+.d-cgpt-explain-content ul {
+	list-style: disc;
+}
+
+.d-cgpt-explain-content ol {
+	list-style: decimal;
+	
+}
+
+.d-cgpt-explain-content ul ul,
+.d-cgpt-explain-content ol ul,
+.d-cgpt-explain-content ul ol,
+.d-cgpt-explain-content ul ul {
+	margin: -10px 0 -10px !important;
+}
+
 .cursor {
 	display: inline-block;
 	width: 8px;

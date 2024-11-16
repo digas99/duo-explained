@@ -28,6 +28,7 @@
                 "scripts/content/settings.js",
 
                 "lib/swiped-events.min.js",
+                "lib/showdown.min.js",
                 "lib/purify.min.js",
 
                 "scripts/content/lesson/parser.js",
