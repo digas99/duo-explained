@@ -10,7 +10,8 @@ importScripts(
 
 chrome.runtime.onInstalled.addListener(details => {
     if (details.reason == "update") {
-        if (details.previousVersion != chrome.runtime.getManifest().version) {
+        const version = chrome.runtime.getManifest().version;
+        if (details.previousVersion != version && version.split('.').length < 4) {
             chrome.storage.sync.set({ "SHOW_CHANGELOG": true });
         }
     }
