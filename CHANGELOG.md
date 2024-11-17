@@ -7,14 +7,10 @@ Released on 17/11/2024
   - Adding emboldened text support
   - Automatic scrolling when the explanation overflows the window
   - Automatic scroll stops when the user scrolls manually
-
 <img class="d-cgpt-changelog-demo" src="https://raw.githubusercontent.com/digas99/duo-explained/refs/heads/main/images/changelog/v002/explain-window-updates.gif" width="400px">
-
 - Improved typing approach to User Extra Query to ChatGPT  
 - Added an update notification when the extension is updated presenting the new features and bug fixes
-
 <img class="d-cgpt-changelog-demo" src="https://raw.githubusercontent.com/digas99/duo-explained/refs/heads/main/images/changelog/v002/update-changelog.png" width="400px">
-
 
 ### Bug Fixes
 - The explanation from ChatGPT now takes into consideration the word bank [#15](https://github.com/digas99/duo-explained/issues/15) 
