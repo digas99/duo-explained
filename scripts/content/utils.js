@@ -20,6 +20,10 @@ function markdownToHtml(text) {
   }
 
 function type(element, htmlContent, delay = 10) {
+    htmlContent = htmlContent
+      .replace(/<blank>/g, "<span>&lt;blank&gt;</span>")
+      .replace(/<\/blank>/g, "</span>");
+
     // Parse the HTML content into a DOM tree
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlContent, "text/html");
@@ -167,32 +171,4 @@ const removeAllElements = (selector) => {
 	const elements = document.querySelectorAll(selector);
 	if (elements)
 		elements.forEach(element => element.remove());
-}
-
-const clearAll = () => {
-    const explainButton = document.querySelector("#d-cgpt-explain-button");
-    if (explainButton) {
-        explainButton.remove();
-    }
-
-    const extraInput = document.querySelector(".d-cgpt-speech-bubble");
-    if (extraInput) {
-        extraInput.remove();
-    }
-
-    const explainArea = document.querySelector(".d-cgpt-explain-area");
-    if (explainArea) {
-        explainArea.remove();
-        const challengeWrapper = document.querySelector("div[data-test^='challenge']");
-        if (challengeWrapper) {
-            challengeWrapper.classList.remove("d-cgpt-explain-area-wrapper");
-        }
-    }
-
-    const swipeIcon = document.querySelector(".d-cgpt-swipe-icon");
-    if (swipeIcon) {
-        swipeIcon.remove();
-    }
-
-    answerData = null;
 }
