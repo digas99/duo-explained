@@ -438,6 +438,11 @@ body {
     padding-bottom: 20px;
 }
 
+.d-cgpt-changelog h3 {
+	margin-top: 12px;
+	margin-bottom: 8px;
+}
+
 .cursor {
 	display: inline-block;
 	width: 8px;
