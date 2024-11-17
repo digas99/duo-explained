@@ -133,47 +133,31 @@ if (typeof window !== 'undefined') {
     init();
 
     async function init() {
-        console.log("Init function called in challenge.js");
-
         try {
             if (typeof extensionActive === "function") {
 				if (!(await extensionActive())) {
-					console.log("Extension is disabled, aborting.");
 					return;
 				}
-            } else {
-                console.log("extensionActive is not a function or is undefined.");
             }
 
-            if (typeof MutationObserver === "undefined") {
-                console.log("MutationObserver is not supported in this environment.");
-                return;
-            }
-
-            console.log("Setting up the MutationObserver...");
+            if (typeof MutationObserver === "undefined") return;
 
             // Disconnect existing observer if it exists
             if (observer) {
                 observer.disconnect();
-                console.log("Existing observer disconnected");
             }
 
             // Create a new MutationObserver
             observer = new MutationObserver(async (mutationsList) => {
-                console.log("MutationObserver callback fired");
-
-                if (mutationsList.length > 0) {
+                if (mutationsList.length > 0)
                     nextChallenge(mutationsList);
-                }
             });
 
             observer.observe(document.body, { childList: true, subtree: true });
-            console.log("Observer has been set up.");
 
             // Process current content if already present
             const challengeWrapper = document.querySelector("div[data-test^='challenge']");
             if (challengeWrapper) {
-                console.log("Processing existing challenge content");
                 nextChallenge([]); // Pass an empty array to indicate initial processing
             }
 
@@ -183,26 +167,18 @@ if (typeof window !== 'undefined') {
     }
 
     function nextChallenge(mutations) {
-        console.log("nextChallenge called");
-
         const challengeWrapper = document.querySelector("div[data-test^='challenge']");
-        if (!challengeWrapper) {
-            console.log("No challenge wrapper found.");
-            return;
-        }
+        if (!challengeWrapper) return;
 
         const challengeContent = mutations.length === 0 ? challengeWrapper : findChallengeInMutations(mutations);
 
         if (challengeContent) {
-            console.log("Challenge content found, dispatching event");
             const type = challengeContent.dataset.test.replace("challenge challenge-", "");
             if (type) {
                 const data = new ChallengeData(ChallengeParser.parse(type, challengeContent));
                 const event = new CustomEvent("challenge", { detail: data });
                 document.dispatchEvent(event);
             }
-        } else {
-            console.log("No valid challenge mutation found.");
         }
     }
 
@@ -211,9 +187,8 @@ if (typeof window !== 'undefined') {
             for (const node of mutation.addedNodes) {
                 if (node instanceof HTMLElement) {
                     const challengeContent = node.querySelector("div[data-test^='challenge']");
-                    if (challengeContent) {
+                    if (challengeContent)
                         return challengeContent;
-                    }
                 }
             }
         }
@@ -223,7 +198,6 @@ if (typeof window !== 'undefined') {
 	async function extensionActive() {
         return new Promise((resolve) => {
             chrome.storage.sync.get("SETTINGS", (data) => {
-				console.log("SETTINGS", data.SETTINGS);
             	resolve(data.SETTINGS?.["extension-enabled"]);
             });
         });
