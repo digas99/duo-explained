@@ -416,6 +416,10 @@ body {
 
 }
 
+.d-cgpt-changelog-demo {
+	width: 100%;
+}
+
 .d-cgpt-changelog a {
 	color: var(--d-cgpt-accent-color);
 }

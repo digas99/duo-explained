@@ -143,6 +143,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     .then(response => response.text())
                     .then(text => {
                         sendResponse({ data: text });
+                        // 
                         chrome.storage.sync.set({ SHOW_CHANGELOG: false });
                     });
             }
