@@ -418,6 +418,7 @@ body {
 
 .d-cgpt-changelog-demo {
 	width: 100%;
+	max-width: 100px;
 }
 
 .d-cgpt-changelog a {
