@@ -127,7 +127,6 @@ if (typeof window !== 'undefined') {
     window.init = init;
 
     document.addEventListener("REFETCH_DATA", async function (event) {
-        console.log("REFETCH_DATA challenge");
         await init();
     });
 
@@ -138,7 +137,6 @@ if (typeof window !== 'undefined') {
 
         try {
             if (typeof extensionActive === "function") {
-                console.log("Checking extensionActive status...");
 				if (!(await extensionActive())) {
 					console.log("Extension is disabled, aborting.");
 					return;

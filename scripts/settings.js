@@ -215,8 +215,10 @@ class Settings {
 			if (setting) {
 				switch (setting.dataset.type) {
 					case "checkbox":
+						console.log("CLICKED", settings[key], setting.checked);
 						if (settings[key] && !setting.checked) {
-							setting.click();
+							setting.closest(".d-cgpt-settings-checkbox").classList.add("d-cgpt-settings-enabled");	
+							setting.checked = true;
 						}
 						break;
 					case "select":

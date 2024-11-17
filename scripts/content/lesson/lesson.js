@@ -25,7 +25,11 @@
     init();
 
 	async function init() {
-		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
+
+		if (typeof extensionActive == "function" && !(await extensionActive())) {
+			clearAll();
+			return;
+		}
 
 		let answerData, challengeData;
 		let mouseDownTime = 0;
@@ -197,34 +201,6 @@
 				});
 			}
 				
-		}
-
-		const clearAll = () => {
-			const explainButton = document.querySelector("#d-cgpt-explain-button");
-			if (explainButton) {
-				explainButton.remove();
-			}
-
-			const extraInput = document.querySelector(".d-cgpt-speech-bubble");
-			if (extraInput) {
-				extraInput.remove();
-			}
-
-			const explainArea = document.querySelector(".d-cgpt-explain-area");
-			if (explainArea) {
-				explainArea.remove();
-				const challengeWrapper = document.querySelector("div[data-test^='challenge']");
-				if (challengeWrapper) {
-					challengeWrapper.classList.remove("d-cgpt-explain-area-wrapper");
-				}
-			}
-
-			const swipeIcon = document.querySelector(".d-cgpt-swipe-icon");
-			if (swipeIcon) {
-				swipeIcon.remove();
-			}
-
-			answerData = null;
 		}
 
 		const addExplainButton = disabled => {
