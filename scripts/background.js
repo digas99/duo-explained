@@ -8,6 +8,14 @@ importScripts(
     "/scripts/settings.js"
 )
 
+chrome.runtime.onInstalled.addListener(details => {
+    if (details.reason == "update") {
+        if (details.previousVersion != chrome.runtime.getManifest().version) {
+            chrome.storage.sync.set({ "SHOW_CHANGELOG": true });
+        }
+    }
+});
+
 let agent = new OpenAIAgent();
 
 /**
@@ -124,6 +132,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === "EXTENSION_VERSION") {
         const version = chrome.runtime.getManifest().version;
         sendResponse({ version });
+    }
+
+    if (request.type === "GET_UPDATE_REVIEW") {
+        chrome.storage.sync.get(["SHOW_CHANGELOG"], result => {
+            const showChangelog = result.SHOW_CHANGELOG;
+            if (showChangelog) {
+                fetch("/CHANGELOG.md")
+                    .then(response => response.text())
+                    .then(text => {
+                        sendResponse({ data: text });
+                        chrome.storage.sync.set({ SHOW_CHANGELOG: false });
+                    });
+            }
+        });
     }
 
     return true;

@@ -306,6 +306,138 @@ body {
 	
 }
 
+.d-cgpt-popup {
+
+}
+
+.d-cgpt-popup-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+}
+
+.d-cgpt-popup-container {
+    max-width: 500px;
+    max-height: 660px;
+	background: rgb(var(--color-snow));
+    border: 2px solid rgb(var(--color-swan));
+	border-radius: 16px;
+	color: rgb(var(--color-eel));
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    z-index: 1000;
+	overflow: hidden;
+}
+
+.d-cgpt-popup-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+    padding: 15px 20px;
+    font-size: 22px;
+	border-bottom: 2px solid rgb(var(--color-swan));
+}
+
+.d-cgpt-popup-header-title {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    gap: 15px;
+}
+
+.d-cgpt-popup-header-close {
+	cursor: pointer;
+}
+
+.d-cgpt-popup-header-close:hover {
+	opacity: 0.8;
+}
+
+.d-cgpt-popup-header-close img {
+	width: 22px;
+}
+
+.d-cgpt-popup-content {
+	padding: 15px;
+	overflow: auto;
+	height: 580px;
+}
+
+/* scroll thumb */
+.d-cgpt-popup-content::-webkit-scrollbar {
+	width: 10px;
+}
+
+.d-cgpt-popup-content::-webkit-scrollbar-thumb {
+	background-color: rgb(var(--color-swan));
+}
+
+.d-cgpt-popup-content::-webkit-scrollbar-thumb:hover {
+	background-color: var(--d-cgpt-accent-color);
+}
+
+.d-cgpt-popup-content::-webkit-scrollbar-track {
+	background-color: rgb(var(--color-snow));
+}
+
+
+/* TODO: merge with d-cgpt-explain-content */
+
+.d-cgpt-markdown p, .d-cgpt-markdown h1, .d-cgpt-markdown h2, .d-cgpt-markdown h3 {
+	margin: unset;
+}
+
+.d-cgpt-markdown ul, .d-cgpt-markdown ol {
+    margin: 0;
+    padding: 0 30px;
+}
+
+.d-cgpt-markdown li {
+	margin: -5px 0;
+}
+
+.d-cgpt-markdown ul {
+	list-style: disc;
+}
+
+.d-cgpt-markdown ol {
+	list-style: decimal;
+}
+
+.d-cgpt-changelog {
+
+}
+
+.d-cgpt-changelog a {
+	color: var(--d-cgpt-accent-color);
+}
+
+.d-cgpt-changelog ul, .d-cgpt-changelog ol {
+
+}
+
+.d-cgpt-changelog li {
+    line-height: normal;
+    padding: 6px 0px;
+}
+
+.d-cgpt-changelog p {
+
+}
+
+.d-cgpt-changelog h1 {
+	padding: 10px;
+    padding-bottom: 20px;
+}
+
 .cursor {
 	display: inline-block;
 	width: 8px;

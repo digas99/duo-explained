@@ -223,6 +223,38 @@
 		`;
 	};
 
+	const makePopup = title => {
+		return /* html */`
+			<div class="d-cgpt-popup">
+				<div class="d-cgpt-popup-overlay"></div>
+				<div class="d-cgpt-popup-container">
+					<div class="d-cgpt-popup-header">
+						<div class="d-cgpt-popup-header-title">${title || ""}</div>
+						<div class="d-cgpt-popup-header-close">
+							<img class="d-cgpt-icon-duo-ui" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/close-thick.png">
+						</div>
+					</div>
+					<div class="d-cgpt-popup-content"></div>
+				</div>	
+			</div>
+		`;
+	}
+
+	const addPopup = (wrapper, title, callback) => {
+		const popup = makePopup(title);
+		wrapper.insertAdjacentHTML("beforeend", popup);
+		const overlay = document.querySelector(".d-cgpt-popup-overlay");
+		const content = document.querySelector(".d-cgpt-popup-content");
+		const headerTitle = document.querySelector(".d-cgpt-popup-header-title");
+		callback(content, headerTitle);
+		
+		const closeExtension = () => document.querySelector(".d-cgpt-popup").remove();
+
+		overlay.addEventListener("click", closeExtension);
+		const close = document.querySelector(".d-cgpt-popup-header-close");
+		close.addEventListener("click", closeExtension);	
+	}
+
 	window.toggleExtension = value => {
 		const extensionTab = document.querySelector(".d-cgpt-tab");
 		if (extensionTab) {
@@ -320,4 +352,31 @@
 	window.addEventListener("resize", () => {
 		setupTab(active);
 	});
+
+	window.onload = () => {
+		// check for update changelog review
+		chrome.runtime.sendMessage({ type: "GET_UPDATE_REVIEW" }, response => {
+			if (response) {
+				console.log(response.data);
+				const label = "# [Changelog";
+				const data = response.data.split(label);
+				addPopup(document.body, "<img width='25' src='https://andreclerigo.github.io/duolingo-chatgpt-assets/logo.png'> Extension Updated", wrapper => {
+					const options = {
+						noHeaderId: true,
+						disableForced4SpacesIndentedSublists: true,
+					}
+					const converter = new showdown.Converter(options);
+					const html = converter.makeHtml(`${label}${data[1]}`);
+					const content = document.createElement("div");
+					content.innerHTML = html;
+					content.classList.add("d-cgpt-markdown", "d-cgpt-changelog");
+					wrapper.appendChild(content);
+
+					// add target _blank to links
+					const links = content.querySelectorAll("a");
+					links.forEach(link => link.target = "_blank");
+				});
+			}
+		});
+	}
 })();
