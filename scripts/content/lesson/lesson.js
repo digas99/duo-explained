@@ -95,6 +95,36 @@
 			mouseDownTime = 0;
 		}
 
+		const clearAll = () => {
+			const explainButton = document.querySelector("#d-cgpt-explain-button");
+			if (explainButton) {
+				explainButton.remove();
+			}
+
+			const extraInput = document.querySelector(".d-cgpt-speech-bubble");
+			if (extraInput) {
+				extraInput.remove();
+			}
+
+			const explainArea = document.querySelector(".d-cgpt-explain-area");
+			if (explainArea) {
+				explainArea.remove();
+				const challengeWrapper = document.querySelector(
+				"div[data-test^='challenge']"
+				);
+				if (challengeWrapper) {
+				challengeWrapper.classList.remove("d-cgpt-explain-area-wrapper");
+				}
+			}
+
+			const swipeIcon = document.querySelector(".d-cgpt-swipe-icon");
+			if (swipeIcon) {
+				swipeIcon.remove();
+			}
+
+			answerData = null;
+		};
+
 		const handleExplanation = callback => {
 			const lesson = {
 				"answer": answerData,
@@ -178,17 +208,15 @@
 					if (explainContent) {
 						explainContent.innerHTML = "";
 						if (response && response.content) {
-							// const text = response.content.split(". ").join(".\n");
 							const text = response.content;
 							const htmlContent = markdownToHtml(text);
-							const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
 							chrome.storage.sync.get("SETTINGS", data => {
 								const typeAnimation = data.SETTINGS?.["typing-animation"];
 								if (typeAnimation) {
-									type(explainContent, sanitizedHtmlContent);
+									type(explainContent, htmlContent);
 								}
 								else {
-									explainContent.innerHTML = sanitizedHtmlContent;
+									explainContent.innerHTML = htmlContent;
 									explainContent.scrollTo({ top: explainContent.scrollHeight, behavior: "smooth" });
 								}
 							});
