@@ -1,4 +1,4 @@
-name: Crowdin Action
+name: Crowdin Push
 
 on:
   push:
