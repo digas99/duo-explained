@@ -8,6 +8,6 @@
 files: [
   {
     "source": "locales/en/messages.json",
-    "translation": "locales/%two_letters_code%/messages.json",
+    "translation": "locales/%android_code%/messages.json",
   }
 ]
