@@ -2,7 +2,7 @@ name: Crowdin Pull
 
 on:
   push:
-    paths: [ "locals/**" ]
+    paths: [ "locales/**" ]
     branches: [ "main" ]
   workflow_run:
     workflows: [ "CodeQL" ]
