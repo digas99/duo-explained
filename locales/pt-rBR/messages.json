@@ -1,134 +1,122 @@
 {
-    "extName": {
-        "message": "Duo Explained",
-        "description": "extension name."
-    },
     "settingsExtEnabled": {
-        "message": "Extension enabled",
+        "message": "Extensão habilitada",
         "description": "label for changing the state of the extension (in settings)."
     },
     "settingsEnabledDescription": {
-        "message": "Enable or disable the possibility to query ChatGPT for explanations.",
+        "message": "Habilite ou desabilite a possibilidade de consultar ChatGPT para obter explicações.",
         "description": "description for changing the state of the extension (in settings)."
     },
     "gptAPIKeyTitle": {
-        "message": "ChatGPT API Key",
+        "message": "Chave de API do ChatGPT",
         "description": "label for the GPT API key input field (in settings)."
     },
     "gptAPIKeyHowTo": {
-        "message": "How do I get a ChatGPT API Key?",
+        "message": "Como eu consigo uma Chave de API do ChatGPT?",
         "description": "label for the link to get a GPT API key (in settings)."
     },
     "btnSave": {
-        "message": "Save",
+        "message": "Salvar",
         "description": "label for the save button."
     },
     "btnReset": {
-        "message": "Reset",
+        "message": "Reiniciar",
         "description": "label for the reset button."
     },
     "btnRemove": {
-        "message": "Remove",
+        "message": "Remover",
         "description": "label for the remove button."
     },
     "settingsLessonsLabel": {
-        "message": "Lessons",
+        "message": "Lições",
         "description": "label for the lessons section."
     },
     "settingsTypingAnimation": {
-        "message": "Exaplanation typing animation",
+        "message": "Animação de explicação de digitação",
         "description": "label for the typing animation setting."
     },
     "settingsTypingAnimationDescription": {
-        "message": "Typing animation with the response from ChatGPT.",
+        "message": "Animação de digitação com resposta do ChatGPT.",
         "description": "description for the typing animation setting."
     },
     "settingsGptModel": {
-        "message": "GPT model",
+        "message": "Modelo do GPT",
         "description": "label for the GPT model setting."
     },
     "settingsGptModelDescription": {
-        "message": "The model to use with ChatGPT.",
+        "message": "Modelo a ser usado com o ChatGPT.",
         "description": "description for the GPT model setting."
     },
     "settingsExplanationLanguage": {
-        "message": "Explanation language",
+        "message": "Idioma da explicação",
         "description": "label for the explanation language setting."
     },
     "settingsExplanationLanguageDescription": {
-        "message": "The language that ChatGPT will use to explain the exercise.",
+        "message": "O idioma que o ChatGPT vai usar para explicar o exercício.",
         "description": "description for the explanation language setting."
     },
     "settingsTokensUsed": {
-        "message": "Show used Tokens in Stats",
+        "message": "Mostrar Tokens usados nas estatísticas",
         "description": "label for the tokens used setting."
     },
     "settingsTokensUsedDescription": {
-        "message": "Show the number of tokens used throughout a lesson in the stats at the end.",
+        "message": "Mostrar o número de tokens usados durante uma lição nas estatísticas ao final.",
         "description": "description for the tokens used setting."
     },
     "settingsMobileLabel": {
-        "message": "Mobile",
+        "message": "Móvel",
         "description": "label for the mobile section."
     },
     "settingsRemoveContinueInApp": {
-        "message": "Remove Continue in App",
+        "message": "Remover o pedido para continuar no aplicativo",
         "description": "label for the remove continue in app setting."
     },
     "settingsRemoveContinueInAppDescription": {
-        "message": "Remove constant prompt asking to continue in the app.",
+        "message": "Remover pedido constante para continuar no aplicativo.",
         "description": "description for the remove continue in app setting."
     },
     "settingsExtensionIcon": {
-        "message": "Extension Icon",
+        "message": "Ícone da extensão",
         "description": "label for the extension icon setting."
     },
     "settingsExtensionIconDescription": {
-        "message": "Show the extension icon in the toolbar (this might cause overflow).",
+        "message": "Mostrar o ícone da extensão na barra de ferramentas (isso pode causar sobrecargas).",
         "description": "description for the extension icon setting."
     },
     "APIKey": {
-        "message": "API Key",
+        "message": "Chave de API",
         "description": "Isolated occurence of the term 'API Key'."
     },
     "popupFooterReportIssue": {
-        "message": "Report Issue",
+        "message": "Relatar problema",
         "description": "Footer option to report an issue."
     },
     "popupFooterRateUs": {
-        "message": "Rate Us",
+        "message": "Nos avalie",
         "description": "Footer option to rate the extension."
     },
     "gptExtraQuery": {
-        "message": "If you want, add to the query to ChatGPT...",
+        "message": "Se você quiser, adicione à consulta ao ChatGPT...",
         "description": "placeholder for the extra query input field."
     },
     "explainButton": {
-        "message": "Explain",
+        "message": "Explique",
         "description": "label for the explain button."
     },
     "explanationTitle": {
-        "message": "Explanation from ChatGPT",
+        "message": "Explicação do ChatGPT",
         "description": "title for the explanation area."
     },
     "reportBugLabel": {
-        "message": "Report a Bug",
+        "message": "Relatar um Bug",
         "description": "label for the bug report dropdown."
     },
     "reportBugExerciseType": {
-        "message": "Exercise Type",
+        "message": "Tipo de Exercício",
         "description": "label for the exercise type in the bug report dropdown."
     },
     "reportBugExtensionVersion": {
-        "message": "Extension Version",
+        "message": "Versão da Extensão",
         "description": "label for the extension version in the bug report dropdown."
-    },
-    "reportBugChallengeDataCopy": {
-        "message": "Challenge Data Object",
-        "description": "label for the challenge data object in the bug report dropdown."
-    },
-    "reportBugAnswerDataCopy": {
-        "message": "Answer Data Object",
-        "description": "label for the answer data object in the bug report dropdown."
     }
 }

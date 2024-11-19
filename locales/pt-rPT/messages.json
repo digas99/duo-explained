@@ -1,8 +1,4 @@
 {
-    "extName": {
-        "message": "Duo Explained",
-        "description": "extension name."
-    },
     "settingsExtEnabled": {
         "message": "Extensão ativada",
         "description": "label for changing the state of the extension (in settings)."
@@ -122,13 +118,5 @@
     "reportBugExtensionVersion": {
         "message": "Versão da Extensão",
         "description": "label for the extension version in the bug report dropdown."
-    },
-    "reportBugChallengeDataCopy": {
-        "message": "Objeto do Challenge Data",
-        "description": "label for the challenge data object in the bug report dropdown."
-    },
-    "reportBugAnswerDataCopy": {
-        "message": "Objeto do Answer Data",
-        "description": "label for the answer data object in the bug report dropdown."
     }
 }
