@@ -118,5 +118,17 @@
     "reportBugExtensionVersion": {
         "message": "Versão da Extensão",
         "description": "label for the extension version in the bug report dropdown."
+    },
+    "apiKeyRateLimitMessage": {
+        "message": "A API Key excedeu o limite de uso ou está num Tier gratuito. Por favor, vê aqui como resolver este problema.",
+        "description": "message for the rate limit error. This refers to ChatGPT Tiers. The word 'here' should be a link."
+    },
+    "apiKeyNotValidMessage": {
+        "message": "A API Key não é válida!",
+        "description": "message for the invalid API key error."
+    },
+    "apiKeySubmitButton": {
+        "message": "Enviar",
+        "description": "label for the submit button"
     }
 }
