@@ -98,5 +98,37 @@
     "popupFooterRateUs": {
         "message": "Rate Us",
         "description": "Footer option to rate the extension."
+    },
+    "gptExtraQuery": {
+        "message": "If you want, add to the query to ChatGPT...",
+        "description": "placeholder for the extra query input field."
+    },
+    "explainButton": {
+        "message": "Explain",
+        "description": "label for the explain button."
+    },
+    "explanationTitle": {
+        "message": "Explanation from ChatGPT",
+        "description": "title for the explanation area."
+    },
+    "reportBugLabel": {
+        "message": "Report a Bug",
+        "description": "label for the bug report dropdown."
+    },
+    "reportBugExerciseType": {
+        "message": "Exercise Type",
+        "description": "label for the exercise type in the bug report dropdown."
+    },
+    "reportBugExtensionVersion": {
+        "message": "Extension Version",
+        "description": "label for the extension version in the bug report dropdown."
+    },
+    "reportBugChallengeDataCopy": {
+        "message": "Challenge Data Object",
+        "description": "label for the challenge data object in the bug report dropdown."
+    },
+    "reportBugAnswerDataCopy": {
+        "message": "Answer Data Object",
+        "description": "label for the answer data object in the bug report dropdown."
     }
 }

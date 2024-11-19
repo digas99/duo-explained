@@ -3,8 +3,6 @@
         "message": "Duo Explained",
         "description": "extension name."
     },
-    
-
     "settingsExtEnabled": {
         "message": "Extension enabled",
         "description": "label for changing the state of the extension (in settings)."
@@ -101,8 +99,6 @@
         "message": "Rate Us",
         "description": "Footer option to rate the extension."
     },
-
-
     "gptExtraQuery": {
         "message": "If you want, add to the query to ChatGPT...",
         "description": "placeholder for the extra query input field."

@@ -98,5 +98,37 @@
     "popupFooterRateUs": {
         "message": "Avalia-nos",
         "description": "Footer option to rate the extension."
+    },
+    "gptExtraQuery": {
+        "message": "Se quiseres, adiciona algo mais ao pedido ao ChatGPT...",
+        "description": "placeholder for the extra query input field."
+    },
+    "explainButton": {
+        "message": "Explicar",
+        "description": "label for the explain button."
+    },
+    "explanationTitle": {
+        "message": "Explicação do ChatGPT",
+        "description": "title for the explanation area."
+    },
+    "reportBugLabel": {
+        "message": "Reportar um Bug",
+        "description": "label for the bug report dropdown."
+    },
+    "reportBugExerciseType": {
+        "message": "Tipo do Exercício",
+        "description": "label for the exercise type in the bug report dropdown."
+    },
+    "reportBugExtensionVersion": {
+        "message": "Versão da Extensão",
+        "description": "label for the extension version in the bug report dropdown."
+    },
+    "reportBugChallengeDataCopy": {
+        "message": "Objeto do Challenge Data",
+        "description": "label for the challenge data object in the bug report dropdown."
+    },
+    "reportBugAnswerDataCopy": {
+        "message": "Objeto do Answer Data",
+        "description": "label for the answer data object in the bug report dropdown."
     }
 }
