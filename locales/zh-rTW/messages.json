@@ -66,5 +66,37 @@
     "settingsTokensUsedDescription": {
         "message": "Show the number of tokens used throughout a lesson in the stats at the end.",
         "description": "description for the tokens used setting."
+    },
+    "settingsMobileLabel": {
+        "message": "Mobile",
+        "description": "label for the mobile section."
+    },
+    "settingsRemoveContinueInApp": {
+        "message": "Remove Continue in App",
+        "description": "label for the remove continue in app setting."
+    },
+    "settingsRemoveContinueInAppDescription": {
+        "message": "Remove constant prompt asking to continue in the app.",
+        "description": "description for the remove continue in app setting."
+    },
+    "settingsExtensionIcon": {
+        "message": "Extension Icon",
+        "description": "label for the extension icon setting."
+    },
+    "settingsExtensionIconDescription": {
+        "message": "Show the extension icon in the toolbar (this might cause overflow).",
+        "description": "description for the extension icon setting."
+    },
+    "APIKey": {
+        "message": "API Key",
+        "description": "Isolated occurence of the term 'API Key'."
+    },
+    "popupFooterReportIssue": {
+        "message": "Report Issue",
+        "description": "Footer option to report an issue."
+    },
+    "popupFooterRateUs": {
+        "message": "Rate Us",
+        "description": "Footer option to rate the extension."
     }
 }

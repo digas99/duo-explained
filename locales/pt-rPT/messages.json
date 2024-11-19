@@ -66,5 +66,37 @@
     "settingsTokensUsedDescription": {
         "message": "Mostrar o número de tokens utilizados ao longo de uma lição nas estatísticas no final.",
         "description": "description for the tokens used setting."
+    },
+    "settingsMobileLabel": {
+        "message": "Mobile",
+        "description": "label for the mobile section."
+    },
+    "settingsRemoveContinueInApp": {
+        "message": "Remover Continuar na App",
+        "description": "label for the remove continue in app setting."
+    },
+    "settingsRemoveContinueInAppDescription": {
+        "message": "Remover o aviso que pergunta se pretende continuar na aplicação.",
+        "description": "description for the remove continue in app setting."
+    },
+    "settingsExtensionIcon": {
+        "message": "Ícone da Extensão",
+        "description": "label for the extension icon setting."
+    },
+    "settingsExtensionIconDescription": {
+        "message": "Mostrar o ícone da extensão na barra de navegação (isto pode causar overflow).",
+        "description": "description for the extension icon setting."
+    },
+    "APIKey": {
+        "message": "API Key",
+        "description": "Isolated occurence of the term 'API Key'."
+    },
+    "popupFooterReportIssue": {
+        "message": "Reportar Problema",
+        "description": "Footer option to report an issue."
+    },
+    "popupFooterRateUs": {
+        "message": "Avalia-nos",
+        "description": "Footer option to rate the extension."
     }
 }
