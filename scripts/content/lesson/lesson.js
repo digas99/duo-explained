@@ -157,6 +157,11 @@
 					navigator.clipboard.writeText(JSON.stringify(data, null, 2));
 				}
 			}
+
+			// close speech bubble on click outside
+			if (!target.closest(".d-cgpt-speech-bubble") && document.querySelector(".d-cgpt-speech-bubble")?.style.display !== "none") {
+				toggleExtraInput(false);
+			}
 		});
 
 		document.addEventListener("mouseover", async event => {
@@ -522,10 +527,7 @@
 		button.classList.remove("d-cgpt-explain-button-enabled");
 		button.classList.add("d-cgpt-explain-button-disabled", "_1NM1Q");
 
-		const explainBubble = document.querySelector(".d-cgpt-speech-bubble");
-		if (explainBubble) {
-			explainBubble.style.display = "none";
-		}
+		toggleExtraInput(false);	
 	}
 
 	const enableButton = button => {
@@ -556,6 +558,23 @@
 				disableButton(button);
 			});
 		}
+
+		// right click
+		button.addEventListener("contextmenu", event => {
+			console.log("right click");
+			if (window.innerWidth <= 700) {
+				event.preventDefault();
+
+				const speechBubble = document.querySelector(".d-cgpt-speech-bubble");
+				if (speechBubble) {
+					toggleExtraInput(true);
+
+					speechBubble.classList.add("d-cgpt-speech-bubble-mobile");
+					speechBubble.focus();
+				}
+			}
+			
+		});
 		
 		button.dataset.hasclick = true;
 	}
@@ -600,22 +619,27 @@
 	const toggleExtraInput = show => {
 		const extraInput = document.querySelector(".d-cgpt-speech-bubble");
 		if (extraInput) {
+			const showBubble = () => {
+				extraInput.style.removeProperty("display");
+			}
+
+			const hideBubble = () => {
+				extraInput.style.display = "none";
+				extraInput.classList.remove("d-cgpt-speech-bubble-mobile");
+			}
+
 			if (show == null) {
-				if (extraInput.style.display == "none") {
-					extraInput.style.removeProperty("display");
-				}
-				else {
-					extraInput.style.display = "none";
-				}
+				if (extraInput.style.display == "none")
+					showBubble();
+				else
+					hideBubble();
 				return;
 			}
 
-			if (show) {
-				extraInput.style.removeProperty("display");
-			}
-			else {
-				extraInput.style.display = "none";
-			}
+			if (show)
+				showBubble();
+			else
+				hideBubble();
 		}
 	}
 
