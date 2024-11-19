@@ -2,5 +2,9 @@
     "extName": {
         "message": "Duo Explained",
         "description": "extension name."
+    },
+    "settingsExtEnabled": {
+        "message": "Extensão ativada",
+        "description": "label for changing the state of the extension (in settings)."
     }
 }
