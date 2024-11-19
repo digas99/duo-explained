@@ -114,6 +114,13 @@
 			});
 		});
 
+		// listen for the no challenge event
+		document.addEventListener("nochallenge", async event => {
+			if (typeof extensionActive == "function" && !(await extensionActive())) return; 
+
+			clearAll();	
+		});
+
 		document.addEventListener("click", async event => {
 			const target = event.target;
 			

@@ -1,3 +1,11 @@
+# [Changelog v0.0.3 &nbsp; <img src="https://img.shields.io/badge/Developing-c7a510">](#)
+
+### Bug Fixes
+- Fixed issue that prevented stats from being displayed at the end of the lesson
+- Removed the "Explain" button when no Challenge is on screen (on motivational messages, for example) [#29](https://github.com/digas99/duo-explained/issues/29)
+- Fixed issue where the Show/Hide button on mobile would linger on the screen after the lesson was over [#21](https://github.com/digas99/duo-explained/issues/21)
+
+
 # [Changelog v0.0.2 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.0.2)
 Released on 17/11/2024
 
