@@ -6,5 +6,65 @@
     "settingsExtEnabled": {
         "message": "Extensão ativada",
         "description": "label for changing the state of the extension (in settings)."
+    },
+    "settingsEnabledDescription": {
+        "message": "Ativar ou desativar a possibilidade de consultar o ChatGPT para explicações.",
+        "description": "description for changing the state of the extension (in settings)."
+    },
+    "gptAPIKeyTitle": {
+        "message": "API Key do ChatGPT",
+        "description": "label for the GPT API key input field (in settings)."
+    },
+    "gptAPIKeyHowTo": {
+        "message": "Como obter uma API Key do ChatGPT?",
+        "description": "label for the link to get a GPT API key (in settings)."
+    },
+    "btnSave": {
+        "message": "Guardar",
+        "description": "label for the save button."
+    },
+    "btnReset": {
+        "message": "Repor",
+        "description": "label for the reset button."
+    },
+    "btnRemove": {
+        "message": "Remover",
+        "description": "label for the remove button."
+    },
+    "settingsLessonsLabel": {
+        "message": "Lições",
+        "description": "label for the lessons section."
+    },
+    "settingsTypingAnimation": {
+        "message": "Animação da escrita de explicações",
+        "description": "label for the typing animation setting."
+    },
+    "settingsTypingAnimationDescription": {
+        "message": "Animação da escrita com a resposta do ChatGPT.",
+        "description": "description for the typing animation setting."
+    },
+    "settingsGptModel": {
+        "message": "Modelo do GPT",
+        "description": "label for the GPT model setting."
+    },
+    "settingsGptModelDescription": {
+        "message": "O modelo a utilizar com o ChatGPT.",
+        "description": "description for the GPT model setting."
+    },
+    "settingsExplanationLanguage": {
+        "message": "Idioma da explicação",
+        "description": "label for the explanation language setting."
+    },
+    "settingsExplanationLanguageDescription": {
+        "message": "O idioma que o ChatGPT usa para explicar o exercício.",
+        "description": "description for the explanation language setting."
+    },
+    "settingsTokensUsed": {
+        "message": "Mostrar Tokens usados nas Estatísticas",
+        "description": "label for the tokens used setting."
+    },
+    "settingsTokensUsedDescription": {
+        "message": "Mostrar o número de tokens utilizados ao longo de uma lição nas estatísticas no final.",
+        "description": "description for the tokens used setting."
     }
 }
