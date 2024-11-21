@@ -1,8 +1,4 @@
 {
-    "extName": {
-        "message": "Duo Explained",
-        "description": "extension name."
-    },
     "settingsExtEnabled": {
         "message": "Extensão ativada",
         "description": "label for changing the state of the extension (in settings)."
@@ -123,12 +119,16 @@
         "message": "Versão da Extensão",
         "description": "label for the extension version in the bug report dropdown."
     },
-    "reportBugChallengeDataCopy": {
-        "message": "Objeto do Challenge Data",
-        "description": "label for the challenge data object in the bug report dropdown."
+    "apiKeyRateLimitMessage": {
+        "message": "A API Key excedeu o limite de uso ou está num Tier gratuito. Por favor, vê aqui como resolver este problema.",
+        "description": "message for the rate limit error. This refers to ChatGPT Tiers. The word 'here' should be a link."
     },
-    "reportBugAnswerDataCopy": {
-        "message": "Objeto do Answer Data",
-        "description": "label for the answer data object in the bug report dropdown."
+    "apiKeyNotValidMessage": {
+        "message": "A API Key não é válida!",
+        "description": "message for the invalid API key error."
+    },
+    "apiKeySubmitButton": {
+        "message": "Enviar",
+        "description": "label for the submit button"
     }
 }

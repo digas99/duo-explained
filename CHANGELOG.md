@@ -1,3 +1,15 @@
+# [Changelog v0.0.3 &nbsp; <img src="https://img.shields.io/badge/Developing-c7a510">](#)
+
+### New Features
+- User Extra Query is now available on mobile devices with right click (long press) on the Explain button
+<img class="d-cgpt-changelog-demo" src="https://raw.githubusercontent.com/digas99/duo-explained/refs/heads/main/images/changelog/v003/user-extra-query-mobile.gif" width="400px">
+
+### Bug Fixes
+- Fixed issue that prevented stats from being displayed at the end of the lesson
+- Removed the "Explain" button when no Challenge is on screen (on motivational messages, for example) [#29](https://github.com/digas99/duo-explained/issues/29)
+- Fixed issue where the Show/Hide button on mobile would linger on the screen after the lesson was over [#21](https://github.com/digas99/duo-explained/issues/21)
+
+
 # [Changelog v0.0.2 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.0.2)
 Released on 17/11/2024
 

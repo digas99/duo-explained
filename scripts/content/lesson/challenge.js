@@ -145,8 +145,36 @@ if (typeof window !== 'undefined') {
 
             // Create a new MutationObserver
             observer = new MutationObserver(async (mutationsList) => {
-                if (mutationsList.length > 0)
-                    nextChallenge(mutationsList);
+                if (mutationsList.length > 0) {
+					nextChallenge(mutationsList);
+	
+					mutationsList.forEach(mutation => {
+						// detect no challenge screen
+						if (mutation.removedNodes && mutation.removedNodes.length > 0) {
+							const challenge = document.querySelector("div[data-test^='challenge']");
+							if (!challenge) {
+								const event = new CustomEvent("nochallenge");
+
+								document.dispatchEvent(event);
+							}
+						}
+
+						// detect session complete
+						mutation.addedNodes.forEach(node => {
+							if (node.closest) {
+								const sessionCompleteAnimation = node.tagName === "svg" && node.closest("div[data-test='session-complete-slide']");
+								if (sessionCompleteAnimation) {
+									const statsWrapper = sessionCompleteAnimation.parentElement.lastElementChild;
+			
+									const event = new CustomEvent("lessonend", { detail: {
+										statsWrapper: statsWrapper
+									}});
+									document.dispatchEvent(event);
+								}
+							}
+						});
+					});
+				}
             });
 
             observer.observe(document.body, { childList: true, subtree: true });

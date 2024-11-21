@@ -542,6 +542,15 @@ body {
     right: 58px;
 }
 
+.d-cgpt-speech-bubble-mobile {
+	display: unset !important;
+	bottom: 60px !important;
+}
+
+.d-cgpt-speech-bubble-mobile .d-cgpt-speech-bubble-tip {
+	display: none;
+}
+
 .d-cgpt-swipe-icon {
 	position: absolute;
 	z-index: 100;
