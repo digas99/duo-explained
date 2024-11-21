@@ -85,67 +85,104 @@ if (typeof window !== 'undefined') {
 }
 
 (async () => {
-	if (typeof extensionActive == "function" && !(await extensionActive())) return; 
+	let observer;
 
-	if (typeof MutationObserver === "undefined") return;
-	
-	// detect answers
-	const observer = new MutationObserver(async (mutationsList, observer) => {
-		if (typeof extensionActive == "function" && !(await extensionActive())) return; 
+	// Expose init to global scope if necessary
+	window.init = init;
 
-		const lessonFooter = document.getElementById("session/PlayerFooter");
-		if (lessonFooter) {
-			answered(mutationsList, "incorrect");
-			answered(mutationsList, "correct");
-		}
+	document.addEventListener("REFETCH_DATA", async function (event) {
+		await init();
 	});
-	
-	observer.observe(document.body, { childList: true, subtree: true });
 
-	const answered = (mutations, state) => {
-		const lessonFooter = document.getElementById("session/PlayerFooter");
-		
-		const validMutation = mutation =>
-			mutation.type === "childList" &&
-			mutation.target == lessonFooter.firstElementChild &&
-			mutation.addedNodes.length > 0;
+	init();
 
+	async function init() {
+		try {
+            if (typeof extensionActive === "function") {
+				if (!(await extensionActive())) return;
+            }
 
-		const answerMutation = mutation => {
-			const nodes = Array.from(mutation.addedNodes);
-			return nodes.find(node => node.querySelector(`div[data-test='blame blame-${state}']`));
+            if (typeof MutationObserver === "undefined") return;
+
+			// Disconnect existing observer if it exists
+			if (observer) observer.disconnect();
+
+			// detect answers
+			observer = new MutationObserver((mutationsList) => {
+				const lessonFooter = document.getElementById("session/PlayerFooter");
+				if (lessonFooter) {
+					answered(mutationsList, "incorrect");
+					answered(mutationsList, "correct");
+				}
+			});
+			
+			observer.observe(document.body, { childList: true, subtree: true });
+			
+			// Process current content if already present
+			const lessonFooter = document.getElementById("session/PlayerFooter");
+			if (lessonFooter) {
+				answered([], "incorrect");
+				answered([], "correct");
+			}
+		} catch (error) {
+			console.error("Error in init():", error);
 		}
-		
-		const validMutations = mutations.filter(validMutation);
-		if (validMutations.length > 0) {
-			const selectedMutation = validMutations.find(answerMutation);
-			if (selectedMutation) {
-				const answerContent = answerMutation(selectedMutation);
-				let solution;
-				
-				const answerData = {
-					state: state,
-					wrapper: lessonFooter,
-					button: lessonFooter.querySelector(`button[data-test='player-next']`),
+
+		function answered(mutations, state) {
+			const lessonFooter = document.getElementById("session/PlayerFooter");
+			console.log("lessonFooter", lessonFooter.firstElementChild);
+
+			const validMutation = mutation =>
+				mutation.type === "childList" &&
+				mutation.target == lessonFooter.firstElementChild &&
+				mutation.addedNodes.length > 0;
+
+			const answerMutation = mutation => {
+				const nodes = Array.from(mutation.addedNodes);
+				return nodes.find(node => node.querySelector(`div[data-test='blame blame-${state}']`));
+			}
+			console.log("mutations", mutations);
+			
+			const validMutations = mutations.filter(validMutation);
+			console.log("validMutation", validMutations);
+			if (validMutations.length > 0) {
+				const selectedMutation = validMutations.find(answerMutation);
+				if (selectedMutation) {
+					const answerContent = answerMutation(selectedMutation);
+					let solution;
+					
+					const answerData = {
+						state: state,
+						wrapper: lessonFooter,
+						button: lessonFooter.querySelector(`button[data-test='player-next']`),
+					}
+
+					if (state === "incorrect") {
+						answerData.language = answerContent.querySelector("div[dir='ltr']")?.lang;
+						solution = answerContent.querySelector("div[dir='ltr']")?.textContent;
+					}
+
+					const challenge = document.querySelector("div[data-test^='challenge']");
+					const challengeType = challenge?.dataset.test.replace("challenge challenge-", "");
+
+					const event = new CustomEvent("answer", { detail:
+						new AnswerData({
+							details: answerData,
+							challenge: new ChallengeData(ChallengeParser.parse(challengeType, challenge)),
+							solution: solution
+						})
+					});
+					document.dispatchEvent(event);
 				}
-
-				if (state === "incorrect") {
-					answerData.language = answerContent.querySelector("div[dir='ltr']")?.lang;
-					solution = answerContent.querySelector("div[dir='ltr']")?.textContent;
-				}
-
-				const challenge = document.querySelector("div[data-test^='challenge']");
-				const challengeType = challenge?.dataset.test.replace("challenge challenge-", "");
-
-				const event = new CustomEvent("answer", { detail:
-					new AnswerData({
-						details: answerData,
-						challenge: new ChallengeData(ChallengeParser.parse(challengeType, challenge)),
-						solution: solution
-					})
-				});
-				document.dispatchEvent(event);
 			}
 		}
 	}
+
+	async function extensionActive() {
+        return new Promise((resolve) => {
+            chrome.storage.sync.get("SETTINGS", (data) => {
+            	resolve(data.SETTINGS?.["extension-enabled"]);
+            });
+        });
+    }
 })();

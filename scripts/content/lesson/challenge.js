@@ -135,17 +135,13 @@ if (typeof window !== 'undefined') {
     async function init() {
         try {
             if (typeof extensionActive === "function") {
-				if (!(await extensionActive())) {
-					return;
-				}
+				if (!(await extensionActive())) return;
             }
 
             if (typeof MutationObserver === "undefined") return;
 
             // Disconnect existing observer if it exists
-            if (observer) {
-                observer.disconnect();
-            }
+            if (observer) observer.disconnect();
 
             // Create a new MutationObserver
             observer = new MutationObserver(async (mutationsList) => {
@@ -160,7 +156,6 @@ if (typeof window !== 'undefined') {
             if (challengeWrapper) {
                 nextChallenge([]); // Pass an empty array to indicate initial processing
             }
-
         } catch (error) {
             console.error("Error in init():", error);
         }

@@ -27,7 +27,6 @@
     init();
 
 	async function init() {
-
 		if (typeof extensionActive == "function" && !(await extensionActive())) {
 			clearAll();
 			return;
