@@ -199,7 +199,10 @@ if (typeof window !== 'undefined') {
             const type = challengeContent.dataset.test.replace("challenge challenge-", "");
             if (type) {
                 const data = new ChallengeData(ChallengeParser.parse(type, challengeContent));
-                const event = new CustomEvent("challenge", { detail: data });
+                const event = new CustomEvent("challenge", { detail: {
+					data,
+					reload: mutations.length === 0
+				}});
                 document.dispatchEvent(event);
             }
         }

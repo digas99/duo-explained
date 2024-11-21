@@ -49,13 +49,16 @@
 		document.addEventListener("challenge", async event => {
 			if (typeof extensionActive == "function" && !(await extensionActive())) return; 
 
-			challengeData = event.detail;
+			challengeData = event.detail.data;
 
 			const footer = document.getElementById("session/PlayerFooter");
 			footer.classList.add("d-cgpt-footer");
 
 			// clear from previous challenge
 			clearAll();
+
+			if (!event.detail.reload)
+				answerData = null;
 
 			addExplainButton(challengeData.content === undefined);
 			toggleExtraInput(false);
@@ -298,8 +301,6 @@
 		if (swipeIcon) {
 			swipeIcon.remove();
 		}
-	
-		answerData = null;
 	}
 
 	const hideExplainArea = () => {
@@ -560,7 +561,6 @@
 
 		// right click
 		button.addEventListener("contextmenu", event => {
-			console.log("right click");
 			if (window.innerWidth <= 700) {
 				event.preventDefault();
 
