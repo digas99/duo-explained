@@ -461,7 +461,7 @@
 							}
 						});
 					} else {
-						explainContent.innerHTML = "Something went wrong. Could not get an explanation.\nWe appologize for the inconvenience.";
+						explainContent.innerHTML = "Oops something went wrong, could not get an explanation.\nWe apologize for the inconvenience. Please try again.";
 
 						const explainButton = document.getElementById("d-cgpt-explain-button");
 						enableButton(explainButton);
@@ -480,7 +480,6 @@
 		const answerWrapper = document.getElementById("session/PlayerFooter");
 		if (answerButtonsWrapper) {
 			answerButtonsWrapper.classList.add("d-cgpt-explain-button-wrapper");
-			console.log("button disabled variable: ", disabled);
 			answerButtonsWrapper.insertBefore(makeButton(answerButtonsWrapper.lastElementChild, disabled), answerButtonsWrapper.lastElementChild);
 			answerWrapper?.parentElement.insertAdjacentHTML("beforeend", extraInputPrompt());
 		}
