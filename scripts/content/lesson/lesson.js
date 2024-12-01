@@ -455,18 +455,21 @@
 							const typeAnimation = data.SETTINGS?.["typing-animation"];
 							if (typeAnimation) {
 								type(explainContent, sanitizedHtmlContent);
-							}
-							else {
+							} else {
 								explainContent.innerHTML = sanitizedHtmlContent;
-								explainContent.scrollTo({ top: explainContent.scrollHeight, behavior: "smooth" });
+								explainContent.scrollTo({top: explainContent.scrollHeight, behavior: "smooth"});
 							}
 						});
-					}
-					else
+					} else {
 						explainContent.innerHTML = "Something went wrong. Could not get an explanation.\nWe appologize for the inconvenience.";
+
+						const explainButton = document.getElementById("d-cgpt-explain-button");
+						enableButton(explainButton);
+					}
 				}
-				if (callback)
+				if (callback) {
 					callback();
+				}
 			});
 		}
 			
@@ -477,6 +480,7 @@
 		const answerWrapper = document.getElementById("session/PlayerFooter");
 		if (answerButtonsWrapper) {
 			answerButtonsWrapper.classList.add("d-cgpt-explain-button-wrapper");
+			console.log("button disabled variable: ", disabled);
 			answerButtonsWrapper.insertBefore(makeButton(answerButtonsWrapper.lastElementChild, disabled), answerButtonsWrapper.lastElementChild);
 			answerWrapper?.parentElement.insertAdjacentHTML("beforeend", extraInputPrompt());
 		}
@@ -493,8 +497,7 @@
 		button.dataset.hasclick = false;
 		if (disabled) {
 			disableButton(button);
-		}
-		else {
+		} else {
 			enableButton(button);
 		}
 		return button;
@@ -547,14 +550,13 @@
 					if (explainArea) {
 						if (explainArea.classList.contains("d-cgpt-explain-area-closed")) {
 							showExplainArea();
-						}
-						else {
+						} else {
 							hideExplainArea();
 						}
 					}
 				});
 
-				handleExplanation();
+				handleExplanation(button);
 				disableButton(button);
 			});
 		}

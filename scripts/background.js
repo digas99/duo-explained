@@ -54,7 +54,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     const prompt = QueryGenerator.generatePrompt(request.data);
                     console.log(prompt);
                     const response = await agent.query(agent.model, prompt);
-                    // const response = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.";
                     sendResponse(response);
                 } catch (error) {
                     sendResponse({ error: error.message });
@@ -113,7 +112,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
     }
 
-    // Reoload the content scripts
+    // Reload the content scripts
     if (request.type === "RELOAD") {
         // inject the content scripts again
         chrome.scripting.executeScript({
@@ -152,7 +151,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     return true;
 });
-
 
 chrome.runtime.onInstalled.addListener(details => {
     console.log("Extension Reloaded");

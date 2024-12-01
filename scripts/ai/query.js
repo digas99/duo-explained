@@ -32,6 +32,7 @@ class QueryGenerator {
      * @param {Object} lessonData - The lesson data containing the answer and challenge information.
      * @param {Object} [lessonData.answer] - The answer data, including user's answer and correctness.
      * @param {Object} lessonData.challenge - The challenge data parsed from the exercise.
+     * @param {Object} lessonData.extra - The extra data added by the user.
      * @returns {string} The generated prompt for ChatGPT.
      */
     static generatePrompt(lessonData) {
@@ -50,7 +51,7 @@ Embolden some of the text to highlight.
 `;
 
         // Check if the user has answered the question
-        if (!lessonData.answer || lessonData.answer === null) {
+        if (!lessonData.answer) {
             // The user's answer is not available (lessonData.answer is null)
             // Generate a prompt that provides a full explanation of the exercise
             prompt += "Please provide a full explanation of the following exercise.\n\n";
