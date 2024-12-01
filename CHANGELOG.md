@@ -1,4 +1,11 @@
-# [Changelog v0.0.3 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](#)
+# [Changelog v0.0.4 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](#)
+Released on 1/12/2024
+
+### Bug Fixes
+- Fixed an issue that made disabled the explain button when ChatGPT's explanation failed to load.
+
+
+# [Changelog v0.0.3 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](#)
 Released on 21/11/2024
 
 ### New Features
