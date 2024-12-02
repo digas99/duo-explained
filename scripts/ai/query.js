@@ -551,3 +551,5 @@ Embolden some of the text to highlight.
         return prompt;
     }
 }
+
+window.QueryGenerator = QueryGenerator;

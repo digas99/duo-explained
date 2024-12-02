@@ -2,7 +2,7 @@
 	window.settings = new Settings(Settings.defaults, document.querySelector("#settings"), 'SETTINGS');
 	window.settings.build();
 
-	chrome.storage.sync.get(["SETTINGS", "API_KEY", "UI_LANGUAGE"], data => {
+	chrome.storage.local.get(["SETTINGS", "API_KEY", "UI_LANGUAGE"], data => {
 		const settings = data.SETTINGS || {};
 		window.settings.update(settings);
 
@@ -107,7 +107,7 @@
 		confirm("Are you sure you want to remove the API key?") && removeApiKey(() => {
 			chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
 				chrome.tabs.sendMessage(tabs[0].id, {type: "RESET"}, () => {
-					chrome.storage.sync.remove("API_KEY_PROMPT_CLOSED");
+					chrome.storage.local.remove("API_KEY_PROMPT_CLOSED");
 				});
 			});
 
@@ -147,16 +147,16 @@
 		if (apiKey) {
 			const result = await validApiKey(apiKey);
 			if (result.valid) {
-				chrome.storage.sync.set({ API_KEY: apiKey }, () => {
+				chrome.storage.local.set({ API_KEY: apiKey }, () => {
 					localStorage.setItem("apiKey", apiKey);
 					chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
 						chrome.tabs.sendMessage(tabs[0].id, {type: "SAVED_KEY", key: apiKey}, () => window.chrome.runtime.lastError);
 					});
 
-					chrome.storage.sync.get("SETTINGS", data => {
+					chrome.storage.local.get("SETTINGS", data => {
 						const settings = data.SETTINGS || {};
 						settings["extension-enabled"] = true;
-						chrome.storage.sync.set({ SETTINGS: settings }, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
+						chrome.storage.local.set({ SETTINGS: settings }, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
 					});
 				});
 
@@ -177,10 +177,10 @@
 	// model select
 	modelSelect.addEventListener("change", () => {
 		const model = modelSelect.value;
-		chrome.storage.sync.get("SETTINGS", data => {
+		chrome.storage.local.get("SETTINGS", data => {
 			const settings = data.SETTINGS || {};
 			settings["model"] = model;
-			chrome.storage.sync.set({ SETTINGS: settings }, () => chrome.runtime.sendMessage({ type: "SET_MODEL", model: model }));
+			chrome.storage.local.set({ SETTINGS: settings }, () => chrome.runtime.sendMessage({ type: "SET_MODEL", model: model }));
 		});
 	});
 
@@ -203,7 +203,7 @@
 })();
 
 const removeApiKey = callback => {
-	chrome.storage.sync.remove("API_KEY", () => {
+	chrome.storage.local.remove("API_KEY", () => {
 		localStorage.removeItem("apiKey");
 		document.querySelector("#api-key").value = "";
 		callback && callback();

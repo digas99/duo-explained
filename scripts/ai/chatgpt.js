@@ -188,3 +188,5 @@ class OpenAIAgent {
         }
     }
 }
+
+window.OpenAIAgent = OpenAIAgent;

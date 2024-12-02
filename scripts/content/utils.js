@@ -1,5 +1,5 @@
 const extensionActive = async () => {
-	const data = await chrome.storage.sync.get("SETTINGS");
+	const data = await chrome.storage.local.get("SETTINGS");
 	return data.SETTINGS?.["extension-enabled"];
 }
 

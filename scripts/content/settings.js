@@ -16,7 +16,7 @@
 		const settings = new Settings(Settings.defaults, settingsWrapper, 'SETTINGS');
 		settings.build();
 		
-		chrome.storage.sync.get(["UI_LANGUAGE"], data => {
+		chrome.storage.local.get(["UI_LANGUAGE"], data => {
 			const uiLanguage = data.UI_LANGUAGE;
 			if (uiLanguage) {
 				const languageSelect = settingsWrapper.querySelector("#d-cgpt-language");

@@ -16,7 +16,7 @@ class Settings {
 		this.storeKey = storeKey;
 
 		if (this.wrapper) {
-			chrome.storage.sync.get([this.storeKey], result => {
+			chrome.storage.local.get([this.storeKey], result => {
 				const settings = result[this.storeKey];
 				if (settings) {
 					this.update(settings);
@@ -168,7 +168,7 @@ class Settings {
 								chrome.tabs.sendMessage(tabs[0].id, {type: "TOGGLE_EXTENSION", value: checkbox.checked}, () => window.chrome.runtime.lastError);
 							});
 						} else {
-							chrome.storage.sync.get("API_KEY", data =>
+							chrome.storage.local.get("API_KEY", data =>
 								window.toggleExtension(data.API_KEY && checkbox.checked)
 							);
 						}
@@ -190,20 +190,20 @@ class Settings {
 						target.closest(".d-cgpt-settings-checkbox").classList.remove("d-cgpt-settings-enabled");
 					}
 					
-					chrome.storage.sync.get([this.storeKey], result => {
+					chrome.storage.local.get([this.storeKey], result => {
 						const settings = result[this.storeKey] || {};
 						settings[target.id.replace("d-cgpt-", "")] = checkbox.checked;
-						chrome.storage.sync.set({ [this.storeKey]: settings });
+						chrome.storage.local.set({ [this.storeKey]: settings });
 					});
 				}
 			}
 
 			if (target.closest("select")) {
 				const select = target.closest("select");
-				chrome.storage.sync.get([this.storeKey], result => {
+				chrome.storage.local.get([this.storeKey], result => {
 					const settings = result[this.storeKey] || {};
 					settings[select.id.replace("d-cgpt-", "")] = select.value;
-					chrome.storage.sync.set({ [this.storeKey]: settings });
+					chrome.storage.local.set({ [this.storeKey]: settings });
 				});
 			}
 		});
@@ -230,7 +230,7 @@ class Settings {
 	}
 
 	setDefaults() {
-		chrome.storage.sync.get([this.storeKey], result => {
+		chrome.storage.local.get([this.storeKey], result => {
 			const storedSettings = result[this.storeKey] || {};
 			// only set defaults for settings that are not already stored
 			const defaulted = {};
@@ -239,7 +239,7 @@ class Settings {
 					defaulted[setting.key] = setting.default;
 				}
 			});
-			chrome.storage.sync.set({ [this.storeKey]: { ...storedSettings, ...defaulted } });
+			chrome.storage.local.set({ [this.storeKey]: { ...storedSettings, ...defaulted } });
 		});
 	}
 

@@ -1,5 +1,5 @@
 (() => {
-	chrome.storage.sync.get(["THEME"], data => {
+	chrome.storage.local.get(["THEME"], data => {
 		theme = data.THEME;
 		if (theme) {
 			document.documentElement.dataset.duoTheme = theme;

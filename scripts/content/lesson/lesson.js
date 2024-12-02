@@ -83,7 +83,7 @@
 		document.addEventListener("lessonend", async event => {
 			if (typeof extensionActive == "function" && !(await extensionActive())) return; 
 
-			chrome.storage.sync.get("SETTINGS", data => {
+			chrome.storage.local.get("SETTINGS", data => {
 				const showUsedTokens = data.SETTINGS?.["show-used-tokens"];
 				
 				if (showUsedTokens) {
@@ -387,7 +387,15 @@
 				explainArea.previousElementSibling.style.setProperty("display", "none", "important");
 			}
 
+			console.log("Querying ChatGPT for explanation...");
+			delete lesson.challenge.wrapper;
 			chrome.runtime.sendMessage({ type: "QUERY", data: lesson }, response => {
+				if (chrome.runtime.lastError) {
+					console.error("Error sending QUERY message:", chrome.runtime.lastError.message);
+				} else {
+					console.log("Response from background script:", response);
+				}
+
 				const explainArea = document.querySelector(".d-cgpt-explain-area");
 				
 				// slide in explanation
@@ -451,7 +459,7 @@
 						const text = response.content;
 						const htmlContent = markdownToHtml(text);
 						const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
-						chrome.storage.sync.get("SETTINGS", data => {
+						chrome.storage.local.get("SETTINGS", data => {
 							const typeAnimation = data.SETTINGS?.["typing-animation"];
 							if (typeAnimation) {
 								type(explainContent, sanitizedHtmlContent);
@@ -467,7 +475,7 @@
 						enableButton(explainButton);
 					}
 				}
-				if (callback) {
+				if (callback && typeof callback === "function") {
 					callback();
 				}
 			});

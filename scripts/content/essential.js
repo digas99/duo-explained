@@ -19,7 +19,7 @@
 	observer.observe(document.body, { childList: true, subtree: true });
 
 	// catch open in app popup
-	chrome.storage.sync.get("SETTINGS", data => {
+	chrome.storage.local.get("SETTINGS", data => {
 		const settings = data.SETTINGS;
 		const removeContinueInApp = settings?.["remove-continue-app"];
 		if (removeContinueInApp) {
@@ -47,7 +47,7 @@
 	// watch for theme change
 	document.addEventListener("duotheme", event => {
 		const theme = event.detail.theme;
-		chrome.storage.sync.set({ "THEME": theme });
+		chrome.storage.local.set({ "THEME": theme });
 		localStorage.setItem("duo.theme", theme);
 
 		updateTheme(theme);
@@ -68,7 +68,7 @@
 
 		setupTab();	
 
-		chrome.storage.sync.get(["API_KEY", "API_KEY_PROMPT_CLOSED", "SETTINGS"], data => {
+		chrome.storage.local.get(["API_KEY", "API_KEY_PROMPT_CLOSED", "SETTINGS"], data => {
 			const settings = data.SETTINGS || {};
 			showIconMobile = settings?.["mobile-extension-icon"] !== false;
 
@@ -149,7 +149,7 @@
 		// clicked on prompt close
 		const promptClose = document.querySelector("#d-cgpt-prompt-close");
 		promptClose.addEventListener("click", () => {
-			chrome.storage.sync.set({ "API_KEY_PROMPT_CLOSED": true, "EXTENSION_ACTIVE": true }, () => {
+			chrome.storage.local.set({ "API_KEY_PROMPT_CLOSED": true, "EXTENSION_ACTIVE": true }, () => {
 				document.querySelector(".d-cgpt-prompt").remove();
 			});
 		});
@@ -281,14 +281,14 @@
 
 	chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 		if (request.type === "TOGGLE_EXTENSION") {
-			chrome.storage.sync.get("API_KEY", data => {
+			chrome.storage.local.get("API_KEY", data => {
 				toggleExtension(data.API_KEY && request.value);
 				document.dispatchEvent(new Event("REFETCH_DATA"));
 			});
 		}
 
 		if (request.type === "RESET") {
-			chrome.storage.sync.remove("API_KEY", () => {
+			chrome.storage.local.remove("API_KEY", () => {
 				const newTab = document.querySelector(".d-cgpt-tab");
 				if (newTab)
 					setupPrompt(newTab);
@@ -318,7 +318,7 @@
 		// clicked on navbar tab
 		if (event.target.closest(".d-cgpt-tab")) {
 			const newTab = document.querySelector(".d-cgpt-tab");
-			chrome.storage.sync.get(["API_KEY", "SETTINGS"], data => {
+			chrome.storage.local.get(["API_KEY", "SETTINGS"], data => {
 				const settings = data.SETTINGS || {};
 				const apiKey = data.API_KEY;
 				if (!apiKey) {
@@ -337,7 +337,7 @@
 					}
 
 					settings["extension-enabled"] = link.classList.contains("d-cgpt-active");
-					chrome.storage.sync.set({"SETTINGS": settings}, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
+					chrome.storage.local.set({"SETTINGS": settings}, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
 				}
 			});
 		}
@@ -345,7 +345,7 @@
 
 	window.addEventListener("message", event => {
 		if (event.data.type === "DUO") {
-			chrome.storage.sync.set({ "UI_LANGUAGE": event.data.language});
+			chrome.storage.local.set({ "UI_LANGUAGE": event.data.language});
 		}
 	});
 

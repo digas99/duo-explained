@@ -223,7 +223,7 @@ if (typeof window !== 'undefined') {
 
 	async function extensionActive() {
         return new Promise((resolve) => {
-            chrome.storage.sync.get("SETTINGS", (data) => {
+            chrome.storage.local.get("SETTINGS", (data) => {
             	resolve(data.SETTINGS?.["extension-enabled"]);
             });
         });

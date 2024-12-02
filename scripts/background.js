@@ -2,17 +2,11 @@
  * @fileoverview Background script for handling messages from the content scripts and querying the OpenAI API.
  */
 
-importScripts(
-    "/scripts/ai/chatgpt.js",
-    "/scripts/ai/query.js",
-    "/scripts/settings.js"
-)
-
 chrome.runtime.onInstalled.addListener(details => {
     if (details.reason == "update") {
         const version = chrome.runtime.getManifest().version;
         if (details.previousVersion != version && version.split('.').length < 4) {
-            chrome.storage.sync.set({ "SHOW_CHANGELOG": true });
+            chrome.storage.local.set({ "SHOW_CHANGELOG": true });
         }
     }
 });
@@ -23,7 +17,7 @@ let agent = new OpenAIAgent();
  * Load local storage values from user settings for API key and model chosen for ChatGPT.
  * This is useful for persisting the API key and model across browser sessions.
  */
-chrome.storage.sync.get(["API_KEY", "MODEL"], (result) => {
+chrome.storage.local.get(["API_KEY", "MODEL"], (result) => {
     const apiKey = result.API_KEY;
     console.log("API_KEY currently is " + apiKey);
 
@@ -46,7 +40,9 @@ chrome.storage.sync.get(["API_KEY", "MODEL"], (result) => {
  * If the message type is "EXTENSION_VERSION", the extension version is sent as a response.
  */
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    console.log(request);
     if (request.type === "QUERY") {
+        console.log("Querying the OpenAI API");
         (async () => {
             if (agent) {
                 try {
@@ -70,13 +66,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         (async () => {
             if (agent) {
                 agent.setApiKey(apiKey);
-                await chrome.storage.sync.set({ API_KEY: apiKey });
+                await chrome.storage.local.set({ API_KEY: apiKey });
                 sendResponse({ message: "API Key set" });
 
-                chrome.storage.sync.get(["SETTINGS"], result => {
+                chrome.storage.local.get(["SETTINGS"], result => {
                     const settings = result.SETTINGS || {};
                     settings["extension-enabled"] = true;
-                    chrome.storage.sync.set({ SETTINGS: settings }, () => {
+                    chrome.storage.local.set({ SETTINGS: settings }, () => {
                         chrome.runtime.sendMessage({ type: "RELOAD" });
                     });
                     
@@ -107,7 +103,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === "SET_MODEL") {
         agent.setModel(request.model);
         // Model value is managed by the content script, therefore always in accordance with the available models
-        chrome.storage.sync.set({ MODEL: request.model }, () => {
+        chrome.storage.local.set({ MODEL: request.model }, () => {
             sendResponse({ message: "Model set." });
         });
     }
@@ -135,7 +131,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 
     if (request.type === "GET_UPDATE_REVIEW") {
-        chrome.storage.sync.get(["SHOW_CHANGELOG"], result => {
+        chrome.storage.local.get(["SHOW_CHANGELOG"], result => {
             const showChangelog = result.SHOW_CHANGELOG;
             if (showChangelog) {
                 fetch("/CHANGELOG.md")
@@ -143,7 +139,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     .then(text => {
                         sendResponse({ data: text });
                         // 
-                        chrome.storage.sync.set({ SHOW_CHANGELOG: false });
+                        chrome.storage.local.set({ SHOW_CHANGELOG: false });
                     });
             }
         });
@@ -158,7 +154,7 @@ chrome.runtime.onInstalled.addListener(details => {
         details.reason === "update") {
 
         // set defaults for settings
-       chrome.storage.sync.get(["SETTINGS"], result => {
+       chrome.storage.local.get(["SETTINGS"], result => {
             const loadedSettings = result.SETTINGS || {};
             const settings = new Settings(loadedSettings, null, "SETTINGS");
             settings.setDefaults();
