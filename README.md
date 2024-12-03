@@ -21,6 +21,7 @@
 
 <p align="center">
   <a href="https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno"><img src="https://developer.chrome.com/static/docs/webstore/branding/image/HRs9MPufa1J1h5glNhut.png" alt="Get Duo Explained for Chrome" width="200"></a><br>
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/duo-explained"><img src="https://github.com/user-attachments/assets/fa67055e-717a-45e2-9f99-a9c40498d94a" alt="Get Duo Explained for FireFox" width="193"></a><br>
 </p>
 
 ---
