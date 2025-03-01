@@ -1,4 +1,10 @@
-# [Changelog v0.0.4 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](#)
+# [Changelog v0.0.5 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](#)
+Released on 1/03/2025
+
+### Bug Fixes
+- Fixed an issue where visual assets where not loading correctly because the base url changed
+
+# [Changelog v0.0.4 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](#)
 Released on 1/12/2024
 
 ### Bug Fixes
