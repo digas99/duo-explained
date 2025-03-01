@@ -1,134 +1,134 @@
 {
     "settingsExtEnabled": {
-        "message": "Extension enabled",
+        "message": "Extension activée",
         "description": "label for changing the state of the extension (in settings)."
     },
     "settingsEnabledDescription": {
-        "message": "Enable or disable the possibility to query ChatGPT for explanations.",
+        "message": "Activer ou désactiver la possibilité de demander au  ChatGPT pour des explications complémentaire.",
         "description": "description for changing the state of the extension (in settings)."
     },
     "gptAPIKeyTitle": {
-        "message": "ChatGPT API Key",
+        "message": "La clé d'API du ChatGPT",
         "description": "label for the GPT API key input field (in settings)."
     },
     "gptAPIKeyHowTo": {
-        "message": "How do I get a ChatGPT API Key?",
+        "message": "Comment obtenir une clé d'API du ChatGPT ?",
         "description": "label for the link to get a GPT API key (in settings)."
     },
     "btnSave": {
-        "message": "Save",
+        "message": "Enregistrer",
         "description": "label for the save button."
     },
     "btnReset": {
-        "message": "Reset",
+        "message": "Réinitialiser",
         "description": "label for the reset button."
     },
     "btnRemove": {
-        "message": "Remove",
+        "message": "Supprimer",
         "description": "label for the remove button."
     },
     "settingsLessonsLabel": {
-        "message": "Lessons",
+        "message": "Leçons",
         "description": "label for the lessons section."
     },
     "settingsTypingAnimation": {
-        "message": "Exaplanation typing animation",
+        "message": "Animation de l'écriture de l'explication",
         "description": "label for the typing animation setting."
     },
     "settingsTypingAnimationDescription": {
-        "message": "Typing animation with the response from ChatGPT.",
+        "message": "Animation progressive de l'écriture de l'explication pendant la réponse.",
         "description": "description for the typing animation setting."
     },
     "settingsGptModel": {
-        "message": "GPT model",
+        "message": "Modèle GPT",
         "description": "label for the GPT model setting."
     },
     "settingsGptModelDescription": {
-        "message": "The model to use with ChatGPT.",
+        "message": "Le modèle à utiliser avec ChatGPT.",
         "description": "description for the GPT model setting."
     },
     "settingsExplanationLanguage": {
-        "message": "Explanation language",
+        "message": "Langue d'explication",
         "description": "label for the explanation language setting."
     },
     "settingsExplanationLanguageDescription": {
-        "message": "The language that ChatGPT will use to explain the exercise.",
+        "message": "La langue utilisée par le ChatGPT pour expliquer l'exercice.",
         "description": "description for the explanation language setting."
     },
     "settingsTokensUsed": {
-        "message": "Show used Tokens in Stats",
+        "message": "Afficher les jetons utilisés dans les statistiques",
         "description": "label for the tokens used setting."
     },
     "settingsTokensUsedDescription": {
-        "message": "Show the number of tokens used throughout a lesson in the stats at the end.",
+        "message": "Afficher la quantité de jetons utilisés tout au long d'une leçon dans les statistiques à la conclusion de cette leçon.",
         "description": "description for the tokens used setting."
     },
     "settingsMobileLabel": {
-        "message": "Mobile",
+        "message": "Portable",
         "description": "label for the mobile section."
     },
     "settingsRemoveContinueInApp": {
-        "message": "Remove Continue in App",
+        "message": "Supprimer l'alerte de \"Continuer dans l'application\"",
         "description": "label for the remove continue in app setting."
     },
     "settingsRemoveContinueInAppDescription": {
-        "message": "Remove constant prompt asking to continue in the app.",
+        "message": "Supprimer l'alerte persistante de \"Continuer dans l'application\".",
         "description": "description for the remove continue in app setting."
     },
     "settingsExtensionIcon": {
-        "message": "Extension Icon",
+        "message": "Icône de l'extension",
         "description": "label for the extension icon setting."
     },
     "settingsExtensionIconDescription": {
-        "message": "Show the extension icon in the toolbar (this might cause overflow).",
+        "message": "Afficher l'icône de l'extension dans la barre d'outils (cela peut entraîner un dépassement).",
         "description": "description for the extension icon setting."
     },
     "APIKey": {
-        "message": "API Key",
+        "message": "Clé d'API",
         "description": "Isolated occurence of the term 'API Key'."
     },
     "popupFooterReportIssue": {
-        "message": "Report Issue",
+        "message": "Signaler un problème",
         "description": "Footer option to report an issue."
     },
     "popupFooterRateUs": {
-        "message": "Rate Us",
+        "message": "Évaluez-nous",
         "description": "Footer option to rate the extension."
     },
     "gptExtraQuery": {
-        "message": "If you want, add to the query to ChatGPT...",
+        "message": "Si vous le souhaitez, ajoutez une demande personnalisée à la demande vers le ChatGPT...",
         "description": "placeholder for the extra query input field."
     },
     "explainButton": {
-        "message": "Explain",
+        "message": "Expliquez",
         "description": "label for the explain button."
     },
     "explanationTitle": {
-        "message": "Explanation from ChatGPT",
+        "message": "Explication du ChatGPT",
         "description": "title for the explanation area."
     },
     "reportBugLabel": {
-        "message": "Report a Bug",
+        "message": "Signaler un probléme",
         "description": "label for the bug report dropdown."
     },
     "reportBugExerciseType": {
-        "message": "Exercise Type",
+        "message": "Type d'exercice",
         "description": "label for the exercise type in the bug report dropdown."
     },
     "reportBugExtensionVersion": {
-        "message": "Extension Version",
+        "message": "Version de l'extension",
         "description": "label for the extension version in the bug report dropdown."
     },
     "apiKeyRateLimitMessage": {
-        "message": "API Key either exceeded the rate limit or is on a Free tier. Please check here how to solve this issue.",
+        "message": "La clé d'API a dépassé la limite de débit, ou votre clé est sur un plan gratuit. Veuillez vérifier ici comment résoudre ce problème.",
         "description": "message for the rate limit error. This refers to ChatGPT Tiers. The word 'here' should be a link."
     },
     "apiKeyNotValidMessage": {
-        "message": "API Key is not valid!",
+        "message": "La clé d'API n'est pas valide !",
         "description": "message for the invalid API key error."
     },
     "apiKeySubmitButton": {
-        "message": "Submit",
+        "message": "Soumettre",
         "description": "label for the submit button"
     }
 }
