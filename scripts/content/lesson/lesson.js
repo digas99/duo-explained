@@ -96,7 +96,7 @@
 								const lastStat = statsWrapper.lastElementChild;
 								const statEntry = makeStatEntry(lastStat, {
 									"title": "Tokens used",
-									"icon": "https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/token.png",
+									"icon": "https://andreclerigo.github.io/duo-explained-assets/icons/token.png",
 									"value": tokens
 								});
 								if (statEntry) {
@@ -513,11 +513,11 @@
 				<div class="d-cgpt-explain-content">${content}</div>
 				<div class="d-cgpt-explain-close">
 					<div class="d-cgpt-explain-close-border"></div>
-					<img class="d-cgpt-icon" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/arrow-circle.png">
+					<img class="d-cgpt-icon" src="https://andreclerigo.github.io/duo-explained-assets/icons/arrow-circle.png">
 				</div>
 				<div class="d-cgpt-explain-bottom">
 					<div class="d-cgpt-explain-model" style="display: none;"><span></span></div>
-					<div class="d-cgpt-explain-tokens"><img class="d-cgpt-icon-accent" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/token.png"><span>0</span></div>
+					<div class="d-cgpt-explain-tokens"><img class="d-cgpt-icon-accent" src="https://andreclerigo.github.io/duo-explained-assets/icons/token.png"><span>0</span></div>
 				</div>
 			</div>
 		`;
@@ -584,7 +584,7 @@
 
 		return /*html*/`
 			<div class="d-cgpt-swipe-icon">
-				<img class="d-cgpt-icon-accent" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/swipe-${orientation}.png">
+				<img class="d-cgpt-icon-accent" src="https://andreclerigo.github.io/duo-explained-assets/icons/swipe-${orientation}.png">
 				<span>${orientation === "down" ? "Hide" : "Show"}</span>
 			</div>
 		`;
@@ -593,7 +593,7 @@
 	const switchSwipeIcon = orientation => {
 		const swipeIcon = document.querySelector(".d-cgpt-swipe-icon img");
 		if (swipeIcon) {
-			swipeIcon.src = `https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/swipe-${orientation}.png`;
+			swipeIcon.src = `https://andreclerigo.github.io/duo-explained-assets/icons/swipe-${orientation}.png`;
 		}
 		const swipeText = document.querySelector(".d-cgpt-swipe-icon span");
 		if (swipeText) {
@@ -674,7 +674,7 @@
 		button.target = "_blank";
 		button.href = "https://github.com/digas99/duo-explained/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml";
 		const img = document.createElement("img");
-		img.src = "https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/bug.png";
+		img.src = "https://andreclerigo.github.io/duo-explained-assets/icons/bug.png";
 		img.classList.add("d-cgpt-icon-duo-ui");
 		button.appendChild(img);
 		return button;
@@ -732,18 +732,18 @@
 			const contextMenu = /*html*/`
 				<div class="d-cgpt-context-menu">
 					<a href="${url}" target="_blank">
-						<img src="https://andreclerigo.github.io/duolingo-chatgpt-assets/logo.png">
+						<img src="https://andreclerigo.github.io/duo-explained-assets/logo.png">
 						<span>Report a Bug</span>
-						<img class="d-cgpt-icon-duo-ui external-link-icon" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/foreign.png">
+						<img class="d-cgpt-icon-duo-ui external-link-icon" src="https://andreclerigo.github.io/duo-explained-assets/icons/foreign.png">
 					</a>
 					<div><b>Exercise Type:</b> ${type}</div>
 					<div><b>Extension Version:</b> ${version}</div>
 					<div class="d-cgpt-context-menu-button ${!challengeData ? 'd-cgpt-button-inactive' : ''}" data-type="challenge">
-						<img class="d-cgpt-icon-duo-ui" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/copy.png">
+						<img class="d-cgpt-icon-duo-ui" src="https://andreclerigo.github.io/duo-explained-assets/icons/copy.png">
 						<span>Challenge Data Object</span>
 					</div>
 					<div class="d-cgpt-context-menu-button ${!answerData ? 'd-cgpt-button-inactive' : ''}" data-type="answer">
-						<img class="d-cgpt-icon-duo-ui" src="https://andreclerigo.github.io/duolingo-chatgpt-assets/icons/copy.png">
+						<img class="d-cgpt-icon-duo-ui" src="https://andreclerigo.github.io/duo-explained-assets/icons/copy.png">
 						<span>Answer Data Object</span>
 					</div>
 				</div>
