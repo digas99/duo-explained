@@ -87,7 +87,7 @@
 				setupPrompt(newTab);
 			}
 			
-			if (apiKey && extensionActive) {
+			if (extensionActive) {
 				if (newTab) {
 					const link = newTab.querySelector("a") || newTab;
 					link.classList.add("d-cgpt-active");
@@ -120,6 +120,7 @@
 								const link = newTab.querySelector("a") || newTab;
 								link.classList.add("d-cgpt-active");
 								active = true;
+								chrome.storage.sync.set({ "API_MODE": "personal" });
 							}
 						}
 					});
@@ -281,8 +282,11 @@
 
 	chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 		if (request.type === "TOGGLE_EXTENSION") {
-			chrome.storage.sync.get("API_KEY", data => {
-				toggleExtension(data.API_KEY && request.value);
+			chrome.storage.sync.get("SETTINGS", data => {
+				const settings = data.SETTINGS || {};
+				const extensionActive = settings?.["extension-enabled"];
+				toggleExtension(extensionActive);
+
 				document.dispatchEvent(new Event("REFETCH_DATA"));
 			});
 		}
@@ -293,9 +297,14 @@
 				if (newTab)
 					setupPrompt(newTab);
 
-				setTimeout(() => toggleExtension(false), 500);
+				chrome.storage.sync.get("SETTINGS", data => {
+					const settings = data.SETTINGS || {};
+					const extensionActive = settings?.["extension-enabled"];
+					if (!extensionActive)
+						setTimeout(() => toggleExtension(false), 500);
 
-				chrome.runtime.sendMessage({ type: "RELOAD" });
+					chrome.runtime.sendMessage({ type: "RELOAD" });
+				});
 			});
 		}
 

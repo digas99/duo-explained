@@ -5,7 +5,7 @@
 importScripts(
     "/scripts/ai/chatgpt.js",
     "/scripts/ai/query.js",
-    "/scripts/settings.js"
+    "/scripts/settings.js",
 )
 
 chrome.runtime.onInstalled.addListener(details => {
@@ -13,6 +13,17 @@ chrome.runtime.onInstalled.addListener(details => {
         const version = chrome.runtime.getManifest().version;
         if (details.previousVersion != version && version.split('.').length < 4) {
             chrome.storage.sync.set({ "SHOW_CHANGELOG": true });
+        }
+
+        // Force extension activation to embrace the new API requests approach
+        if (version <= "0.0.6") {
+            chrome.storage.sync.get(["SETTINGS"], result => {
+                const settings = result.SETTINGS || {};
+                settings["extension-enabled"] = true;
+                chrome.storage.sync.set({ SETTINGS: settings }, () => {
+                    chrome.runtime.sendMessage({ type: "RELOAD" });
+                });
+            });
         }
     }
 });
@@ -35,6 +46,7 @@ chrome.storage.sync.get(["API_KEY", "MODEL"], (result) => {
     agent.init(apiKey, model);
 });
 
+
 /**
  * Listen for messages from the content script.
  * If the message type is "QUERY", a message is sent to the agent to query the OpenAI API.
@@ -52,9 +64,35 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 try {
                     // Generate the prompt using QueryGenerator
                     const prompt = QueryGenerator.generatePrompt(request.data);
-                    console.log(prompt);
-                    const response = await agent.query(agent.model, prompt);
-                    sendResponse(response);
+                    const mode = await chrome.storage.sync.get("API_MODE");
+                    if (mode.API_MODE === "personal") {
+                        const response = await agent.query(agent.model, prompt);
+                        sendResponse(response);
+                    } else if (mode.API_MODE === "free") {
+                        const id = request.id;
+                        if (!id) {
+                            sendResponse({ error: "ID not found." });
+                            return;
+                        }
+
+                        const response = await fetch("https://duo-explained-proxy.andreclerigo.com/proxy", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                source: id,
+                                prompt: prompt
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                                console.log(data);
+                                return data;
+                            });
+
+                        sendResponse(response);
+                    }
                 } catch (error) {
                     sendResponse({ error: error.message });
                 }
@@ -107,7 +145,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === "SET_MODEL") {
         agent.setModel(request.model);
         // Model value is managed by the content script, therefore always in accordance with the available models
-        chrome.storage.sync.set({ MODEL: request.model }, () => {
+        chrome.sPersonaltorage.sync.set({ MODEL: request.model }, () => {
             sendResponse({ message: "Model set." });
         });
     }

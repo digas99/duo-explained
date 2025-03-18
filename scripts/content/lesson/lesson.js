@@ -22,6 +22,8 @@
         await init();
     });
 
+	const fingerprint = import('/vendor/fingerprint.min.js').then(FingerprintJS => FingerprintJS.load());
+
 	let answerData, challengeData;
 
     init();
@@ -364,7 +366,7 @@
 		mouseDownTime = 0;
 	}
 
-	const handleExplanation = callback => {
+	const handleExplanation = async callback => {
 		const lesson = {
 			"answer": answerData,
 			"challenge": challengeData
@@ -387,7 +389,10 @@
 				explainArea.previousElementSibling.style.setProperty("display", "none", "important");
 			}
 
-			chrome.runtime.sendMessage({ type: "QUERY", data: lesson }, response => {
+			const id = await fingerprint.then(fp => fp.get()).then(result => result.visitorId);
+
+			chrome.runtime.sendMessage({ type: "QUERY", data: lesson, id: id }, response => {
+				console.log(response);
 				const explainArea = document.querySelector(".d-cgpt-explain-area");
 				
 				// slide in explanation
@@ -446,9 +451,10 @@
 				const explainContent = document.querySelector(".d-cgpt-explain-content");
 				if (explainContent) {
 					explainContent.innerHTML = "";
-					if (response && response.content) {
+					const content = response?.content || response?.response;
+					if (response && content) {
 						// const text = response.content.split(". ").join(".\n");
-						const text = response.content;
+						const text = content;
 						const htmlContent = markdownToHtml(text);
 						const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
 						chrome.storage.sync.get("SETTINGS", data => {

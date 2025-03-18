@@ -1,7 +1,7 @@
 {
     "name": "Duo Explained",
     "description": "Get explanations for exercises on Duolingo using OpenAI's ChatGPT.",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "manifest_version": 3,
     "icons": {
         "16":  "/images/logo/logo_16x16.png",
@@ -44,7 +44,7 @@
 	],
     "web_accessible_resources": [
         {
-            "resources": ["scripts/content/duo.js"],
+            "resources": ["scripts/content/duo.js", "vendor/fingerprint.min.js"],
             "matches": ["https://duolingo.com/*", "https://www.duolingo.com/*", "https://preview.duolingo.com/*"]
         }
     ],

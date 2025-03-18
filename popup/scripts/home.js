@@ -2,21 +2,29 @@
 	window.settings = new Settings(Settings.defaults, document.querySelector("#settings"), 'SETTINGS');
 	window.settings.build();
 
-	chrome.storage.sync.get(["SETTINGS", "API_KEY", "UI_LANGUAGE"], data => {
+	chrome.storage.sync.get(["SETTINGS", "API_KEY", "API_MODE", "UI_LANGUAGE"], data => {
 		const settings = data.SETTINGS || {};
 		window.settings.update(settings);
+
+		const apiMode = data.API_MODE;
 
 		apiKey = data.API_KEY;
 		if (apiKey) {
 			document.querySelector("#api-key").value = apiKey;
 			localStorage.setItem("apiKey", apiKey);
+			if (apiMode === "personal")
+				swapAPIMode("personal");
 		}
 		else {
-			const extensionEnabled = document.querySelector("#d-cgpt-extension-enabled");
-			if (extensionEnabled.checked) {
-				extensionEnabled.click();
-			}
-			extensionEnabled.closest(".d-cgpt-settings-checkbox").style.pointerEvents = "none";
+			if (apiMode === "personal")
+				swapAPIMode("free");
+
+		//	DISABLE EXTENSION IF NO API KEY (NOT NEEDED ANYMORE)
+		// 	const extensionEnabled = document.querySelector("#d-cgpt-extension-enabled");
+		// 	if (extensionEnabled.checked) {
+		// 		extensionEnabled.click();
+		// 	}
+		// 	extensionEnabled.closest(".d-cgpt-settings-checkbox").style.pointerEvents = "none";
 		}
 
 		model = settings["model"];
@@ -36,11 +44,30 @@
 		}
 	});
 
+	const apiKeyWrapper = document.querySelector(".api-key-input");
 	const apiKeyInput = document.querySelector("#api-key");
 	const apiKeyRemove = document.querySelector("#remove-api-key");
 	const apiKeyCancel = document.querySelector("#cancel-action-api-key");
 	const apiKeySave = document.querySelector("#save-api-key");
 	const languageSelect = document.querySelector("#d-cgpt-language");
+
+	// api key mode
+	const apiKeyMode = document.querySelector(".api-mode");
+	apiKeyMode.addEventListener("click", e => {
+		const modeSelected = e.target.closest(".api-mode > div");
+		if (modeSelected) {
+			const mode = modeSelected.dataset.mode;
+			if (mode === "personal") {
+				apiKeyWrapper.style.opacity = 1;
+				apiKeyInput.focus();
+			
+				if (apiKeyInput.value) swapAPIMode("personal");
+			} else if (mode === "free") {
+				apiKeyWrapper.style.opacity = 0.5;
+				swapAPIMode("free");
+			}
+		}
+	});
 
 	// api key input
 	let apiKey = localStorage.getItem("apiKey");
@@ -158,6 +185,8 @@
 						settings["extension-enabled"] = true;
 						chrome.storage.sync.set({ SETTINGS: settings }, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
 					});
+
+					swapAPIMode("personal");
 				});
 
 				window.location.reload();
@@ -208,4 +237,29 @@ const removeApiKey = callback => {
 		document.querySelector("#api-key").value = "";
 		callback && callback();
 	});
+}
+
+const swapAPIMode = mode => {
+	if (!mode) {
+		chrome.storage.sync.get("API_MODE", data => {
+			mode = data.API_MODE;
+			if (!mode) {
+				const apiModeSelected = document.querySelector(".api-mode-selected");
+				mode = apiModeSelected.dataset.mode || "free";
+			}
+
+			swapAPIMode(mode);
+		});
+	}
+	else {
+		const apiModeSelected = document.querySelector(".api-mode-selected");
+		apiModeSelected.classList.remove("api-mode-selected");
+		document.querySelector(`.api-mode > div[data-mode="${mode}"]`).classList.add("api-mode-selected");
+		chrome.storage.sync.set({ API_MODE: mode });
+
+		if (mode === "personal") {
+			const apiKeyWrapper = document.querySelector(".api-key-input");
+			if (apiKeyWrapper) apiKeyWrapper.style.opacity = 1;
+		}
+	}
 }
