@@ -103,3 +103,4 @@ Comprehensive documentation for developers and contributors can be found in [doc
 Duo Explained is licensed under the [MIT License](LICENSE).
 
 ---
+
