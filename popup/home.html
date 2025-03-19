@@ -9,8 +9,6 @@
 	<link rel="stylesheet" href="/styles/settings.css">
 
 	<link rel="stylesheet" href="styles/home.css">
-	<script src="/vendor/client.base.min.js"></script>
-	<script src="/vendor/fingerprint.min.js"></script>
 	<script src="/scripts/settings.js"></script>
 </head>
 <body>
@@ -26,7 +24,7 @@
 
 	<div class="separator"></div>
 
-	<div class="element">
+	<div class="element" style="padding-bottom: unset;">
 		<div class="d-cgpt-settings-group" style="margin-bottom: 20px;">
 			<h3 style="margin: unset;">API Mode</h3>
 		</div>
@@ -36,7 +34,7 @@
 		</div>
 	</div>
 
-	<div class="element api-key-input" style="opacity: 0.5;">
+	<div class="element api-key-input" style="opacity: 0.5; padding-top: 20px;">
 		<div class="title">ChatGPT API Key <a href="apikey.html" title="How do I get a ChatGPT API Key?"><img class="icon" src="/images/icons/about.png" alt="help"></a></div>
 		<div class="input-wrapper">
 			<input type="text" id="api-key" placeholder="API Key">
@@ -66,7 +64,7 @@
 		</div>
 	</div>
 
-	<script src="scripts/scripts.js"></script>
-	<script src="scripts/home.js"></script>
+	<script type="module" src="scripts/scripts.js"></script>
+	<script type="module" src="scripts/home/main.js"></script>
 </body>
 </html>

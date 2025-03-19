@@ -13,7 +13,7 @@
 		firstSection.parentElement.insertBefore(settingsWrapper, firstSection);
 		settingsWrapper.appendChild(settingsHeader);
 
-		const settings = new Settings(Settings.defaults, settingsWrapper, 'SETTINGS');
+		const settings = new SettingsComponent(SettingsComponent.defaults, settingsWrapper, 'SETTINGS');
 		settings.build();
 		
 		chrome.storage.sync.get(["UI_LANGUAGE"], data => {

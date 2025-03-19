@@ -145,7 +145,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === "SET_MODEL") {
         agent.setModel(request.model);
         // Model value is managed by the content script, therefore always in accordance with the available models
-        chrome.sPersonaltorage.sync.set({ MODEL: request.model }, () => {
+        chrome.storage.sync.set({ MODEL: request.model }, () => {
             sendResponse({ message: "Model set." });
         });
     }
@@ -198,7 +198,7 @@ chrome.runtime.onInstalled.addListener(details => {
         // set defaults for settings
        chrome.storage.sync.get(["SETTINGS"], result => {
             const loadedSettings = result.SETTINGS || {};
-            const settings = new Settings(loadedSettings, null, "SETTINGS");
+            const settings = new SettingsComponent(loadedSettings, null, "SETTINGS");
             settings.setDefaults();
        });
     }

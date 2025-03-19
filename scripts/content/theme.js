@@ -83,15 +83,19 @@ const updateTheme = theme => {
 	});
 }
 
+
 (async () => {
 	let event;
-	window.onload = () => {
+	console.log('theme.js');
+	console.log(window);
+	window.addEventListener("load", function() {
+		console.log('onload');
 		event = new CustomEvent("duotheme", { detail: {
 			theme: duolingoTheme(),
 			context: 'onload',
 		} });
 		document.dispatchEvent(event);
-	}
+	});
 
 	// watch for dark mode change
 	document.addEventListener("input", e => {

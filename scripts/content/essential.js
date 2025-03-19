@@ -56,6 +56,7 @@
 	});
 
 	const injectElements = () => {
+		console.log("Injecting elements");
 		// backdoor to the duo object
 		const script = document.createElement("script");
 		script.src = chrome.runtime.getURL("scripts/content/duo.js");
@@ -362,7 +363,7 @@
 		setupTab(active);
 	});
 
-	window.onload = () => {
+	window.addEventListener("load", function() {
 		// check for update changelog review
 		chrome.runtime.sendMessage({ type: "GET_UPDATE_REVIEW" }, response => {
 			if (response) {
@@ -387,5 +388,5 @@
 				});
 			}
 		});
-	}
+	});
 })();

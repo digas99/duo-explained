@@ -1,4 +1,4 @@
-class Settings {
+class SettingsComponent {
 	constructor(settings, wrapper, storeKey) {
 		// group settings by 'group' key
 		if (typeof settings.reduce === "function") {
@@ -128,10 +128,10 @@ class Settings {
 			settings.forEach(setting => {
 				switch (setting.type) {
 					case "checkbox":
-						groupHtml += Settings.buildCheckbox(setting);
+						groupHtml += SettingsComponent.buildCheckbox(setting);
 						break;
 					case "select":
-						groupHtml += Settings.buildSelect(setting);
+						groupHtml += SettingsComponent.buildSelect(setting);
 						break;
 				}
 			});
@@ -234,7 +234,7 @@ class Settings {
 			const storedSettings = result[this.storeKey] || {};
 			// only set defaults for settings that are not already stored
 			const defaulted = {};
-			Settings.defaults.forEach(setting => {
+			SettingsComponent.defaults.forEach(setting => {
 				if (!storedSettings.hasOwnProperty(setting.key)) {
 					defaulted[setting.key] = setting.default;
 				}
@@ -274,7 +274,7 @@ class Settings {
 }
 
 if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
-    module.exports = Settings;
+    module.exports = SettingsComponent;
 } else if (typeof window !== "undefined") {
-    window.Settings = Settings;
+    window.SettingsComponent = SettingsComponent;
 }
