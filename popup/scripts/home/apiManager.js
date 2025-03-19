@@ -185,6 +185,10 @@ export const apiModeManager = {
 				await apiModeManager.swapAPIMode(mode);
 				break;
 		}
+
+		chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
+			chrome.tabs.sendMessage(tabs[0].id, {type: "SET_MODE", mode}, () => window.chrome.runtime.lastError);
+		});
 	},
 
 	apiModeHoverEvent(e) {

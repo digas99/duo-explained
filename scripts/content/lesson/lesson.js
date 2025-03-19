@@ -680,9 +680,13 @@
 		button.target = "_blank";
 		button.href = "https://github.com/digas99/duo-explained/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml";
 		const img = document.createElement("img");
-		img.src = "https://andreclerigo.github.io/duo-explained-assets/icons/bug.png";
-		img.classList.add("d-cgpt-icon-duo-ui");
+		img.src = "https://andreclerigo.github.io/duo-explained-assets/logo.png";
 		button.appendChild(img);
+		const apiModeTag = document.createElement("span");
+		apiModeTag.textContent = "Free";
+		apiModeTag.classList.add("d-cgpt-free-tag");
+		apiModeTag.style.display = "none";
+		button.appendChild(apiModeTag);
 		return button;
 	}
 
@@ -716,6 +720,16 @@
 			}
 		});
 
+		chrome.storage.sync.get("API_MODE", data => {
+			let mode = data.API_MODE || "unknown";
+			mode = mode.charAt(0).toUpperCase() + mode.slice(1);
+			reportButton.title += `\nAPI Mode: ${mode}`;
+			reportButton.dataset.mode = mode;
+			if (mode === "Free")
+				document.querySelector(".d-cgpt-free-tag").style.removeProperty("display");
+
+		});
+
 		const progressBar = document.querySelector("div[role='progressbar']");
 		if (progressBar) {
 			wrapper.insertBefore(reportButton, progressBar);
@@ -726,6 +740,7 @@
 		reportButton.addEventListener("click", event => {
 			const version = reportButton.dataset.version;
 			const type = reportButton.dataset.type;
+			const mode = reportButton.dataset.mode;
 			const url = `
 				https://github.com/digas99/duo-explained/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml
 				&title=[
@@ -738,12 +753,12 @@
 			const contextMenu = /*html*/`
 				<div class="d-cgpt-context-menu">
 					<a href="${url}" target="_blank">
-						<img src="https://andreclerigo.github.io/duo-explained-assets/logo.png">
 						<span>Report a Bug</span>
 						<img class="d-cgpt-icon-duo-ui external-link-icon" src="https://andreclerigo.github.io/duo-explained-assets/icons/foreign.png">
 					</a>
 					<div><b>Exercise Type:</b> ${type}</div>
 					<div><b>Extension Version:</b> ${version}</div>
+					<div class="d-cgpt-report-button-mode"><b>API Mode:</b> ${mode}</div> 
 					<div class="d-cgpt-context-menu-button ${!challengeData ? 'd-cgpt-button-inactive' : ''}" data-type="challenge">
 						<img class="d-cgpt-icon-duo-ui" src="https://andreclerigo.github.io/duo-explained-assets/icons/copy.png">
 						<span>Challenge Data Object</span>

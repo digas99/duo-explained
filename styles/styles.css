@@ -626,6 +626,21 @@ body {
 	background-color: unset !important;
 }
 
+.d-cgpt-free-tag {
+    position: absolute;
+    bottom: -13px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 1px 5px;
+    font-size: 11px;
+    left: -3px;
+    right: 0;
+    width: fit-content;
+    background-color: rgb(var(--color-swan));
+    color: rgb(var(--color-eel));
+    font-weight: bold;
+}
+
 .d-cgpt-context-menu {
     position: absolute;
     top: 100px;

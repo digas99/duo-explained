@@ -46,8 +46,12 @@ import { apiModeManager } from "./apiManager.js";
 
 		// version
 		const version = data.VERSION;
-		if (version)
+		if (version) {
 			document.querySelector("#version").innerText = "v"+version;
+			const versionLink =	document.querySelector(".version");
+			versionLink.href = versionLink.href.replace("v0.0.0", "v"+version); 
+			versionLink.title = versionLink.title.replace("v0.0.0", "v"+version);
+		}
 	};
 
 	// render values from local storage

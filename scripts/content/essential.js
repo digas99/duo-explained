@@ -322,6 +322,28 @@
 				}
 			});
 		}
+
+		if (request.type === "SET_MODE") {
+			const bugReportButton = document.querySelector(".d-cgpt-bug-report");
+			if (bugReportButton) {
+				const mode = request.mode.charAt(0).toUpperCase() + request.mode.slice(1);
+				bugReportButton.dataset.mode = mode;
+				const buttonPopupMode = document.querySelector(".d-cgpt-report-button-mode");
+				const modeTag = bugReportButton.querySelector(".d-cgpt-free-tag");
+				let buttonTitle = bugReportButton.title;
+				if (request.mode === "free") {
+					modeTag.style.removeProperty("display");
+					buttonTitle = buttonTitle.replace("Personal", "Free");
+					if (buttonPopupMode) buttonPopupMode.innerHTML = "<b>API Mode:</b> Free";
+				}
+				else {
+					modeTag.style.display = "none";
+					buttonTitle = buttonTitle.replace("Free", "Personal");
+					if (buttonPopupMode) buttonPopupMode.innerHTML = "<b>API Mode:</b> Personal";
+				}
+				bugReportButton.title = buttonTitle;
+			}
+		}
 	});
 
 	document.addEventListener("click", event => {
