@@ -1,17 +1,23 @@
-# [Changelog v0.0.5 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](#)
+# [Changelog v0.1.0 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.1.0)
+Released on 19/03/2025
+
+### New Features
+- Added possibility for the user to use a free limited version of ChatGPT OpenAI API
+
+# [Changelog v0.0.5 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](https://github.com/digas99/duo-explained/releases/tag/v0.0.5)
 Released on 1/03/2025
 
 ### Bug Fixes
 - Fixed an issue where visual assets where not loading correctly because the base url changed
 
-# [Changelog v0.0.4 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](#)
+# [Changelog v0.0.4 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](https://github.com/digas99/duo-explained/releases/tag/v0.0.4)
 Released on 1/12/2024
 
 ### Bug Fixes
 - Fixed an issue that disabled the explain button when ChatGPT's explanation failed to load.
 
 
-# [Changelog v0.0.3 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](#)
+# [Changelog v0.0.3 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](https://github.com/digas99/duo-explained/releases/tag/v0.0.3)
 Released on 21/11/2024
 
 ### New Features
