@@ -11,10 +11,13 @@
 <p align="center">
   <a href="https://github.com/digas99/duo-explained/actions/workflows/codeql.yml"><img src="https://github.com/digas99/duo-explained/actions/workflows/codeql.yml/badge.svg" alt="CodeQL"></a>
   <a href="https://github.com/digas99/duo-explained/actions/workflows/deploy-extension.yml"><img src="https://github.com/digas99/duo-explained/actions/workflows/deploy-extension.yml/badge.svg" alt="Deploy Chrome Extension"></a>
-  <a href="https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno"><img src="https://img.shields.io/chrome-web-store/v/ibnifmdhbaknbkgldmbnebeidephchno.svg?color=orange" alt="Chrome Web Store Version"></a>
-  <a href="https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno"><img src="https://img.shields.io/chrome-web-store/users/ibnifmdhbaknbkgldmbnebeidephchno.svg?color=orange" alt="Chrome Web Store Users"></a>
   <a href="https://github.com/digas99/duo-explained/issues"><img src="https://img.shields.io/github/issues/digas99/duo-explained" alt="GitHub Issues"></a>
   <a href="https://github.com/digas99/duo-explained/blob/main/LICENSE"><img src="https://shields.io/github/license/digas99/duo-explained.svg" alt="License"></a>
+<br>
+  <a href="https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno"><img src="https://img.shields.io/chrome-web-store/v/ibnifmdhbaknbkgldmbnebeidephchno.svg?color=orange" alt="Chrome Web Store Version"></a>
+  <a href="https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno"><img src="https://img.shields.io/chrome-web-store/users/ibnifmdhbaknbkgldmbnebeidephchno.svg?color=orange" alt="Chrome Web Store Users"></a>
+   <a href="https://addons.mozilla.org/en-US/firefox/addon/duo-explained/"><img src="https://img.shields.io/amo/v/duo-explained.svg?color=blue" alt="Mozilla Addons"></a>
+   <a href="https://addons.mozilla.org/en-US/firefox/addon/duo-explained/"><img src="https://img.shields.io/amo/users/duo-explained.svg?color=blue" alt="Mozilla Addons Users"></a>
 </p>
 
 ---
