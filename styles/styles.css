@@ -35,18 +35,19 @@ body {
 }
 
 .d-cgpt-tab > a > span {
-	border: unset !important;
+	border: 2px solid rgb(var(--color-snow)) !important;
     background-color: unset !important;
 	border-radius: 12px !important;
+}
+
+.d-cgpt-tab > a > span:hover {
+	background-color: rgb(var(--color-polar)) !important; 
+	border: 2px solid rgb(var(--color-polar)) !important;
 }
 
 .d-cgpt-tab > .d-cgpt-active > span {
 	border: 2px solid var(--d-cgpt-accent-color) !important;
     background-color: var(--d-cgpt-secondary-color) !important;
-}
-
-.d-cgpt-tab > a > span:hover {
-	background-color: rgb(var(--color-polar)) !important; 
 }
 
 .d-cgpt-tab > .d-cgpt-active > span span {
@@ -800,6 +801,10 @@ body {
 		border: 2px solid var(--d-cgpt-accent-color) !important;
 		background-color: var(--d-cgpt-secondary-color) !important;
 		border-radius: 8px;
+	}
+
+	a.d-cgpt {
+		border: 2px solid var(--color-snow) !important;
 	}
 
 	.d-cgpt-context-menu {

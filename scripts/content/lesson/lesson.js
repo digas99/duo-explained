@@ -721,7 +721,7 @@
 		});
 
 		chrome.storage.sync.get("API_MODE", data => {
-			let mode = data.API_MODE || "unknown";
+			let mode = data.API_MODE || "free";
 			mode = mode.charAt(0).toUpperCase() + mode.slice(1);
 			reportButton.title += `\nAPI Mode: ${mode}`;
 			reportButton.dataset.mode = mode;
