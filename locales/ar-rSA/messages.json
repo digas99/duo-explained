@@ -1,134 +1,134 @@
 {
     "settingsExtEnabled": {
-        "message": "Extension enabled",
+        "message": "تم تمكين الإضافة",
         "description": "label for changing the state of the extension (in settings)."
     },
     "settingsEnabledDescription": {
-        "message": "Enable or disable the possibility to query ChatGPT for explanations.",
+        "message": "تمكين أو تعطيل إمكانية إستعلام ChatGPT عن تفسيرات.",
         "description": "description for changing the state of the extension (in settings)."
     },
     "gptAPIKeyTitle": {
-        "message": "ChatGPT API Key",
+        "message": "مفتاح API لـ ChatGPT",
         "description": "label for the GPT API key input field (in settings)."
     },
     "gptAPIKeyHowTo": {
-        "message": "How do I get a ChatGPT API Key?",
+        "message": "كيف أحصل على مفتاح API لـ ChatGPT؟",
         "description": "label for the link to get a GPT API key (in settings)."
     },
     "btnSave": {
-        "message": "Save",
+        "message": "حفظ",
         "description": "label for the save button."
     },
     "btnReset": {
-        "message": "Reset",
+        "message": "إعادة ضبط",
         "description": "label for the reset button."
     },
     "btnRemove": {
-        "message": "Remove",
+        "message": "إزالة",
         "description": "label for the remove button."
     },
     "settingsLessonsLabel": {
-        "message": "Lessons",
+        "message": "الدروس",
         "description": "label for the lessons section."
     },
     "settingsTypingAnimation": {
-        "message": "Exaplanation typing animation",
+        "message": "تأثيرات الحركة للكتابة التوضيحية",
         "description": "label for the typing animation setting."
     },
     "settingsTypingAnimationDescription": {
-        "message": "Typing animation with the response from ChatGPT.",
+        "message": "تأثيرات حركة الكتابة مع استجابة ChatGPT.",
         "description": "description for the typing animation setting."
     },
     "settingsGptModel": {
-        "message": "GPT model",
+        "message": "نموذج GPT",
         "description": "label for the GPT model setting."
     },
     "settingsGptModelDescription": {
-        "message": "The model to use with ChatGPT.",
+        "message": "النموذج الذي يجب استخدامه مع ChatGPT.",
         "description": "description for the GPT model setting."
     },
     "settingsExplanationLanguage": {
-        "message": "Explanation language",
+        "message": "لغة الشرح",
         "description": "label for the explanation language setting."
     },
     "settingsExplanationLanguageDescription": {
-        "message": "The language that ChatGPT will use to explain the exercise.",
+        "message": "اللغة التي سيستخدمها ChatGPT لشرح التمرين.",
         "description": "description for the explanation language setting."
     },
     "settingsTokensUsed": {
-        "message": "Show used Tokens in Stats",
+        "message": "إظهار النقاط المستخدمة في الإحصائيات",
         "description": "label for the tokens used setting."
     },
     "settingsTokensUsedDescription": {
-        "message": "Show the number of tokens used throughout a lesson in the stats at the end.",
+        "message": "إظهار عدد النقاط المستخدمة طوال الدرس في الإحصائيات الموجودة في النهاية.",
         "description": "description for the tokens used setting."
     },
     "settingsMobileLabel": {
-        "message": "Mobile",
+        "message": "الهاتف",
         "description": "label for the mobile section."
     },
     "settingsRemoveContinueInApp": {
-        "message": "Remove Continue in App",
+        "message": "إزالة المتابعة في التطبيق",
         "description": "label for the remove continue in app setting."
     },
     "settingsRemoveContinueInAppDescription": {
-        "message": "Remove constant prompt asking to continue in the app.",
+        "message": "إزالة المطالبة المستمرة التي تطلب المتابعة في التطبيق.",
         "description": "description for the remove continue in app setting."
     },
     "settingsExtensionIcon": {
-        "message": "Extension Icon",
+        "message": "أيقونة الإضافة",
         "description": "label for the extension icon setting."
     },
     "settingsExtensionIconDescription": {
-        "message": "Show the extension icon in the toolbar (this might cause overflow).",
+        "message": "إظهار أيقونة الإضافة في شريط الأدوات (قد يتسبب هذا في إخفاء الأيقونة).",
         "description": "description for the extension icon setting."
     },
     "APIKey": {
-        "message": "API Key",
+        "message": "مفتاح API",
         "description": "Isolated occurence of the term 'API Key'."
     },
     "popupFooterReportIssue": {
-        "message": "Report Issue",
+        "message": "الإبلاغ عن مشكلة",
         "description": "Footer option to report an issue."
     },
     "popupFooterRateUs": {
-        "message": "Rate Us",
+        "message": "قيمنا",
         "description": "Footer option to rate the extension."
     },
     "gptExtraQuery": {
-        "message": "If you want, add to the query to ChatGPT...",
+        "message": "إذا أردت، أضف إلى استعلام ChatGPT...",
         "description": "placeholder for the extra query input field."
     },
     "explainButton": {
-        "message": "Explain",
+        "message": "شرح",
         "description": "label for the explain button."
     },
     "explanationTitle": {
-        "message": "Explanation from ChatGPT",
+        "message": "توضيح من ChatGPT",
         "description": "title for the explanation area."
     },
     "reportBugLabel": {
-        "message": "Report a Bug",
+        "message": "الإبلاغ عن خطأ",
         "description": "label for the bug report dropdown."
     },
     "reportBugExerciseType": {
-        "message": "Exercise Type",
+        "message": "نوع التمرين",
         "description": "label for the exercise type in the bug report dropdown."
     },
     "reportBugExtensionVersion": {
-        "message": "Extension Version",
+        "message": "إصدار الإضافة",
         "description": "label for the extension version in the bug report dropdown."
     },
     "apiKeyRateLimitMessage": {
-        "message": "API Key either exceeded the rate limit or is on a Free tier. Please check here how to solve this issue.",
+        "message": "مفتاح API تجاوز الحد الأقصى للاستعلام أو أنه على الخطة المجانية. يرجى الاطلاع هنا على كيفية حل هذه المشكلة.",
         "description": "message for the rate limit error. This refers to ChatGPT Tiers. The word 'here' should be a link."
     },
     "apiKeyNotValidMessage": {
-        "message": "API Key is not valid!",
+        "message": "مفتاح API غير صالح!",
         "description": "message for the invalid API key error."
     },
     "apiKeySubmitButton": {
-        "message": "Submit",
+        "message": "إرسال",
         "description": "label for the submit button"
     }
 }
