@@ -1,4 +1,5 @@
-# [Changelog v0.1.2 &nbsp; <img src="https://img.shields.io/badge/Developing-c7a510">](https://github.com/digas99/duo-explained/releases/tag/v0.1.2)
+# [Changelog v0.1.2 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.1.2)
+Released on 20/03/2025
 
 ### Bug Fixes
 - Fixed interaction with extension enable button in Duolingo's home page when no API Key is set
@@ -8,7 +9,7 @@
 - Added Extension Badge identifying if use is using personal API Key
 - Disabled chatgpt model option when not using personal API Key
 
-# [Changelog v0.1.1 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.1.1)
+# [Changelog v0.1.1 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](https://github.com/digas99/duo-explained/releases/tag/v0.1.1)
 Released on 20/03/2025
 
 ### Bug Fixes
