@@ -1,4 +1,13 @@
-# [Changelog v0.1.1 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.1.1)
+# [Changelog v0.1.2 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.1.2)
+
+### Bug Fixes
+- Fixed interaction with extension enable button in Duolingo's home page when no API Key is set
+
+### New Features
+- Added Extension Badge identifying if use is using personal API Key
+
+# [Changelog v0.1.1 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](https://github.com/digas99/duo-explained/releases/tag/v0.1.1)
+Released on 20/03/2025
 
 ### Bug Fixes
 - Fixed weird misplacement of button when disabling the extension in the Duolingo's home page
@@ -10,6 +19,8 @@ Released on 19/03/2025
 
 ### New Features
 - Added possibility for the user to use a free limited version of ChatGPT OpenAI API
+
+---
 
 # [Changelog v0.0.5 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](https://github.com/digas99/duo-explained/releases/tag/v0.0.5)
 Released on 1/03/2025

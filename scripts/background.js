@@ -187,8 +187,33 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
     }
 
+    if (request.type === "SET_MODE") {
+        let tabId = sender.tab?.id || sender.tab;
+
+        if (tabId !== undefined) {
+            updateBadge(tabId, request.mode);
+        } else {
+            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                console.log(tabs);
+                if (tabs.length > 0 && tabs[0].id !== undefined) {
+                    updateBadge(tabs[0].id, request.mode);
+                }
+            });
+        }
+    }
+
     return true;
 });
+
+const updateBadge = (tabId, mode) => {
+    if (mode === "personal") {
+        chrome.action.setBadgeText({text: "🔑", tabId:tabId});
+        chrome.action.setBadgeBackgroundColor({color: "#202f36", tabId:tabId});
+    } else {
+        chrome.action.setBadgeText({text: "", tabId:tabId});
+        chrome.action.setBadgeBackgroundColor({color: "#202f36", tabId:tabId});
+    }
+}
 
 chrome.runtime.onInstalled.addListener(details => {
     console.log("Extension Reloaded");

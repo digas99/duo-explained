@@ -123,6 +123,7 @@
 								active = true;
 								chrome.storage.sync.set({ "API_MODE": "personal" });
 							}
+							chrome.runtime.sendMessage({ type: "SET_MODE", mode: "personal" });
 						}
 					});
 				}
@@ -352,25 +353,29 @@
 			const newTab = document.querySelector(".d-cgpt-tab");
 			chrome.storage.sync.get(["API_KEY", "SETTINGS"], data => {
 				const settings = data.SETTINGS || {};
-				const apiKey = data.API_KEY;
-				if (!apiKey) {
-					setupPrompt(newTab, 100);
-				} else {
-					const link = newTab.querySelector("a") || newTab;
-					if (link.classList.contains("d-cgpt-active")) {
-						// disable extension
-						link.classList.remove("d-cgpt-active");
-						active = false;
-					}
-					else {
-						// enable extension
-						link.classList.add("d-cgpt-active");
-						active = true;
-					}
 
-					settings["extension-enabled"] = link.classList.contains("d-cgpt-active");
-					chrome.storage.sync.set({"SETTINGS": settings}, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
+				const link = newTab.querySelector("a") || newTab;
+				
+				if (link.classList.contains("d-cgpt-active")) {
+					// disable extension
+					link.classList.remove("d-cgpt-active");
+					active = false;
+
+					const apiKey = data.API_KEY;
+					if (!apiKey)
+						setupPrompt(newTab, 100);
 				}
+				else {
+					// enable extension
+					link.classList.add("d-cgpt-active");
+					active = true;
+
+					// remove prompt
+					document.querySelector(".d-cgpt-prompt")?.remove();	
+				}
+
+				settings["extension-enabled"] = link.classList.contains("d-cgpt-active");
+				chrome.storage.sync.set({"SETTINGS": settings}, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
 			});
 		}
 	});

@@ -22,6 +22,7 @@ class SettingsManager {
 	loadFromLocal() {
 		return {
 			API_KEY: localStore.get("apiKey"),
+			API_MODE: localStore.get("apiMode") || "free",
 			UI_LANGUAGE: localStore.get("uiLanguage"),
 			VERSION: localStore.get("version"),
 			SETTINGS: {

@@ -12,6 +12,7 @@ import { apiModeManager } from "./apiManager.js";
 		const apiKeyRemove = document.querySelector("#remove-api-key");
 		const apiKeySave = document.querySelector("#save-api-key");
 
+		console.log(apiKey, apiMode);
 		if (apiKey) {
 			document.querySelector("#api-key").value = apiKey;
 			localStore.set("apiKey", apiKey);
@@ -20,6 +21,9 @@ import { apiModeManager } from "./apiManager.js";
 
 			apiKeyInput.value = apiKey;
 			apiKeyInput.dataset.original = apiKey;
+
+			apiKeyRemove.classList.remove("button-disabled");
+			apiKeySave.classList.add("button-disabled");
 		}
 		else {
 			if (apiMode === "personal")

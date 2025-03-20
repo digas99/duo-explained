@@ -147,6 +147,7 @@ export const apiModeManager = {
 			apiModeSelectedElement?.classList.remove("api-mode-selected");
 			document.querySelector(`.api-mode div[data-mode="${mode}"]`).classList.add("api-mode-selected");
 			await storage.set("API_MODE", mode);
+			localStore.set("apiMode", mode);
 
 			if (mode === "personal") {
 				const apiKeyWrapper = document.querySelector(".api-key-input");
@@ -160,7 +161,8 @@ export const apiModeManager = {
 
 			swapAPIMode(mode);
 		}
-
+		
+		chrome.runtime.sendMessage({ type: "SET_MODE", mode });
 		chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
 			chrome.tabs.sendMessage(tabs[0].id, {type: "SET_MODE", mode}, () => window.chrome.runtime.lastError);
 		});
