@@ -22,7 +22,7 @@
         await init();
     });
 
-	const fingerprint = import('/vendor/fingerprint.min.js').then(FingerprintJS => FingerprintJS.load());
+	const fingerprint = import('/lib/fingerprint.min.js').then(FingerprintJS => FingerprintJS.load());
 
 	let answerData, challengeData;
 

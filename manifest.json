@@ -44,7 +44,7 @@
 	],
     "web_accessible_resources": [
         {
-            "resources": ["scripts/content/duo.js", "vendor/fingerprint.min.js"],
+            "resources": ["scripts/content/duo.js", "lib/fingerprint.min.js"],
             "matches": ["https://duolingo.com/*", "https://www.duolingo.com/*", "https://preview.duolingo.com/*"]
         }
     ],
