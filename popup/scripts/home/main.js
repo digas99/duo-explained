@@ -16,8 +16,7 @@ import { apiModeManager } from "./apiManager.js";
 		if (apiKey) {
 			document.querySelector("#api-key").value = apiKey;
 			localStore.set("apiKey", apiKey);
-			if (apiMode === "personal")
-				apiModeManager.swapAPIMode("personal");
+			apiModeManager.swapAPIMode(apiMode);
 
 			apiKeyInput.value = apiKey;
 			apiKeyInput.dataset.original = apiKey;

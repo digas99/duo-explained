@@ -104,3 +104,8 @@
     color: rgb(var(--color-wolf));
     font-weight: bold;
 }
+
+.d-cgpt-settings-entry-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}

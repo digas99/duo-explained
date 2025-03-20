@@ -149,9 +149,15 @@ export const apiModeManager = {
 			await storage.set("API_MODE", mode);
 			localStore.set("apiMode", mode);
 
+			const apiKeyWrapper = document.querySelector(".api-key-input");
+			const modelSettingsEntry = document.querySelector("#d-cgpt-model");
 			if (mode === "personal") {
-				const apiKeyWrapper = document.querySelector(".api-key-input");
 				apiKeyWrapper?.style.removeProperty("opacity");
+				modelSettingsEntry?.parentElement.classList.remove("d-cgpt-settings-entry-disabled");
+			}
+			else if (mode === "free") {
+				apiKeyWrapper.style.opacity = 0.5;
+				modelSettingsEntry?.parentElement.classList.add("d-cgpt-settings-entry-disabled");
 			}
 		}
 		else {
@@ -178,8 +184,6 @@ export const apiModeManager = {
 		const mode = modeSelectedElement?.dataset.mode;
 		switch(mode) {
 			case "personal":
-				apiKeyInputWrapper.style.removeProperty("opacity");
-
 				if (apiKeyInput.value)
 					await apiModeManager.swapAPIMode(mode);
 				else {
@@ -188,7 +192,6 @@ export const apiModeManager = {
 
 				break;
 			case "free":
-				apiKeyInputWrapper.style.opacity = 0.5;
 				await apiModeManager.swapAPIMode(mode);
 				break;
 		}

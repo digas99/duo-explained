@@ -6,6 +6,7 @@
 
 ### New Features
 - Added Extension Badge identifying if use is using personal API Key
+- Disabled chatgpt model option when not using personal API Key
 
 # [Changelog v0.1.1 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.1.1)
 Released on 20/03/2025
