@@ -54,7 +54,8 @@
     "permissions": [
         "scripting",
         "storage",
-        "clipboardRead"
+        "clipboardRead",
+        "webNavigation"
     ],
     "host_permissions": [
         "https://duolingo.com/*",

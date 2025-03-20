@@ -28,6 +28,8 @@ chrome.runtime.onInstalled.addListener(details => {
     }
 });
 
+let tabId = null;
+
 let agent = new OpenAIAgent();
 
 /**
@@ -188,13 +190,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 
     if (request.type === "SET_MODE") {
-        let tabId = sender.tab?.id || sender.tab;
+        tabId = sender.tab?.id || sender.tab;
 
         if (tabId !== undefined) {
             updateBadge(tabId, request.mode);
         } else {
             chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-                console.log(tabs);
                 if (tabs.length > 0 && tabs[0].id !== undefined) {
                     updateBadge(tabs[0].id, request.mode);
                 }
@@ -205,7 +206,24 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
 });
 
-const updateBadge = (tabId, mode) => {
+// on tab load
+chrome.webNavigation.onDOMContentLoaded.addListener(async details => {
+	tabId = details.tabId;
+    await updateBadge(tabId);
+});
+
+// on tab switch
+chrome.tabs.onActivated.addListener(async activeInfo => {
+	tabId = activeInfo["tabId"];
+    await updateBadge(tabId);
+});
+
+const updateBadge = async (tabId, mode) => {
+    if (!mode) {
+        mode = await chrome.storage.sync.get("API_MODE");
+        mode = mode?.API_MODE || "free";
+    }
+
     if (mode === "personal") {
         chrome.action.setBadgeText({text: "🔑", tabId:tabId});
         chrome.action.setBadgeBackgroundColor({color: "#202f36", tabId:tabId});
@@ -215,7 +233,7 @@ const updateBadge = (tabId, mode) => {
     }
 }
 
-chrome.runtime.onInstalled.addListener(details => {
+chrome.runtime.onInstalled.addListener(async details => {
     console.log("Extension Reloaded");
     if (details.reason === "install" ||
         details.reason === "update") {
@@ -228,6 +246,8 @@ chrome.runtime.onInstalled.addListener(details => {
        });
 
         // set API mode default
-        chrome.storage.sync.set({ API_MODE: "free" });    
+        const mode = await chrome.storage.sync.get("API_MODE");
+        if (!mode.API_MODE)
+            chrome.storage.sync.set({ API_MODE: "free" });    
     }
 });

@@ -2,6 +2,7 @@
 
 ### Bug Fixes
 - Fixed interaction with extension enable button in Duolingo's home page when no API Key is set
+- Fixed dark mode not working on API Key page from extension popup
 
 ### New Features
 - Added Extension Badge identifying if use is using personal API Key
