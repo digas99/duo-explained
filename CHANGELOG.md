@@ -3,6 +3,7 @@
 ### Bug Fixes
 - Fixed weird misplacement of button when disabling the extension in the Duolingo's home page
 - Fixed wrong behavior of api mode information during a lesson while changing its value in the extension popup
+- Fixed explain requests breaking for new users
 
 # [Changelog v0.1.0 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](https://github.com/digas99/duo-explained/releases/tag/v0.1.0)
 Released on 19/03/2025

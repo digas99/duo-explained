@@ -201,5 +201,8 @@ chrome.runtime.onInstalled.addListener(details => {
             const settings = new SettingsComponent(loadedSettings, null, "SETTINGS");
             settings.setDefaults();
        });
+
+        // set API mode default
+        chrome.storage.sync.set({ API_MODE: "free" });    
     }
 });
