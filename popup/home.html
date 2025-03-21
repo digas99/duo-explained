@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,8 @@
 
 	<link rel="stylesheet" href="styles/home.css">
 	<script src="/scripts/settings.js"></script>
+	<script src="/lib/i18nextHttpBackend.min.js"></script>
+	<script src="/lib/i18next.min.js"></script>
 </head>
 <body>
 	<div class="top">
@@ -35,17 +37,17 @@
 	</div>
 
 	<div class="element api-key-input" style="opacity: 0.5; padding-top: 20px;">
-		<div class="title">ChatGPT API Key <a href="apikey.html" title="How do I get a ChatGPT API Key?"><img class="icon" src="/images/icons/about.png" alt="help"></a></div>
+		<div class="title" data-i18n="gptAPIKeyTitle">ChatGPT API Key <a href="apikey.html" title="How do I get a ChatGPT API Key?"><img class="icon" src="/images/icons/about.png" alt="help"></a></div>
 		<div class="input-wrapper">
 			<input type="text" id="api-key" placeholder="API Key">
 			<img id="copy-api-key" class="icon" title="Copy API Key" src="/images/icons/copy.png" alt="copy">
 			<img id="paste-api-key" class="icon" title="Paste API Key" style="width: 25px;" src="/images/icons/paste.png" alt="paste">
 		</div>
-		<a class="link" href="apikey.html">How do I get a ChatGPT API Key?</a>
+		<a class="link" href="apikey.html" data-i18n="gptAPIKeyHowTo">How do I get a ChatGPT API Key?</a>
 		<div class="buttons">
-			<button class="button-disabled" id="save-api-key">Save</button>
-			<button class="button-disabled" id="cancel-action-api-key">Reset</button>
-			<button id="remove-api-key">Remove</button>
+			<button class="button-disabled" id="save-api-key" data-i18n="btnSave">Save</button>
+			<button class="button-disabled" id="cancel-action-api-key" data-i18n="btnReset">Reset</button>
+			<button id="remove-api-key" data-i18n="btnRemove">Remove</button>
 		</div>
 	</div>
 
@@ -53,14 +55,13 @@
 
 	<div id="settings"></div>
 
-
 	<div class="footer">
 		<div class="links">
 			<a href="https://github.com/digas99/duo-explained" title="https://github.com/digas99/duo-explained" target="_blank">GitHub</a>
 			<a href="https://duolingo.com/" title="https://duolingo.com/" target="_blank">Duolingo</a>
-			<a href="https://platform.openai.com/api-keys" title="https://platform.openai.com/api-keys" target="_blank">API Key</a>
-			<a href="https://github.com/digas99/duo-explained/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml" title="https://github.com/digas99/duo-explained/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml" target="_blank">Report Issue</a>
-			<a href="https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno/reviews#:~:text=Write%20a%20Review" title="https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno/reviews" target="_blank">Rate Us</a>
+			<a href="https://platform.openai.com/api-keys" title="https://platform.openai.com/api-keys" target="_blank" data-i18n="APIKey">API Key</a>
+			<a href="https://github.com/digas99/duo-explained/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml" title="https://github.com/digas99/duo-explained/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml" target="_blank" data-i18n="popupFooterReportIssue">Report Issue</a>
+			<a href="https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno/reviews#:~:text=Write%20a%20Review" title="https://chromewebstore.google.com/detail/duo-explained/ibnifmdhbaknbkgldmbnebeidephchno/reviews" target="_blank" data-i18n="popupFooterRateUs">Rate Us</a>
 		</div>
 	</div>
 
