@@ -87,9 +87,7 @@ storage.get(["API_KEY", "MODEL"], (result) => {
  * If the message type is "EXTENSION_VERSION", the extension version is sent as a response.
  */
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    console.log("Received message", request);
     if (request.type === "QUERY") {
-        console.log("Received query request");
         (async () => {
             if (agent) {
                 try {

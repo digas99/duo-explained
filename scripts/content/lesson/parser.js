@@ -80,7 +80,7 @@ class ChallengeParser {
 
 		return {
 			type,
-			wrapper,
+			// wrapper,
 			exercise,
 			content,
 			language

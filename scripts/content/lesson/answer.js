@@ -137,8 +137,8 @@ if (typeof window !== 'undefined') {
 				
 				const answerData = {
 					state: state,
-					wrapper: lessonFooter,
-					button: lessonFooter.querySelector(`button[data-test='player-next']`),
+					// wrapper: lessonFooter,
+					// button: lessonFooter.querySelector(`button[data-test='player-next']`),
 				}
 
 				if (state === "incorrect") {

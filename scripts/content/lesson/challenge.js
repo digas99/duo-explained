@@ -47,7 +47,7 @@ class ChallengeData {
 	get() {
 		return {
 			content: this.content,
-			wrapper: this.wrapper,
+			// wrapper: this.wrapper,
 			exercise: this.exercise,
 			type: this.type,
 			language: this.language
