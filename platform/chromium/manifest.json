@@ -1,0 +1,65 @@
+{
+    "name": "Duo Explained",
+    "description": "Get explanations for exercises on Duolingo using OpenAI's ChatGPT.",
+    "version": "0.1.3",
+    "manifest_version": 3,
+    "icons": {
+        "16":  "/images/logo/logo_16x16.png",
+        "32":  "/images/logo/logo_32x32.png",
+        "48":  "/images/logo/logo_48x48.png",
+        "128":  "/images/logo/logo_128x128.png"
+    },
+    "background": {
+        "service_worker": "scripts/background.js",
+        "type": "module"
+    },
+	"content_scripts": [
+		{
+			"matches": ["https://duolingo.com/*", "https://www.duolingo.com/*", "https://preview.duolingo.com/*"],
+			"js": [
+                "scripts/content/utils.js",
+                "scripts/content/theme.js", 
+                "scripts/content/essential.js",
+                "scripts/content/settings.js",
+
+                "lib/swiped-events.min.js",
+                "lib/showdown.min.js",
+                "lib/purify.min.js",
+
+                "scripts/content/lesson/parser.js",
+                "scripts/content/lesson/answer.js",
+                "scripts/content/lesson/challenge.js",
+                "scripts/content/lesson/lesson.js"
+            ],
+			"css": [
+                "styles/styles.css",
+                "styles/settings.css"
+            ]
+		}
+	],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "scripts/content/duo.js",
+                "lib/fingerprint.min.js",
+                "/scripts/settings.js",
+                "/scripts/config.js"
+            ],
+            "matches": ["https://duolingo.com/*", "https://www.duolingo.com/*", "https://preview.duolingo.com/*"]
+        }
+    ],
+    "action": {
+        "default_popup": "popup/home.html"
+    },
+    "permissions": [
+        "scripting",
+        "storage",
+        "clipboardRead",
+        "webNavigation"
+    ],
+    "host_permissions": [
+        "https://duolingo.com/*",
+        "https://www.duolingo.com/*",
+        "https://preview.duolingo.com/*"
+    ]
+}
