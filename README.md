@@ -85,7 +85,7 @@ Duo Explained is a browser extension designed to integrate OpenAI's ChatGPT capa
 
 ## Mobile Setup
 
-To use the extension on mobile, you need to use a browser that supports extensions. Please follow the detailed steps in [SETUP.md](SETUP.md).
+To use the extension on mobile, you need to use a browser that supports extensions. Please follow the detailed steps in [docs/MOBILE_SETUP.md](docs/MOBILE_SETUP.md).
 
 ---
 

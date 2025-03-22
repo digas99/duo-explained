@@ -134,7 +134,7 @@
 					let error = result.message;
 					
 					if (result.status === 429) {
-						error += ` Please check <a style='color: rgb(var(--color-macaw));' target='_blank' href='${urls.EXTENSION_REPO}/blob/main/docs/help/API_KEY.md'>here</a> how to solve this issue.`;
+						error += ` Please check <a style='color: rgb(var(--color-macaw));' target='_blank' href='${urls.EXTENSION_REPO}/blob/main/docs/API_KEY.md'>here</a> how to solve this issue.`;
 					}
 
 					const promptMessage = document.querySelector(".d-cgpt-prompt-message");

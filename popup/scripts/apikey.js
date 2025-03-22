@@ -1,5 +1,5 @@
 (async () => {
-	const content = await fetch('/docs/help/API_KEY.md').then((response) => response.text()).then((text) => text);
+	const content = await fetch('/docs/API_KEY.md').then((response) => response.text()).then((text) => text);
 	
 	const converter = new showdown.Converter();
 	let html = converter.makeHtml(content);
