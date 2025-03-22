@@ -67,6 +67,17 @@ Here is a step-by-step guide on how to use Duo Explained on your mobile device:
 		<img src="../images/screenshots/mobile-setup/edge/Screenshot_20250322_212214.jpg" width=200>
 	</div>
 
+3. It sould now be available on your home screen, and if you open it from there, it will feel like you are using the Duolingo Mobile App (it will never be the same as the actual Duolingo Mobile App because it is limited to what features the Duolingo team implements in the browser version, but it is still a very good and complete experience).
+
+	<div style="gap: 10px; display: flex;">
+		<img src="../images/screenshots/mobile-setup/edge/Screenshot_20250322_212310_One UI Home.jpg" width=200>
+		<img src="../images/screenshots/mobile-setup/edge/Screenshot_20250322_213227.jpg" width=200>
+	</div>
+
+4. Start a lesson and try it for yourself!
+   
+   <img src="../images/screenshots/mobile-setup/edge/Screenshot_20250322_213351.jpg" width=200>
+
 ## Kiwi Browser
 
 > **Note:** Kiwi Browser is no longer being updated. The developers recommend using Edge Canary instead. If you still want to use Kiwi Browser, you can get the APK from their official source [Release 12867802748](https://github.com/kiwibrowser/src.next/releases/tag/12867802748).
