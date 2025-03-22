@@ -2,11 +2,10 @@
  * @fileoverview Background script for handling messages from the content scripts and querying the OpenAI API.
  */
 
-importScripts(
-    "/scripts/ai/chatgpt.js",
-    "/scripts/ai/query.js",
-    "/scripts/settings.js",
-)
+import { OpenAIAgent } from "./ai/chatgpt.js";
+import { QueryGenerator } from "./ai/query.js";
+import { SettingsComponent } from "./settings.js";
+import { urls } from "./config.js";
 
 chrome.runtime.onInstalled.addListener(details => {
     if (details.reason == "update") {
@@ -77,7 +76,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                             return;
                         }
 
-                        const response = await fetch("https://duo-explained-proxy.andreclerigo.com/proxy", {
+                        const response = await fetch(urls.API_PROXY, {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"
@@ -241,7 +240,15 @@ chrome.runtime.onInstalled.addListener(async details => {
         // set defaults for settings
        chrome.storage.sync.get(["SETTINGS"], result => {
             const loadedSettings = result.SETTINGS || {};
-            const settings = new SettingsComponent(loadedSettings, null, "SETTINGS");
+            const settings = new SettingsComponent(
+                loadedSettings,
+                null,
+                "SETTINGS",
+                {
+                    "duolingo": urls.DUOLINGO,
+                    "assets": urls.ASSETS,
+                }
+            );
             settings.setDefaults();
        });
 

@@ -497,8 +497,6 @@ class ChallengeParser {
 
 if (typeof window !== 'undefined') {
     window.ChallengeParser = ChallengeParser;
-} else {
-    module.exports = ChallengeParser;
 }
 
 

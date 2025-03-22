@@ -213,12 +213,15 @@ a {
 
 .input-wrapper > img {
 	width: 20px;
-	cursor: pointer;
-	filter: invert(83%) sepia(29%) saturate(5497%) hue-rotate(102deg) brightness(90%) contrast(101%) !important;
 }
 
 .input-wrapper > img:hover {
 	opacity: 0.5;
+}
+
+.icon-colored {
+	cursor: pointer;
+	filter: invert(83%) sepia(29%) saturate(5497%) hue-rotate(102deg) brightness(90%) contrast(101%) !important;
 }
 
 .icon-accent {

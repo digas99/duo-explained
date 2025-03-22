@@ -116,8 +116,6 @@ class ChallengeData {
 
 if (typeof window !== 'undefined') {
     window.ChallengeData = ChallengeData;
-} else {
-    module.exports = ChallengeData;
 }
 
 (async () => {

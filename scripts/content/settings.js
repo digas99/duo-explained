@@ -1,4 +1,7 @@
-(() => {
+(async () => {
+	const { SettingsComponent } = await import(chrome.runtime.getURL("scripts/settings.js"));
+	const { urls } = await import(chrome.runtime.getURL("scripts/config.js"));
+
 	const injectSettings = root => {
 		const firstSection = root.querySelector("section");
 		const firstHeader = firstSection.firstElementChild;
@@ -13,7 +16,15 @@
 		firstSection.parentElement.insertBefore(settingsWrapper, firstSection);
 		settingsWrapper.appendChild(settingsHeader);
 
-		const settings = new SettingsComponent(SettingsComponent.defaults, settingsWrapper, 'SETTINGS');
+		const settings = new SettingsComponent(
+			null,
+			settingsWrapper,
+			'SETTINGS',
+			{
+				"duolingo": urls.DUOLINGO,
+				"assets": urls.ASSETS,
+			}
+		);
 		settings.build();
 		
 		chrome.storage.sync.get(["UI_LANGUAGE"], data => {

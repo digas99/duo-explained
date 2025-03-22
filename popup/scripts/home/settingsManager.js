@@ -1,8 +1,18 @@
 import { storage, localStore } from "../storage.js";
+import { SettingsComponent } from "/scripts/settings.js";
+import { urls } from "/scripts/config.js";
 
 class SettingsManager {
 	constructor() {
-		this.settings = new SettingsComponent(SettingsComponent.defaults, document.querySelector("#settings"), 'SETTINGS');
+		this.settings = new SettingsComponent(
+			null, // use defaults
+			document.querySelector("#settings"),
+			'SETTINGS',
+			{
+				"duolingo": urls.DUOLINGO,
+				"assets": urls.ASSETS,
+			}
+		);
 		this.settings.build();
 	}
 

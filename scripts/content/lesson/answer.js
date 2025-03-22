@@ -80,8 +80,6 @@ class AnswerData {
 
 if (typeof window !== 'undefined') {
     window.AnswerData = AnswerData;
-} else {
-    module.exports = AnswerData;
 }
 
 (async () => {

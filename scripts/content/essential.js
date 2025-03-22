@@ -3,6 +3,8 @@
  */
 
 (async () => {
+	const { urls } = await import(chrome.runtime.getURL("scripts/config.js"));
+
 	let active = false, showIconMobile = true;
 
 	// kick starter
@@ -132,7 +134,7 @@
 					let error = result.message;
 					
 					if (result.status === 429) {
-						error += " Please check <a style='color: rgb(var(--color-macaw));' target='_blank' href='https://github.com/digas99/duo-explained/blob/main/docs/help/API_KEY.md'>here</a> how to solve this issue.";
+						error += ` Please check <a style='color: rgb(var(--color-macaw));' target='_blank' href='${urls.EXTENSION_REPO}/blob/main/docs/help/API_KEY.md'>here</a> how to solve this issue.`;
 					}
 
 					const promptMessage = document.querySelector(".d-cgpt-prompt-message");
@@ -188,7 +190,7 @@
 		const tabText = tab.querySelector("span span");
 		tabText.innerText = "Duo Explained";
 		const tabIcon = tab.querySelector("img");
-		tabIcon.src = "https://andreclerigo.github.io/duo-explained-assets/logo.png";
+		tabIcon.src = `${urls.ASSETS}/logo.png`;
 		return tab;
 	}
 
@@ -208,7 +210,7 @@
 		BETADiv.innerText = "BETA";
 		tab.appendChild(BETADiv);
 		const tabIcon = tab.querySelector("img");
-		tabIcon.src = "https://andreclerigo.github.io/duo-explained-assets/logo.png";
+		tabIcon.src = `${urls.ASSETS}/logo.png`;
 		return tab;
 	}
 
@@ -217,10 +219,10 @@
 			<div class="d-cgpt-prompt" style="bottom: -100px;">
 				<p class="d-cgpt-prompt-message"></p>
 				<div>
-					<img src="https://andreclerigo.github.io/duo-explained-assets/logo-stroke.png">
+					<img src="${urls.ASSETS}/logo-stroke.png">
 					<input type="text" placeholder="ChatGPT API Key">
 					<button>Submit</button>
-					<img id="d-cgpt-prompt-close" class="d-cgpt-prompt-icon d-cgpt-button" src="https://andreclerigo.github.io/duo-explained-assets/icons/close-thick.png">
+					<img id="d-cgpt-prompt-close" class="d-cgpt-prompt-icon d-cgpt-button" src="${urls.ASSETS}/icons/close-thick.png">
 				</div>
 			</div>
 		`;
@@ -234,7 +236,7 @@
 					<div class="d-cgpt-popup-header">
 						<div class="d-cgpt-popup-header-title">${title || ""}</div>
 						<div class="d-cgpt-popup-header-close">
-							<img class="d-cgpt-icon-duo-ui" src="https://andreclerigo.github.io/duo-explained-assets/icons/close-thick.png">
+							<img class="d-cgpt-icon-duo-ui" src="${urls.ASSETS}/icons/close-thick.png">
 						</div>
 					</div>
 					<div class="d-cgpt-popup-content"></div>
@@ -397,7 +399,7 @@
 				console.log(response.data);
 				const label = "# [Changelog";
 				const data = response.data.split(label);
-				addPopup(document.body, "<img width='25' src='https://andreclerigo.github.io/duo-explained-assets/logo.png'> Extension Updated", wrapper => {
+				addPopup(document.body, `<img width='25' src='${urls.ASSETS}/logo.png'> Extension Updated`, wrapper => {
 					const options = {
 						noHeaderId: true,
 						disableForced4SpacesIndentedSublists: true,

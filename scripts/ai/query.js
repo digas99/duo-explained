@@ -25,7 +25,7 @@
 */
 
 
-class QueryGenerator {
+export class QueryGenerator {
 
     /**
      * Generates a prompt for ChatGPT to explain the exercise or the user's answer.

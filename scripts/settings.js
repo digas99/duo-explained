@@ -1,5 +1,115 @@
-class SettingsComponent {
-	constructor(settings, wrapper, storeKey) {
+export class SettingsComponent {
+	constructor(settings, wrapper, storeKey, urls) {
+		this.wrapper = wrapper;
+		this.storeKey = storeKey;
+		this.urls = urls;
+
+		this.defaults = [
+			{
+				type: "checkbox",
+				group: "",
+				label: "Extension enabled",
+				description: "Enable or disable the possibility to query ChatGPT for explanations.",
+				default: true,
+				key: "extension-enabled"
+			},
+			{
+				type: "checkbox",
+				group: "lessons",
+				label: "Explanation typing animation",
+				description: "Typing animation with the response from ChatGPT.",
+				default: true,
+				key: "typing-animation"
+			},
+			{
+				type: "select",
+				group: "lessons",
+				label: "GPT model",
+				description: "The model to use with ChatGPT.",
+				default: "gpt-4o-mini",
+				options: [
+					"chatgpt-4o-latest",
+					"gpt-3.5-turbo",
+					"gpt-4o-mini",
+					"gpt-4o",
+					"gpt-4",
+					"gpt-4-turbo",
+				],
+				key: "model"
+			},
+			{
+				type: "select",
+				group: "lessons",
+				label: "Explanation language",
+				description: "The language that ChatGPT will use to explain the exercise.",
+				default: "Auto",
+				options: [
+					"Auto",
+					"Bahasa Ind.",
+					"Čeština",
+					"Deutsch",
+					"English",
+					"Español",
+					"Français",
+					"Italiano",
+					"Magyar",
+					"Nederlands",
+					"Polski",
+					"Português",
+					"Română",
+					"Tagalog",
+					"Tiếng Việt",
+					"Türkçe",
+					"Ελληνικά",
+					"Русский",
+					"Українською",
+					"العربية",
+					"हिंदी",
+					"বাংলা",
+					"తెలుగు",
+					"ภาษาไทย",
+					"한국어",
+					"中文",
+					"日本語"
+				],
+				key: "language"
+			},
+			{
+				type: "checkbox",
+				group: "mobile",
+				label: "Remove Continue in App",
+				description: "Remove constant prompt asking to continue in the app.",
+				default: true,
+				key: "remove-continue-app"
+			},
+			{
+				type: "checkbox",
+				group: "mobile",
+				label: "Extension Icon",
+				description: "Show the extension icon in the toolbar (this might cause overflow).",
+				default: true,
+				key: "mobile-extension-icon"
+			},
+			{
+				type: "checkbox",
+				group: "lessons",
+				label: "Show used Tokens in Stats",
+				description: "Show the number of tokens used throughout a lesson in the stats at the end.",
+				default: true,
+				key: "show-used-tokens"
+			},
+			{
+				type: "external",
+				group: "app",
+				label: "Extension Theme",
+				description: "Change between light and dark mode. It will match the theme of the Duolingo website.",
+				link: `${this.urls.duolingo}/settings/account#:~:text=Appearance-,Dark%20mode,-ON`,
+				key: "extension-theme"
+			}
+		];
+
+		settings = settings || this.defaults;
+
 		// group settings by 'group' key
 		if (typeof settings.reduce === "function") {
 			this.settings = settings.reduce((acc, setting) => {
@@ -12,9 +122,6 @@ class SettingsComponent {
 			}, {});
 		}
 
-		this.wrapper = wrapper;
-		this.storeKey = storeKey;
-
 		if (this.wrapper) {
 			chrome.storage.sync.get([this.storeKey], result => {
 				const settings = result[this.storeKey];
@@ -25,113 +132,41 @@ class SettingsComponent {
 		}
 	}
 
-	static defaults = [
-		{
-			type: "checkbox",
-			group: "",
-			label: "Extension enabled",
-			description: "Enable or disable the possibility to query ChatGPT for explanations.",
-			default: true,
-			key: "extension-enabled"
+	static groups = {
+		general: {
+			value: "General",
+			order: 0,
 		},
-		{
-			type: "checkbox",
-			group: "lessons",
-			label: "Explanation typing animation",
-			description: "Typing animation with the response from ChatGPT.",
-			default: true,
-			key: "typing-animation"
+		lessons: {
+			value: "Lessons",
+			order: 1,
 		},
-		{
-			type: "select",
-			group: "lessons",
-			label: "GPT model",
-			description: "The model to use with ChatGPT.",
-			default: "gpt-4o-mini",
-			options: [
-				"chatgpt-4o-latest",
-				"gpt-3.5-turbo",
-				"gpt-4o-mini",
-				"gpt-4o",
-				"gpt-4",
-				"gpt-4-turbo",
-			],
-			key: "model"
+		app: {
+			value: "App",
+			order: 2,
 		},
-		{
-			type: "select",
-			group: "lessons",
-			label: "Explanation language",
-			description: "The language that ChatGPT will use to explain the exercise.",
-			default: "Auto",
-			options: [
-				"Auto",
-				"Bahasa Ind.",
-				"Čeština",
-				"Deutsch",
-				"English",
-				"Español",
-				"Français",
-				"Italiano",
-				"Magyar",
-				"Nederlands",
-				"Polski",
-				"Português",
-				"Română",
-				"Tagalog",
-				"Tiếng Việt",
-				"Türkçe",
-				"Ελληνικά",
-				"Русский",
-				"Українською",
-				"العربية",
-				"हिंदी",
-				"বাংলা",
-				"తెలుగు",
-				"ภาษาไทย",
-				"한국어",
-				"中文",
-				"日本語"
-			],
-			key: "language"
+		mobile: {
+			value: "Mobile",
+			order: 3,
 		},
-		{
-			type: "checkbox",
-			group: "mobile",
-			label: "Remove Continue in App",
-			description: "Remove constant prompt asking to continue in the app.",
-			default: true,
-			key: "remove-continue-app"
-		},
-		{
-			type: "checkbox",
-			group: "mobile",
-			label: "Extension Icon",
-			description: "Show the extension icon in the toolbar (this might cause overflow).",
-			default: true,
-			key: "mobile-extension-icon"
-		},
-		{
-			type: "checkbox",
-			group: "lessons",
-			label: "Show used Tokens in Stats",
-			description: "Show the number of tokens used throughout a lesson in the stats at the end.",
-			default: true,
-			key: "show-used-tokens"
-		}
-	];
+	}
 
 	build() {
 		let html = "";
-		Object.entries(this.settings).forEach(([group, settings]) => {
+
+		const groups = Object.keys(this.settings).sort((a, b) => SettingsComponent.groups[a].order - SettingsComponent.groups[b].order);
+		groups.forEach(group => {
 			let groupHtml = "";
-			settings.forEach(setting => {
+			this.settings[group].forEach(setting => {
 				switch (setting.type) {
 					case "checkbox":
 						groupHtml += SettingsComponent.buildCheckbox(setting);
 						break;
 					case "select":
 						groupHtml += SettingsComponent.buildSelect(setting);
+						break;
+					case "external":
+						groupHtml += SettingsComponent.buildExternal(setting, `${this.urls.assets}/icons/foreign.png`);
 						break;
 				}
 			});
@@ -142,6 +177,7 @@ class SettingsComponent {
 				</div>
 			`;
 		});
+
 		this.wrapper.insertAdjacentHTML("beforeend", html);
 
 		let clickTarget = this.wrapper;
@@ -234,7 +270,7 @@ class SettingsComponent {
 			const storedSettings = result[this.storeKey] || {};
 			// only set defaults for settings that are not already stored
 			const defaulted = {};
-			SettingsComponent.defaults.forEach(setting => {
+			this.defaults.forEach(setting => {
 				if (!storedSettings.hasOwnProperty(setting.key)) {
 					defaulted[setting.key] = setting.default;
 				}
@@ -271,10 +307,17 @@ class SettingsComponent {
 			</div>
 		`;
 	}
+
+	static buildExternal(setting, iconSource) {
+		return /* html */ `
+			<a href="${setting.link}" target="_blank" class="d-cgpt-settings d-cgpt-settings-external" title="${setting.description}">
+				<label for="d-cgpt-${setting.key}">${setting.label} <div>${setting.description}</div></label>
+				<img id="d-cgpt-${setting.key}" class="d-cgpt-icon-accent icon-colored icon" src="${iconSource}" alt="External link" title="${setting.link}">
+			</a>
+		`;
+	}
 }
 
-if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
-    module.exports = SettingsComponent;
-} else if (typeof window !== "undefined") {
+if (typeof window !== "undefined") {
     window.SettingsComponent = SettingsComponent;
 }

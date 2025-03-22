@@ -16,6 +16,7 @@
     align-items: center;
 	column-gap: 15px;
     cursor: pointer;
+    text-decoration: unset;
 }
 
 .d-cgpt-settings-group {
@@ -30,7 +31,7 @@
     margin-top: 15px;
 }
 
-.d-cgpt-settings > label {
+.d-cgpt-settings label {
 	font-size: 15px;
 	font-weight: bold;
 	opacity: 0.6;
@@ -39,7 +40,7 @@
     width: 100%;
 }
 
-.d-cgpt-settings > label > div {
+.d-cgpt-settings label > div {
     font-size: 12px;
     font-weight: normal;
 	color: rgb(var(--color-wolf));
@@ -94,7 +95,7 @@
     border-color: var(--d-cgpt-accent-color);
 }
 
-.d-cgpt-settings-select > label {
+.d-cgpt-settings-select > label, .d-cgpt-settings-external > label {
     opacity: 1;
 }
 
@@ -108,4 +109,8 @@
 .d-cgpt-settings-entry-disabled {
     opacity: 0.5;
     pointer-events: none;
+}
+
+.d-cgpt-settings .icon {
+    width: 25px;
 }

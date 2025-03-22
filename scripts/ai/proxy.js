@@ -2,7 +2,7 @@
  * @fileoverview ProxyAgent class for interacting with your backend proxy server.
  */
 
-class ProxyAgent {
+export class ProxyAgent {
   /**
    * Constructs an instance of the ProxyAgent.
    */
