@@ -30,6 +30,11 @@ export const interfaceManager = {
 		const modelSelect = document.querySelector("#d-cgpt-model");
 		
 		modelSelect		.addEventListener("change", apiModelManager.modelSelectEvent);
+
+
+		// SETTINGS
+		const settings = document.querySelector("#settings");
+		settings 		.addEventListener("change", interfaceManager.settingsChangeEvent);
 	},
 
 	setDefaults(data) {
@@ -83,5 +88,25 @@ export const interfaceManager = {
 			versionLink.href = versionLink.href.replace("v0.0.0", "v"+version); 
 			versionLink.title = versionLink.title.replace("v0.0.0", "v"+version);
 		}
+
+		// app language
+		const appLanguage = data.SETTINGS["app-language"] || "en-rUS";
+		window.languageManager.changeLanguage(window.languageManager.getLanguageID(appLanguage));
+
 	},
+
+	settingsChangeEvent(e) {
+		const target = e.target;
+		if (target.closest("select")) {
+			const select = target.closest("select");
+			switch(select.id) {
+				case "d-cgpt-app-language":
+					const lang = select.value;
+					const langLabel = window.languageManager.getLanguageID(lang);
+					if (langLabel)
+						window.languageManager.changeLanguage(langLabel);
+					break;
+			}
+		}
+	}
 };

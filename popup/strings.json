@@ -1,0 +1,116 @@
+{
+    "settingsExtEnabled": {
+        "message": "Extension enabled"
+    },
+    "settingsEnabledDescription": {
+        "message": "Enable or disable the possibility to query ChatGPT for explanations."
+    },
+    "gptAPIKeyTitle": {
+        "message": "ChatGPT API Key"
+    },
+    "gptAPIKeyHowTo": {
+        "message": "How do I get a ChatGPT API Key?"
+    },
+    "btnSave": {
+        "message": "Save"
+    },
+    "btnReset": {
+        "message": "Reset"
+    },
+    "btnRemove": {
+        "message": "Remove"
+    },
+    "settingsLessonsLabel": {
+        "message": "Lessons"
+    },
+    "settingsTypingAnimation": {
+        "message": "Exaplanation typing animation"
+    },
+    "settingsTypingAnimationDescription": {
+        "message": "Typing animation with the response from ChatGPT."
+    },
+    "settingsGptModel": {
+        "message": "GPT model"
+    },
+    "settingsGptModelDescription": {
+        "message": "The model to use with ChatGPT."
+    },
+    "settingsExplanationLanguage": {
+        "message": "Explanation language"
+    },
+    "settingsExplanationLanguageDescription": {
+        "message": "The language that ChatGPT will use to explain the exercise."
+    },
+    "settingsTokensUsed": {
+        "message": "Show used Tokens in Stats"
+    },
+    "settingsTokensUsedDescription": {
+        "message": "Show the number of tokens used throughout a lesson in the stats at the end."
+    },
+    "settingsMobileLabel": {
+        "message": "Mobile"
+    },
+    "settingsRemoveContinueInApp": {
+        "message": "Remove Continue in App"
+    },
+    "settingsRemoveContinueInAppDescription": {
+        "message": "Remove constant prompt asking to continue in the app."
+    },
+    "settingsExtensionIcon": {
+        "message": "Extension Icon"
+    },
+    "settingsExtensionIconDescription": {
+        "message": "Show the extension icon in the toolbar (this might cause overflow)."
+    },
+    "APIKey": {
+        "message": "API Key"
+    },
+    "popupFooterReportIssue": {
+        "message": "Report Issue"
+    },
+    "popupFooterRateUs": {
+        "message": "Rate Us"
+    },
+    "gptExtraQuery": {
+        "message": "If you want, add to the query to ChatGPT..."
+    },
+    "explainButton": {
+        "message": "Explain"
+    },
+    "explanationTitle": {
+        "message": "Explanation from ChatGPT"
+    },
+    "reportBugLabel": {
+        "message": "Report a Bug"
+    },
+    "reportBugExerciseType": {
+        "message": "Exercise Type"
+    },
+    "reportBugExtensionVersion": {
+        "message": "Extension Version"
+    },
+    "apiKeyRateLimitMessage": {
+        "message": "API Key either exceeded the rate limit or is on a Free tier. Please check here how to solve this issue."
+    },
+    "apiKeyNotValidMessage": {
+        "message": "API Key is not valid!"
+    },
+    "apiKeySubmitButton": {
+        "message": "Submit"
+    },
+    "settingsAppLabel": {
+        "message": "App"
+    },
+    "settingsAppLanguage": {
+        "message": "App Language"
+    },
+    "settingsAppLanguageDescription": {
+        "message": "The language of this Extension's interface."
+    },
+    "settingsExtensionTheme": {
+        "message": "Extension Theme"
+    },
+    "settingsExtensionThemeDescription": {
+        "message": "Change between light and dark mode. It will match the theme of the Duolingo website."
+    }
+}

@@ -1,4 +1,10 @@
-# [Changelog v0.1.3 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.1.3)
+# [Changelog v0.2.0 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.2.0)
+
+### New Features
+- Added Extension UI language selection
+
+# [Changelog v0.1.3 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](https://github.com/digas99/duo-explained/releases/tag/v0.1.3)
+Released on 22/03/2025
 
 ### Bug Fixes
 - Minor fixes of errors under the hood
@@ -6,7 +12,7 @@
 ### New Features
 - Added section to settings to send the user to Duolingo's settings to change the appearance theme
 
-# [Changelog v0.1.2 &nbsp; <img src="https://img.shields.io/badge/Developing-c7a510">](https://github.com/digas99/duo-explained/releases/tag/v0.1.2)
+# [Changelog v0.1.2 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2e">](https://github.com/digas99/duo-explained/releases/tag/v0.1.2)
 Released on 20/03/2025
 
 ### Bug Fixes

@@ -9,24 +9,42 @@ export class SettingsComponent {
 			{
 				type: "checkbox",
 				group: "",
-				label: "Extension enabled",
-				description: "Enable or disable the possibility to query ChatGPT for explanations.",
+				label: {
+					value: "Extension enabled",
+					i18n: "settingsExtEnabled"
+				},
+				description: {
+					value: "Enable or disable the possibility to query ChatGPT for explanations.",
+					i18n: "settingsEnabledDescription"
+				},
 				default: true,
 				key: "extension-enabled"
 			},
 			{
 				type: "checkbox",
 				group: "lessons",
-				label: "Explanation typing animation",
-				description: "Typing animation with the response from ChatGPT.",
+				label: {
+					value: "Explanation typing animation",
+					i18n: "settingsTypingAnimation"
+				},
+				description: {
+					value: "Typing animation with the response from ChatGPT.",
+					i18n: "settingsTypingAnimationDescription"
+				},
 				default: true,
 				key: "typing-animation"
 			},
 			{
 				type: "select",
 				group: "lessons",
-				label: "GPT model",
-				description: "The model to use with ChatGPT.",
+				label: {
+					value: "GPT model",
+					i18n: "settingsGptModel"
+				},
+				description: {
+					value: "The model to use with ChatGPT.",
+					i18n: "settingsGptModelDescription"
+				},
 				default: "gpt-4o-mini",
 				options: [
 					"chatgpt-4o-latest",
@@ -41,8 +59,14 @@ export class SettingsComponent {
 			{
 				type: "select",
 				group: "lessons",
-				label: "Explanation language",
-				description: "The language that ChatGPT will use to explain the exercise.",
+				label: {
+					value: "Explanation language",
+					i18n: "settingsExplanationLanguage"
+				},
+				description: {
+					value: "The language that ChatGPT will use to explain the exercise.",
+					i18n: "settingsExplanationLanguageDescription"
+				},
 				default: "Auto",
 				options: [
 					"Auto",
@@ -78,35 +102,81 @@ export class SettingsComponent {
 			{
 				type: "checkbox",
 				group: "mobile",
-				label: "Remove Continue in App",
-				description: "Remove constant prompt asking to continue in the app.",
+				label: {
+					value: "Remove Continue in App",
+					i18n: "settingsRemoveContinueInApp"
+				},
+				description: {
+					value: "Remove constant prompt asking to continue in the app.",
+					i18n: "settingsRemoveContinueInAppDescription"
+				},
 				default: true,
 				key: "remove-continue-app"
 			},
 			{
 				type: "checkbox",
 				group: "mobile",
-				label: "Extension Icon",
-				description: "Show the extension icon in the toolbar (this might cause overflow).",
+				label: {
+					value: "Extension Icon",
+					i18n: "settingsExtensionIcon"
+				},
+				description: {
+					value: "Show the extension icon in the toolbar (this might cause overflow).",
+					i18n: "settingsExtensionIconDescription"
+				},
 				default: true,
 				key: "mobile-extension-icon"
 			},
 			{
 				type: "checkbox",
 				group: "lessons",
-				label: "Show used Tokens in Stats",
-				description: "Show the number of tokens used throughout a lesson in the stats at the end.",
+				label: {
+					value: "Show used Tokens in Stats",
+					i18n: "settingsTokensUsed"
+				},
+				description: {
+					value: "Show the number of tokens used throughout a lesson in the stats at the end.",
+					i18n: "settingsTokensUsedDescription"
+				},
 				default: true,
 				key: "show-used-tokens"
 			},
 			{
 				type: "external",
 				group: "app",
-				label: "Extension Theme",
-				description: "Change between light and dark mode. It will match the theme of the Duolingo website.",
+				label: {
+					value: "Extension Theme",
+					i18n: "settingsExtensionTheme"
+				},
+				description: {
+					value: "Change between light and dark mode. It will match the theme of the Duolingo website.",
+					i18n: "settingsExtensionThemeDescription"
+				},
 				link: `${this.urls.duolingo}/settings/account#:~:text=Appearance-,Dark%20mode,-ON`,
 				key: "extension-theme"
-			}
+			},
+			{
+				type: "select",
+				group: "app",
+				label: {
+					value: "App Language",
+					i18n: "settingsAppLanguage"
+				},
+				description: {
+					value: "The language of this Extension's interface.",
+					i18n: "settingsAppLanguageDescription"
+				},
+				default: "English (US)",
+				options: [
+					"العربية",
+					"English (US)",
+					"Français",
+					"Português",
+					"Português (Brasil)",
+					"Русский"
+				],
+				key: "app-language"
+			},
 		];
 
 		settings = settings || this.defaults;
@@ -142,14 +212,17 @@ export class SettingsComponent {
 		},
 		lessons: {
 			value: "Lessons",
+			i18n: "settingsLessonsLabel",
 			order: 1,
 		},
 		app: {
 			value: "App",
+			i18n: "settingsAppLabel",
 			order: 2,
 		},
 		mobile: {
 			value: "Mobile",
+			i18n: "settingsMobileLabel",
 			order: 3,
 		},
 	}
@@ -173,9 +246,10 @@ export class SettingsComponent {
 						break;
 				}
 			});
-			html += /* html */ `
+			const groupData = SettingsComponent.groups[group];
+			html += /* htmy: Explanation typing animationl */ `
 				<div class="d-cgpt-settings-group" data-type="${group}">
-					${group === "general" ? "" : `<h3>${group[0].toUpperCase() + group.slice(1)}</h3>`}
+					${group === "general" ? "" : `<h3 data-i18n="${groupData.i18n}">${groupData.value}</h3>`}
 					${groupHtml}
 				</div>
 			`;
@@ -285,8 +359,8 @@ export class SettingsComponent {
 
 	static buildCheckbox(setting) {
 		return /* html */ `
-			<div class="d-cgpt-settings d-cgpt-settings-checkbox" title="${setting.description}">
-				<label for="d-cgpt-${setting.key}">${setting.label} <div>${setting.description}</div></label>
+			<div class="d-cgpt-settings d-cgpt-settings-checkbox" title="${setting.description.value}">
+				<label for="d-cgpt-${setting.key}"><span data-i18n="${setting.label.i18n}">${setting.label.value}</span> <div data-i18n="${setting.description.i18n}">${setting.description.value}</div></label>
 				<div class="d-cgpt-custom-checkbox">
 					<input data-type="checkbox" type="checkbox" id="d-cgpt-${setting.key}">
 					<div class="d-cgpt-custom-checkbox-back"></div>
@@ -302,8 +376,8 @@ export class SettingsComponent {
 			options += `<option value="${option}">${option}</option>`;
 		});
 		return /* html */ `
-			<div class="d-cgpt-settings d-cgpt-settings-select" title="${setting.description}">
-				<label for="d-cgpt-${setting.key}">${setting.label} <div>${setting.description}</div></label>
+			<div class="d-cgpt-settings d-cgpt-settings-select" title="${setting.description.value}">
+				<label for="d-cgpt-${setting.key}"><span data-i18n="${setting.label.i18n}">${setting.label.value}</span> <div data-i18n="${setting.description.i18n}">${setting.description.value}</div></label>
 				<select data-type="select" id="d-cgpt-${setting.key}">
 					${options}
 				</select>
@@ -314,7 +388,7 @@ export class SettingsComponent {
 	static buildExternal(setting, iconSource) {
 		return /* html */ `
 			<a href="${setting.link}" target="_blank" class="d-cgpt-settings d-cgpt-settings-external" title="${setting.description}">
-				<label for="d-cgpt-${setting.key}">${setting.label} <div>${setting.description}</div></label>
+				<label for="d-cgpt-${setting.key}"><span data-i18n="${setting.label.i18n}">${setting.label}</span> <div data-i18n="${setting.description.i18n}">${setting.description}</div></label>
 				<img id="d-cgpt-${setting.key}" class="d-cgpt-icon-accent icon-colored icon" src="${iconSource}" alt="External link" title="${setting.link}">
 			</a>
 		`;
