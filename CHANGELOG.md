@@ -1,4 +1,9 @@
-# [Changelog v0.1.2 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.1.2)
+# [Changelog v0.1.3 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.1.3)
+
+### New Features
+- Added section to settings to send the user to Duolingo's settings to change the appearance theme
+
+# [Changelog v0.1.2 &nbsp; <img src="https://img.shields.io/badge/Developing-c7a510">](https://github.com/digas99/duo-explained/releases/tag/v0.1.2)
 Released on 20/03/2025
 
 ### Bug Fixes
