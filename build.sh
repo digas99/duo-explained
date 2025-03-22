@@ -32,7 +32,7 @@ if [ -f "$MANIFEST_PATH/$FILENAME" ]; then
 		cp $MANIFEST_PATH/manifest.json .
 
 		# pick files and folders to zip
-		zip -r "$ZIPNAME" manifest.json images scripts styles popup docs lib
+		zip -r "$ZIPNAME" manifest.json images scripts styles popup docs lib locales
 
 		# remove manifest
 		rm manifest.json
