@@ -1,5 +1,8 @@
 # [Changelog v0.1.3 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.1.3)
 
+### Bug Fixes
+- Minor fixes of errors under the hood
+
 ### New Features
 - Added section to settings to send the user to Duolingo's settings to change the appearance theme
 
