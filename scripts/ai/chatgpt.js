@@ -44,7 +44,7 @@ export class OpenAIAgent {
     init(apiKey, model) {
         // Check if the API key is a string
         if (typeof apiKey !== "string") {
-            console.error("No OpenAI API key provided.");
+            console.warn("No OpenAI API key provided.");
         } else {
             // Set the API key
             this.apiKey = apiKey;
@@ -53,7 +53,7 @@ export class OpenAIAgent {
 
         // Check if the model is correct
         if (!this.availableModels.includes(model)) {
-            console.error(`Model "${model}" is not available. Using GPT 4o mini.`);
+            console.warn(`Model "${model}" is not available. Using GPT 4o mini.`);
             model = "gpt-4o-mini";
         } else {
             // Set the model

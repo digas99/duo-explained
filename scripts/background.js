@@ -5,21 +5,49 @@
 import { OpenAIAgent } from "./ai/chatgpt.js";
 import { QueryGenerator } from "./ai/query.js";
 import { SettingsComponent } from "./settings.js";
-import { urls } from "./config.js";
+import { urls, storage } from "./config.js";
+
+chrome.runtime.onInstalled.addListener(async details => {
+    console.log("Extension Reloaded");
+    if (details.reason === "install" ||
+        details.reason === "update") {
+
+        // set defaults for settings
+        storage.get(["SETTINGS"], result => {
+            const loadedSettings = result?.SETTINGS || null;
+            const settings = new SettingsComponent(
+                loadedSettings,
+                null,
+                "SETTINGS",
+                {
+                    "duolingo": urls.DUOLINGO,
+                    "assets": urls.ASSETS,
+                },
+                storage
+            );
+            settings.setDefaults();
+       });
+
+        // set API mode default
+        const mode = await storage.get("API_MODE");
+        if (!mode.API_MODE)
+            storage.set({ API_MODE: "free" });    
+    }
+});
 
 chrome.runtime.onInstalled.addListener(details => {
     if (details.reason == "update") {
         const version = chrome.runtime.getManifest().version;
         if (details.previousVersion != version && version.split('.').length < 4) {
-            chrome.storage.sync.set({ "SHOW_CHANGELOG": true });
+            storage.set({ "SHOW_CHANGELOG": true });
         }
 
         // Force extension activation to embrace the new API requests approach
         if (version <= "0.0.6") {
-            chrome.storage.sync.get(["SETTINGS"], result => {
+            storage.get(["SETTINGS"], result => {
                 const settings = result.SETTINGS || {};
                 settings["extension-enabled"] = true;
-                chrome.storage.sync.set({ SETTINGS: settings }, () => {
+                storage.set({ SETTINGS: settings }, () => {
                     chrome.runtime.sendMessage({ type: "RELOAD" });
                 });
             });
@@ -35,12 +63,12 @@ let agent = new OpenAIAgent();
  * Load local storage values from user settings for API key and model chosen for ChatGPT.
  * This is useful for persisting the API key and model across browser sessions.
  */
-chrome.storage.sync.get(["API_KEY", "MODEL"], (result) => {
-    const apiKey = result.API_KEY;
+storage.get(["API_KEY", "MODEL"], (result) => {
+    const apiKey = result?.API_KEY;
     console.log("API_KEY currently is " + apiKey);
 
     // Load the model from local storage
-    const model = result.MODEL;
+    const model = result?.MODEL;
     console.log("MODEL currently is " + model);
 
     // Instantiate OpenAIAgent once the API_KEY and MODEL are loaded
@@ -59,13 +87,15 @@ chrome.storage.sync.get(["API_KEY", "MODEL"], (result) => {
  * If the message type is "EXTENSION_VERSION", the extension version is sent as a response.
  */
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    console.log("Received message", request);
     if (request.type === "QUERY") {
+        console.log("Received query request");
         (async () => {
             if (agent) {
                 try {
                     // Generate the prompt using QueryGenerator
                     const prompt = QueryGenerator.generatePrompt(request.data);
-                    const mode = await chrome.storage.sync.get("API_MODE");
+                    const mode = await storage.get("API_MODE");
                     if (mode.API_MODE === "personal") {
                         const response = await agent.query(agent.model, prompt);
                         sendResponse(response);
@@ -109,13 +139,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         (async () => {
             if (agent) {
                 agent.setApiKey(apiKey);
-                await chrome.storage.sync.set({ API_KEY: apiKey });
+                await storage.set({ API_KEY: apiKey });
                 sendResponse({ message: "API Key set" });
 
-                chrome.storage.sync.get(["SETTINGS"], result => {
+                storage.get(["SETTINGS"], result => {
                     const settings = result.SETTINGS || {};
                     settings["extension-enabled"] = true;
-                    chrome.storage.sync.set({ SETTINGS: settings }, () => {
+                    storage.set({ SETTINGS: settings }, () => {
                         chrome.runtime.sendMessage({ type: "RELOAD" });
                     });
                     
@@ -146,7 +176,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === "SET_MODEL") {
         agent.setModel(request.model);
         // Model value is managed by the content script, therefore always in accordance with the available models
-        chrome.storage.sync.set({ MODEL: request.model }, () => {
+        storage.set({ MODEL: request.model }, () => {
             sendResponse({ message: "Model set." });
         });
     }
@@ -174,7 +204,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 
     if (request.type === "GET_UPDATE_REVIEW") {
-        chrome.storage.sync.get(["SHOW_CHANGELOG"], result => {
+        storage.get(["SHOW_CHANGELOG"], result => {
             const showChangelog = result.SHOW_CHANGELOG;
             if (showChangelog) {
                 fetch("/CHANGELOG.md")
@@ -182,7 +212,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     .then(text => {
                         sendResponse({ data: text });
                         // 
-                        chrome.storage.sync.set({ SHOW_CHANGELOG: false });
+                        storage.set({ SHOW_CHANGELOG: false });
                     });
             }
         });
@@ -219,7 +249,7 @@ chrome.tabs.onActivated.addListener(async activeInfo => {
 
 const updateBadge = async (tabId, mode) => {
     if (!mode) {
-        mode = await chrome.storage.sync.get("API_MODE");
+        mode = await storage.get("API_MODE");
         mode = mode?.API_MODE || "free";
     }
 
@@ -231,30 +261,3 @@ const updateBadge = async (tabId, mode) => {
         chrome.action.setBadgeBackgroundColor({color: "#202f36", tabId:tabId});
     }
 }
-
-chrome.runtime.onInstalled.addListener(async details => {
-    console.log("Extension Reloaded");
-    if (details.reason === "install" ||
-        details.reason === "update") {
-
-        // set defaults for settings
-       chrome.storage.sync.get(["SETTINGS"], result => {
-            const loadedSettings = result.SETTINGS || {};
-            const settings = new SettingsComponent(
-                loadedSettings,
-                null,
-                "SETTINGS",
-                {
-                    "duolingo": urls.DUOLINGO,
-                    "assets": urls.ASSETS,
-                }
-            );
-            settings.setDefaults();
-       });
-
-        // set API mode default
-        const mode = await chrome.storage.sync.get("API_MODE");
-        if (!mode.API_MODE)
-            chrome.storage.sync.set({ API_MODE: "free" });    
-    }
-});

@@ -1,6 +1,6 @@
 (async () => {
 	const { SettingsComponent } = await import(chrome.runtime.getURL("scripts/settings.js"));
-	const { urls } = await import(chrome.runtime.getURL("scripts/config.js"));
+	const { urls, storage } = await import(chrome.runtime.getURL("scripts/config.js"));
 
 	const injectSettings = root => {
 		const firstSection = root.querySelector("section");
@@ -23,11 +23,12 @@
 			{
 				"duolingo": urls.DUOLINGO,
 				"assets": urls.ASSETS,
-			}
+			},
+			storage
 		);
 		settings.build();
 		
-		chrome.storage.sync.get(["UI_LANGUAGE"], data => {
+		storage.get(["UI_LANGUAGE"], data => {
 			const uiLanguage = data.UI_LANGUAGE;
 			if (uiLanguage) {
 				const languageSelect = settingsWrapper.querySelector("#d-cgpt-language");
@@ -37,7 +38,7 @@
 		});
 	};
 
-	window.navigation.addEventListener("navigate", (event) => {
+	window?.navigation?.addEventListener("navigate", (event) => {
 		const destination = new URL(event.destination.url);
 		if (destination.pathname === "/settings/account") {
 			// remove all old settings containers

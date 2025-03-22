@@ -1,6 +1,6 @@
-import { storage, localStore } from "../storage.js";
+import { browserStore, localStore } from "../storage.js";
 import { SettingsComponent } from "/scripts/settings.js";
-import { urls } from "/scripts/config.js";
+import { urls, storage } from "/scripts/config.js";
 
 class SettingsManager {
 	constructor() {
@@ -11,14 +11,15 @@ class SettingsManager {
 			{
 				"duolingo": urls.DUOLINGO,
 				"assets": urls.ASSETS,
-			}
+			},
+			storage
 		);
 		this.settings.build();
 	}
 
 	async loadFromStorage() {
 		return new Promise((resolve, reject) => {
-			chrome.storage.sync.get(["SETTINGS", "API_KEY", "API_MODE", "UI_LANGUAGE"], async data => {
+			storage.get(["SETTINGS", "API_KEY", "API_MODE", "UI_LANGUAGE"], async data => {
 				this.settings.update(data.SETTINGS || {});
 				
 				const version = await fetch("/manifest.json").then(response => response.json()).then(data => data.version);
@@ -43,9 +44,9 @@ class SettingsManager {
 	}
 
 	async updateValue(key, value) {
-		const settingsData = await storage.get("SETTINGS");
+		const settingsData = await browserStore.get("SETTINGS");
 		settingsData[key] = value;
-		await storage.set("SETTINGS", settingsData); 
+		await browserStore.set("SETTINGS", settingsData); 
 	}
 }
 

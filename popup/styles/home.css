@@ -28,6 +28,7 @@
 
 body {
 	min-width: 350px;
+	max-width: 410px;
 	font-family: din-round, sans-serif;
 	color: rgb(var(--color-eel));
 	background-color: rgb(var(--color-snow));
@@ -285,6 +286,7 @@ a {
 }
 
 .api-mode > div {
+	font-size: 14px;
 	text-align: center;
     width: 100%;
 	display: flex;

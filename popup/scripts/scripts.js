@@ -1,4 +1,4 @@
-import { storage, localStore } from "./storage.js";
+import { browserStore, localStore } from "./storage.js";
 
 (async () => {
 	// theme
@@ -6,7 +6,7 @@ import { storage, localStore } from "./storage.js";
 	if (theme)
 		document.documentElement.dataset.duoTheme = theme;
 	
-	theme = await storage.get("THEME");
+	theme = await browserStore.get("THEME");
 	if (theme) {
 		document.documentElement.dataset.duoTheme = theme;
 		localStore.set("theme", theme);

@@ -118,7 +118,10 @@ if (typeof window !== 'undefined') {
     window.ChallengeData = ChallengeData;
 }
 
+
 (async () => {
+	const { storage } = await import(chrome.runtime.getURL("scripts/config.js"));
+
     let observer;
 
     // Expose init to global scope if necessary
@@ -221,7 +224,7 @@ if (typeof window !== 'undefined') {
 
 	async function extensionActive() {
         return new Promise((resolve) => {
-            chrome.storage.sync.get("SETTINGS", (data) => {
+            storage.get("SETTINGS", (data) => {
             	resolve(data.SETTINGS?.["extension-enabled"]);
             });
         });

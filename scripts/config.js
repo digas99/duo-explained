@@ -6,6 +6,9 @@ export const urls = {
 	EXTENSION_REPO: "https://github.com/digas99/duo-explained",
 };
 
+export const storage = chrome.storage.sync || chrome.storage.local;
+
 if (typeof window !== "undefined") {
     window.urls = urls;
+	window.storage = storage;
 }

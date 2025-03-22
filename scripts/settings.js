@@ -1,9 +1,10 @@
 export class SettingsComponent {
-	constructor(settings, wrapper, storeKey, urls) {
+	constructor(settings, wrapper, storeKey, urls, storage) {
 		this.wrapper = wrapper;
 		this.storeKey = storeKey;
 		this.urls = urls;
-
+		this.storage = storage;
+		
 		this.defaults = [
 			{
 				type: "checkbox",
@@ -110,6 +111,8 @@ export class SettingsComponent {
 
 		settings = settings || this.defaults;
 
+		console.log(this);
+
 		// group settings by 'group' key
 		if (typeof settings.reduce === "function") {
 			this.settings = settings.reduce((acc, setting) => {
@@ -123,7 +126,7 @@ export class SettingsComponent {
 		}
 
 		if (this.wrapper) {
-			chrome.storage.sync.get([this.storeKey], result => {
+			this.storage.get([this.storeKey], result => {
 				const settings = result[this.storeKey];
 				if (settings) {
 					this.update(settings);
@@ -204,7 +207,7 @@ export class SettingsComponent {
 								chrome.tabs.sendMessage(tabs[0].id, {type: "TOGGLE_EXTENSION", value: checkbox.checked}, () => window.chrome.runtime.lastError);
 							});
 						} else {
-							chrome.storage.sync.get("API_KEY", data =>
+							this.storage.get("API_KEY", data =>
 								window.toggleExtension(data.API_KEY && checkbox.checked)
 							);
 						}
@@ -226,20 +229,20 @@ export class SettingsComponent {
 						target.closest(".d-cgpt-settings-checkbox").classList.remove("d-cgpt-settings-enabled");
 					}
 					
-					chrome.storage.sync.get([this.storeKey], result => {
+					this.storage.get([this.storeKey], result => {
 						const settings = result[this.storeKey] || {};
 						settings[target.id.replace("d-cgpt-", "")] = checkbox.checked;
-						chrome.storage.sync.set({ [this.storeKey]: settings });
+						this.storage.set({ [this.storeKey]: settings });
 					});
 				}
 			}
 
 			if (target.closest("select")) {
 				const select = target.closest("select");
-				chrome.storage.sync.get([this.storeKey], result => {
+				this.storage.get([this.storeKey], result => {
 					const settings = result[this.storeKey] || {};
 					settings[select.id.replace("d-cgpt-", "")] = select.value;
-					chrome.storage.sync.set({ [this.storeKey]: settings });
+					this.storage.set({ [this.storeKey]: settings });
 				});
 			}
 		});
@@ -266,8 +269,8 @@ export class SettingsComponent {
 	}
 
 	setDefaults() {
-		chrome.storage.sync.get([this.storeKey], result => {
-			const storedSettings = result[this.storeKey] || {};
+		this.storage.get([this.storeKey], result => {
+			const storedSettings = (result && result[this.storeKey]) || {};
 			// only set defaults for settings that are not already stored
 			const defaulted = {};
 			this.defaults.forEach(setting => {
@@ -275,7 +278,7 @@ export class SettingsComponent {
 					defaulted[setting.key] = setting.default;
 				}
 			});
-			chrome.storage.sync.set({ [this.storeKey]: { ...storedSettings, ...defaulted } });
+			this.storage.set({ [this.storeKey]: { ...storedSettings, ...defaulted } });
 		});
 	}
 

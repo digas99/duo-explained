@@ -1,14 +1,16 @@
-export const storage = {
+import { storage } from "/scripts/config.js";
+
+export const browserStore = {
     get(key) {
-        return new Promise(resolve => chrome.storage.sync.get(key, data => resolve(data[key])));
+        return new Promise(resolve => storage.get(key, data => resolve(data[key])));
     },
 
     set(key, value) {
-        return new Promise(resolve => chrome.storage.sync.set({ [key]: value }, resolve));
+        return new Promise(resolve => storage.set({ [key]: value }, resolve));
     },
 
     remove(key) {
-        return new Promise(resolve => chrome.storage.sync.remove(key, resolve));
+        return new Promise(resolve => storage.remove(key, resolve));
     }
 };
 

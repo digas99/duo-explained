@@ -4,14 +4,14 @@
  * - apiModeManager
 */
 
-import { storage, localStore } from "../storage.js";
+import { browserStore, localStore } from "../storage.js";
 import { settingsManager } from "./settingsManager.js";
 import { popupMessage } from "../scripts.js";
 
 export const apiKeyManager = {
 	// METHODS
 	async removeApiKey(callback) {
-		await storage.remove("API_KEY");
+		await browserStore.remove("API_KEY");
 		localStore.remove("apiKey");
 		document.querySelector("#api-key").value = "";
 		callback && callback();
@@ -65,7 +65,7 @@ export const apiKeyManager = {
 		const apiKey = document.querySelector("#api-key").value;
 		const result = await apiKeyManager.validApiKey(apiKey);
 		if (result.valid) {
-			await storage.set("API_KEY", apiKey);
+			await browserStore.set("API_KEY", apiKey);
 			localStore.set("apiKey", apiKey);
 			chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
 				chrome.tabs.sendMessage(tabs[0].id, {type: "SAVED_KEY", key: apiKey}, () => window.chrome.runtime.lastError);
@@ -112,7 +112,7 @@ export const apiKeyManager = {
 		confirm("Are you sure you want to remove the API key?") && await apiKeyManager.removeApiKey(() => {
 			chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
 				chrome.tabs.sendMessage(tabs[0].id, {type: "RESET"}, async () => {
-					await storage.remove("API_KEY_PROMPT_CLOSED");
+					await browserStore.remove("API_KEY_PROMPT_CLOSED");
 				});
 			});
 
@@ -146,7 +146,7 @@ export const apiModeManager = {
 		if (mode) {
 			apiModeSelectedElement?.classList.remove("api-mode-selected");
 			document.querySelector(`.api-mode div[data-mode="${mode}"]`).classList.add("api-mode-selected");
-			await storage.set("API_MODE", mode);
+			await browserStore.set("API_MODE", mode);
 			localStore.set("apiMode", mode);
 
 			const apiKeyWrapper = document.querySelector(".api-key-input");
@@ -161,7 +161,7 @@ export const apiModeManager = {
 			}
 		}
 		else {
-			mode = await storage.get("API_MODE")
+			mode = await browserStore.get("API_MODE")
 				|| apiModeSelectedElement?.dataset.mode
 				|| "free";
 
@@ -211,7 +211,7 @@ export const apiModeManager = {
 		const modelSelected = e.target.closest(".api-mode > div");
 		const mode = modelSelected?.dataset.mode;
 		if (mode === "personal") {
-			const apiMode = await storage.get("API_MODE") || "free";
+			const apiMode = await browserStore.get("API_MODE") || "free";
 			if (apiMode !== "personal") apiKeyInput.style.opacity = 0.5;
 		}
 	},

@@ -15,7 +15,7 @@
 
 
 (async () => {
-	const { urls } = await import(chrome.runtime.getURL("scripts/config.js"));
+	const { urls, storage } = await import(chrome.runtime.getURL("scripts/config.js"));
 
     // Expose init to global scope if necessary
     window.init = init;
@@ -24,7 +24,7 @@
         await init();
     });
 
-	const fingerprint = import('/lib/fingerprint.min.js').then(FingerprintJS => FingerprintJS.load());
+	const fingerprint = import(chrome.runtime.getURL('/lib/fingerprint.min.js')).then(FingerprintJS => FingerprintJS.load());
 
 	let answerData, challengeData;
 
@@ -87,7 +87,7 @@
 		document.addEventListener("lessonend", async event => {
 			if (typeof extensionActive == "function" && !(await extensionActive())) return; 
 
-			chrome.storage.sync.get("SETTINGS", data => {
+			storage.get("SETTINGS", data => {
 				const showUsedTokens = data.SETTINGS?.["show-used-tokens"];
 				
 				if (showUsedTokens) {
@@ -459,7 +459,7 @@
 						const text = content;
 						const htmlContent = markdownToHtml(text);
 						const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
-						chrome.storage.sync.get("SETTINGS", data => {
+						storage.get("SETTINGS", data => {
 							const typeAnimation = data.SETTINGS?.["typing-animation"];
 							if (typeAnimation) {
 								type(explainContent, sanitizedHtmlContent);
@@ -475,7 +475,8 @@
 						enableButton(explainButton);
 					}
 				}
-				if (callback) {
+			
+				if (typeof callback === "function") {
 					callback();
 				}
 			});
@@ -722,7 +723,7 @@
 			}
 		});
 
-		chrome.storage.sync.get("API_MODE", data => {
+		storage.get("API_MODE", data => {
 			let mode = data.API_MODE || "free";
 			mode = mode.charAt(0).toUpperCase() + mode.slice(1);
 			reportButton.title += `\nAPI Mode: ${mode}`;

@@ -3,7 +3,7 @@
  */
 
 (async () => {
-	const { urls } = await import(chrome.runtime.getURL("scripts/config.js"));
+	const { urls, storage } = await import(chrome.runtime.getURL("scripts/config.js"));
 
 	let active = false, showIconMobile = true;
 
@@ -21,7 +21,7 @@
 	observer.observe(document.body, { childList: true, subtree: true });
 
 	// catch open in app popup
-	chrome.storage.sync.get("SETTINGS", data => {
+	storage.get("SETTINGS", data => {
 		const settings = data.SETTINGS;
 		const removeContinueInApp = settings?.["remove-continue-app"];
 		if (removeContinueInApp) {
@@ -49,7 +49,7 @@
 	// watch for theme change
 	document.addEventListener("duotheme", event => {
 		const theme = event.detail.theme;
-		chrome.storage.sync.set({ "THEME": theme });
+		storage.set({ "THEME": theme });
 		localStorage.setItem("duo.theme", theme);
 
 		updateTheme(theme);
@@ -71,7 +71,7 @@
 
 		setupTab();	
 
-		chrome.storage.sync.get(["API_KEY", "API_KEY_PROMPT_CLOSED", "SETTINGS"], data => {
+		storage.get(["API_KEY", "API_KEY_PROMPT_CLOSED", "SETTINGS"], data => {
 			const settings = data.SETTINGS || {};
 			showIconMobile = settings?.["mobile-extension-icon"] !== false;
 
@@ -123,7 +123,7 @@
 								const link = newTab.querySelector("a") || newTab;
 								link.classList.add("d-cgpt-active");
 								active = true;
-								chrome.storage.sync.set({ "API_MODE": "personal" });
+								storage.set({ "API_MODE": "personal" });
 							}
 							chrome.runtime.sendMessage({ type: "SET_MODE", mode: "personal" });
 						}
@@ -154,7 +154,7 @@
 		// clicked on prompt close
 		const promptClose = document.querySelector("#d-cgpt-prompt-close");
 		promptClose.addEventListener("click", () => {
-			chrome.storage.sync.set({ "API_KEY_PROMPT_CLOSED": true, "EXTENSION_ACTIVE": true }, () => {
+			storage.set({ "API_KEY_PROMPT_CLOSED": true, "EXTENSION_ACTIVE": true }, () => {
 				document.querySelector(".d-cgpt-prompt").remove();
 			});
 		});
@@ -275,18 +275,30 @@
 		}
 	}
 
-	navigation.addEventListener("navigate", (event) => {
-		// check if entering a lesson
-		if (event.destination.url.split("duolingo.com/")[1] === "lesson") {
+
+	if ('navigation' in window) {
+		// Chromium browsers
+		navigation.addEventListener("navigate", (event) => {
+			checkLesson(event.destination.url);
+		});
+	} else {
+		// Firefox fallback using popstate
+		window.addEventListener("popstate", () => {
+			checkLesson(window.location.href);
+		});
+	}
+	
+	function checkLesson(url) {
+		if (url.includes("duolingo.com/lesson")) {
 			const prompt = document.querySelector(".d-cgpt-prompt");
-			if (prompt)
-				prompt.remove();
+			if (prompt) prompt.remove();
 		}
-	});
+	}
+	
 
 	chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 		if (request.type === "TOGGLE_EXTENSION") {
-			chrome.storage.sync.get("SETTINGS", data => {
+			storage.get("SETTINGS", data => {
 				const settings = data.SETTINGS || {};
 				const extensionActive = settings?.["extension-enabled"];
 				toggleExtension(extensionActive);
@@ -296,12 +308,12 @@
 		}
 
 		if (request.type === "RESET") {
-			chrome.storage.sync.remove("API_KEY", () => {
+			storage.remove("API_KEY", () => {
 				const newTab = document.querySelector(".d-cgpt-tab");
 				if (newTab)
 					setupPrompt(newTab);
 
-				chrome.storage.sync.get("SETTINGS", data => {
+				storage.get("SETTINGS", data => {
 					const settings = data.SETTINGS || {};
 					const extensionActive = settings?.["extension-enabled"];
 					if (!extensionActive)
@@ -353,7 +365,7 @@
 		// clicked on navbar tab
 		if (event.target.closest(".d-cgpt-tab")) {
 			const newTab = document.querySelector(".d-cgpt-tab");
-			chrome.storage.sync.get(["API_KEY", "SETTINGS"], data => {
+			storage.get(["API_KEY", "SETTINGS"], data => {
 				const settings = data.SETTINGS || {};
 
 				const link = newTab.querySelector("a") || newTab;
@@ -377,14 +389,14 @@
 				}
 
 				settings["extension-enabled"] = link.classList.contains("d-cgpt-active");
-				chrome.storage.sync.set({"SETTINGS": settings}, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
+				storage.set({"SETTINGS": settings}, () => chrome.runtime.sendMessage({ type: "RELOAD" }));
 			});
 		}
 	});
 
 	window.addEventListener("message", event => {
 		if (event.data.type === "DUO") {
-			chrome.storage.sync.set({ "UI_LANGUAGE": event.data.language});
+			storage.set({ "UI_LANGUAGE": event.data.language});
 		}
 	});
 

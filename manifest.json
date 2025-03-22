@@ -15,11 +15,7 @@
     },
 	"content_scripts": [
 		{
-			"matches": [
-                "https://duolingo.com/*",
-                "https://www.duolingo.com/*",
-                "https://preview.duolingo.com/*"
-            ],
+			"matches": ["https://duolingo.com/*", "https://www.duolingo.com/*", "https://preview.duolingo.com/*"],
 			"js": [
                 "scripts/content/utils.js",
                 "scripts/content/theme.js", 
@@ -65,5 +61,10 @@
         "https://duolingo.com/*",
         "https://www.duolingo.com/*",
         "https://preview.duolingo.com/*"
-    ]
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "digas_correia@hotmail.com"
+        }
+    }
 }
