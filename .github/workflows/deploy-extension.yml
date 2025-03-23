@@ -119,7 +119,7 @@ jobs:
         uses: wdzeng/edge-addon@v2
         with:
           zip-path: 'extension-chromium.zip'
-          product-id: '676e8faf-4af5-4c0a-aa3c-6f3524472fba'
+          product-id: 'e29a4e1d-b5b6-4885-8b9a-1a6fa1429502'
           api-key: ${{ secrets.EDGE_API_KEY }}
           client-id: ${{ secrets.EDGE_CLIENT_ID }}
 
