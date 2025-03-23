@@ -24,9 +24,9 @@ if [ -f "$MANIFEST_PATH/$FILENAME" ]; then
 		fi
 
 		# format version string from '"0.0.1",' to '001'
-		formated=$(echo "$value" | sed 's/[\.\,\ "]//g') 
+		formated=$(echo "$value" | sed 's/[\,\ "]//g') 
 		# create zip
-		ZIPNAME="build/${PLATFORM}_${formated}.zip"
+		ZIPNAME="build/DuoExplained_${formated}.${PLATFORM}.zip"
 
 		# put manifest outside temporarily
 		cp $MANIFEST_PATH/manifest.json .
