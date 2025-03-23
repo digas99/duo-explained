@@ -1,4 +1,4 @@
-name: Deploy Chrome Extension
+name: Deploy Extension
 
 on:
   release:
@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Step 1: Pack Extension
-  packExtension:
+  # Step 1: Pack Extension for Chromium
+  packChromium:
     runs-on: ubuntu-latest
     outputs:
       zip_path: ${{ steps.pack.outputs.zipFilePath }}
@@ -16,23 +16,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Move manifest to root
+        run: mv platform/chromium/manifest.json .
+      
+      - name: Rename Chromium manifest
+        run: mv platform/firefox/manifest.json manifest.json.firefox
+
       - name: Build Extension
         id: pack
         uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
         with:
           extensionDir: '.'
-          zipFilePath: 'build/extension.zip'
+          zipFilePath: 'build/extension-chromium.zip'
 
       - name: Upload Packed Extension
         uses: actions/upload-artifact@v4
         with:
-          name: extension
-          path: build/extension.zip
+          name: extension-chromium
+          path: build/extension-chromium.zip
 
-  # Step 2: Fetch Google Access Token
-  fetchToken:
+  # Step 1.1.1: Fetch Google Access Token
+  fetchGToken:
     runs-on: ubuntu-latest
-    needs: packExtension
+    needs: packChromium
     outputs:
       access_token_path: google-access-token
     steps:
@@ -53,10 +59,10 @@ jobs:
           name: google-access-token
           path: access_token.txt
 
-  # Step 3: Upload Extension
-  uploadExtension:
+  # Step 1.1.2: Upload Extension to the Chrome Web Store
+  uploadGoogle:
     runs-on: ubuntu-latest
-    needs: [packExtension, fetchToken]
+    needs: [packChromium, fetchGToken]
     steps:
       - name: Download token artifact
         uses: actions/download-artifact@v4
@@ -66,7 +72,7 @@ jobs:
       - name: Download extension artifact
         uses: actions/download-artifact@v4
         with:
-          name: extension
+          name: extension-chromium
 
       - name: Read access token
         id: read-token
@@ -75,14 +81,14 @@ jobs:
       - name: Upload to Chrome Web Store
         uses: cardinalby/webext-buildtools-chrome-webstore-action@v1
         with:
-          zipFilePath: 'extension.zip'
+          zipFilePath: 'extension-chromium.zip'
           extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
           apiAccessToken: ${{ env.ACCESS_TOKEN }}
 
-  # Step 4: Publish Extension
-  publishExtension:
+  # Step 1.1.3: Publish Extension to the Chrome Web Store
+  publishGoogle:
     runs-on: ubuntu-latest
-    needs: uploadExtension
+    needs: uploadGoogle
     steps:
       - name: Download token artifact
         uses: actions/download-artifact@v4
@@ -98,3 +104,65 @@ jobs:
         with:
           extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
           apiAccessToken: ${{ env.ACCESS_TOKEN }}
+  
+  # Step 1.2.1: Upload and Publish to the Microsoft Edge Add-ons
+  uploadAndPublishEdge:
+    runs-on: ubuntu-latest
+    needs: packChromium
+    steps:
+      - name: Download extension artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: extension-chromium
+      
+      - name: Publish to Microsoft Edge Add-ons
+        uses: wdzeng/edge-addon@v2
+        with:
+          zip-path: 'extension-chromium.zip'
+          product-id: 'e29a4e1d-b5b6-4885-8b9a-1a6fa1429502'
+          api-key: ${{ secrets.EDGE_API_KEY }}
+          client-id: ${{ secrets.EDGE_CLIENT_ID }}
+
+  # Step 2: Pack Extension for Firefox
+  packFirefox:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Move manifest to root
+        run: mv platform/firefox/manifest.json .
+      
+      - name: Rename Chromium manifest
+        run: mv platform/chromium/manifest.json manifest.json.chromium
+
+      - name: Build Firefox Extension
+        run: chmod +x build.sh && ./build.sh firefox
+
+      - name: Rename Firefox zip to standard name
+        run: mv build/DuoExplained_*.firefox.zip build/extension-firefox.zip
+
+      - name: Upload Packed Extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-firefox
+          path: build/extension-firefox.zip
+  
+  # Step 2.1: Upload and Publish to the Microsoft Edge Add-ons
+  uploadAndPublishFirefox:
+    runs-on: ubuntu-latest
+    needs: packFirefox
+    steps:
+      - name: Download extension artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: extension-firefox
+      
+      - name: Publish to Firefox Add-ons
+        uses: wdzeng/firefox-addon@v1
+        with:
+          addon-guid: '{2acab3d4-f546-4e70-b325-4f85c9e19093}'
+          xpi-path: extension-firefox.zip
+          self-hosted: false
+          jwt-issuer: ${{ secrets.FIREFOX_JWT_ISSUER }}
+          jwt-secret: ${{ secrets.FIREFOX_JWT_SECRET }}
