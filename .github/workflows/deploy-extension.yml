@@ -24,13 +24,13 @@ jobs:
         uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
         with:
           extensionDir: '.'
-          zipFilePath: 'build/extension.zip'
+          zipFilePath: 'build/extension-chromemium.zip'
 
       - name: Upload Packed Extension
         uses: actions/upload-artifact@v4
         with:
-          name: extension
-          path: build/extension.zip
+          name: extension-chromemium
+          path: build/extension-chromemium.zip
 
   # Step 2: Fetch Google Access Token
   fetchToken:
@@ -69,7 +69,7 @@ jobs:
       - name: Download extension artifact
         uses: actions/download-artifact@v4
         with:
-          name: extension
+          name: extension-chromemium
 
       - name: Read access token
         id: read-token
@@ -78,7 +78,7 @@ jobs:
       - name: Upload to Chrome Web Store
         uses: cardinalby/webext-buildtools-chrome-webstore-action@v1
         with:
-          zipFilePath: 'extension.zip'
+          zipFilePath: 'extension-chromemium.zip'
           extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
           apiAccessToken: ${{ env.ACCESS_TOKEN }}
 
@@ -110,12 +110,12 @@ jobs:
       - name: Download extension artifact
         uses: actions/download-artifact@v4
         with:
-          name: extension
+          name: extension-chromemium
       
       - name: Publish to Microsoft Edge Add-ons
         uses: wdzeng/edge-addon@v2
         with:
-          zip-path: 'extension.zip'
+          zip-path: 'extension-chromemium.zip'
           product-id: '676e8faf-4af5-4c0a-aa3c-6f3524472fba'
           api-key: ${{ secrets.EDGE_API_KEY }}
           client-id: ${{ secrets.EDGE_CLIENT_ID }}
