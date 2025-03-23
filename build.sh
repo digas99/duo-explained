@@ -2,6 +2,26 @@
 
 FILENAME=manifest.json
 PLATFORM=${1:-chromium}
+KEEP_MANIFEST=NO
+
+# parse arguments
+for i in "$@"
+do
+case $i in
+	--keep-manifest)
+	KEEP_MANIFEST=YES
+	shift
+	;;
+	--platform=*)
+	PLATFORM="${i#*=}"
+	shift
+	;;
+	*)
+	# unknown option
+	;;
+esac
+done
+
 MANIFEST_PATH=platform/$PLATFORM
 
 # Get version from manifest
@@ -19,8 +39,8 @@ if [ -f "$MANIFEST_PATH/$FILENAME" ]; then
 	tag=\"version\"
 	if [ "$key" == "$tag" ]; then
 		# delete old zip files
-		if [ -f build/${PLATFORM}_*.zip ]; then
-			rm build/${PLATFORM}_*
+		if [ -f build/DuoExplained_*.${PLATFORM}.zip ]; then
+			rm build/DuoExplained_*.${PLATFORM}.zip
 		fi
 
 		# format version string from '"0.0.1",' to '001'
@@ -34,8 +54,10 @@ if [ -f "$MANIFEST_PATH/$FILENAME" ]; then
 		# pick files and folders to zip
 		zip -r "$ZIPNAME" manifest.json images scripts styles popup docs lib locales
 
-		# remove manifest
-		rm manifest.json
+		if [ "$KEEP_MANIFEST" == "NO" ]; then
+			# remove manifest
+			rm manifest.json
+		fi
 
 		break
 	fi
