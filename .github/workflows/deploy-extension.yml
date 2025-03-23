@@ -1,4 +1,4 @@
-name: Deploy Chrome Extension
+name: Deploy Extension
 
 on:
   release:
@@ -15,6 +15,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Move manifest to root
+        run: mv platform/chromemium/manifest.json .
 
       - name: Build Extension
         id: pack
@@ -98,3 +101,21 @@ jobs:
         with:
           extensionId: 'ibnifmdhbaknbkgldmbnebeidephchno'
           apiAccessToken: ${{ env.ACCESS_TOKEN }}
+  
+  # Step 5: Upload to Microsoft Edge Add-ons
+  publishEdge:
+    runs-on: ubuntu-latest
+    needs: packExtension
+    steps:
+      - name: Download extension artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: extension
+      
+      - name: Publish to Microsoft Edge Add-ons
+        uses: wdzeng/edge-addon@v2
+        with:
+          zip-path: 'extension.zip'
+          product-id: '676e8faf-4af5-4c0a-aa3c-6f3524472fba'
+          api-key: ${{ secrets.EDGE_API_KEY }}
+          client-id: ${{ secrets.EDGE_CLIENT_ID }}
