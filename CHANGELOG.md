@@ -1,4 +1,9 @@
-# [Changelog v0.2.0 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.2.0)
+# [Changelog v0.2.1 &nbsp; <img src="https://img.shields.io/badge/Latest-0a7fa6">](https://github.com/digas99/duo-explained/releases/tag/v0.2.0)
+
+### Bug Fixes
+- Added clean up to exercise type string to fix [#48](https://github.com/digas99/duo-explained/issues/48)
+
+# [Changelog v0.2.0 &nbsp; <img src="https://img.shields.io/badge/Released-11ad2">](https://github.com/digas99/duo-explained/releases/tag/v0.2.0)
 
 ### New Features
 - Added Extension UI language selection

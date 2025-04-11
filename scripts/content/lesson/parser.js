@@ -12,8 +12,11 @@ class ChallengeParser {
 		const exerciseHeader = wrapper.querySelector("h1[data-test='challenge-header']");
 		const exercise = exerciseHeader?.innerText;
 	
+		// clean up the exercise type
+		const exerciseType = type.split(" ")[0];
+
 		let content, language;
-		switch(type) {
+		switch(exerciseType) {
 			case "syllableTap":
 			case "translate":
 				content = this.parseTranslate(wrapper);
