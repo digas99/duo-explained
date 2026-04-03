@@ -6,7 +6,7 @@ export const browserStore = {
     },
 
     set(key, value) {
-        return new Promise(resolve => storage.set({ [key]: value }, resolve));
+        return new Promise(resolve => storage.set({ [key]: value }, () => resolve(value)));
     },
 
     remove(key) {
